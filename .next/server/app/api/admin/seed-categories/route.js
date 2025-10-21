@@ -1,0 +1,10 @@
+var R=require("../../../../chunks/[turbopack]_runtime.js")("server/app/api/admin/seed-categories/route.js")
+R.c("server/chunks/c46c0_@supabase_node-fetch_lib_index_52d564c7.js")
+R.c("server/chunks/c46c0_next_6aa1a0f5._.js")
+R.c("server/chunks/c46c0_tr46_5f9aa227._.js")
+R.c("server/chunks/c46c0_@supabase_auth-js_dist_module_6c50833b._.js")
+R.c("server/chunks/c46c0_0b21715b._.js")
+R.c("server/chunks/[root-of-the-server]__7a0a513f._.js")
+R.m("[project]/mokshainvestment/.next-internal/server/app/api/admin/seed-categories/route/actions.js [app-rsc] (server actions loader, ecmascript)")
+R.m("[project]/mokshainvestment/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/mokshainvestment/app/api/admin/seed-categories/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)")
+module.exports=R.m("[project]/mokshainvestment/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/mokshainvestment/app/api/admin/seed-categories/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports

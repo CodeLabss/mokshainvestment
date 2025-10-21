@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Tarak/Desktop/mokshainvestment/mokshainvestment/app/admin/layout.tsx"],"sourcesContent":["export default async function AdminLayout({\r\n  children,\r\n}: {\r\n  children: React.ReactNode\r\n}) {\r\n  // Simple layout - authentication is handled by middleware\r\n  return (\r\n    <div className=\"min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900\">\r\n      {children}\r\n    </div>\r\n  )\r\n}"],"names":[],"mappings":";;;;;;AAAe,eAAe,YAAY,EACxC,QAAQ,EAGT;IACC,0DAA0D;IAC1D,qBACE,kQAAC;QAAI,WAAU;kBACZ;;;;;;AAGP","debugId":null}}]
+}

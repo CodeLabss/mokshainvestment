@@ -1,0 +1,15 @@
+{
+  "pages": {
+    "/api/admin/seed-categories/route": [
+      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_f528c91a._.js",
+      "static/chunks/c46c0_next_dist_compiled_react-dom_fa9472e3._.js",
+      "static/chunks/c46c0_next_dist_compiled_next-devtools_index_75e01526.js",
+      "static/chunks/c46c0_next_dist_compiled_accf6bf0._.js",
+      "static/chunks/c46c0_next_dist_client_d90e3ea8._.js",
+      "static/chunks/c46c0_next_dist_f5df054a._.js",
+      "static/chunks/c46c0_@swc_helpers_cjs_a9dd0772._.js",
+      "static/chunks/mokshainvestment_a0ff3932._.js",
+      "static/chunks/turbopack-mokshainvestment_3ba76e37._.js"
+    ]
+  }
+}
