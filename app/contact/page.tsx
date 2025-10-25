@@ -376,8 +376,8 @@ export default function ContactPage() {
             Contact Us
           </h1>
           <p className="mt-3 text-lg text-gray-600">
-            Share your details and we'll get back shortly.
-          </p>
+  Share your details and we&apos;ll get back shortly.
+</p>
 
           {/* Status Message */}
           {submitStatus && (
