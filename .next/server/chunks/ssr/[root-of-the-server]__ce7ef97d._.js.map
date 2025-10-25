@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 3, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 15, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Tarak/Desktop/mokshainvestment/mokshainvestment/app/page.tsx"],"sourcesContent":["import Navbar from \"@/components/Navbar\";\nimport Hero from \"@/components/Hero\";\nimport Stats from \"@/components/Stats\";\nimport Footer from \"@/components/Footer\";\nimport Features from \"@/components/Features\";\nimport Services from \"@/components/Services\";\nimport Testimonials from \"@/components/Testimonials\";\n// import Logos from \"@/components/Logos\";\nimport FAQ from \"@/components/FAQ\";\nimport CTA from \"@/components/CTA\";\n\nexport default function HomePage() {\n  return (\n    <main className=\"flex flex-col min-h-screen\">\n      <Navbar />\n      <div className=\"pt-20\"> {/* offset for fixed navbar */}\n        <Hero />\n        <Stats />\n        <Features />\n        \n        <Services />\n        <Testimonials />\n        \n        <FAQ />\n        <CTA />\n      </div>\n      <Footer />\n    </main>\n  );\n}\n"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAWe,SAAS;IACtB,qBACE,kQAAC;QAAK,WAAU;;0BACd,kQAAC;;;;;0BACD,kQAAC;gBAAI,WAAU;;oBAAQ;kCACrB,kQAAC;;;;;kCACD,kQAAC;;;;;kCACD,kQAAC;;;;;kCAED,kQAAC;;;;;kCACD,kQAAC;;;;;kCAED,kQAAC;;;;;kCACD,kQAAC;;;;;;;;;;;0BAEH,kQAAC;;;;;;;;;;;AAGP","debugId":null}}]
+}
