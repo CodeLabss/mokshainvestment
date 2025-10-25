@@ -8,8 +8,8 @@ __turbopack_context__.s([
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/three/build/three.core.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/three/build/three.module.js [app-client] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/three/build/three.core.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/three/build/three.module.js [app-client] (ecmascript) <locals>");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
@@ -25,8 +25,8 @@ function BgComponent() {
             if (!containerRef.current || !canvasRef.current) return;
             const vertexShader = "\n        varying vec2 vUv;\n        void main(){\n          vUv = uv;\n          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);\n        }\n      ";
             const displayShader = "\n        uniform float iTime;\n        uniform vec2 iResolution;\n        uniform float uDistortionAmount;\n        uniform vec3 uColor1;\n        uniform vec3 uColor2;\n        uniform vec3 uColor3;\n        uniform vec3 uColor4;\n        uniform float uColorIntensity;\n        uniform float uSoftness;\n        varying vec2 vUv;\n\n        void main() {\n          vec2 fragCoord = vUv * iResolution;\n          float mr = min(iResolution.x, iResolution.y);\n          vec2 uv = (fragCoord * 2.0 - iResolution.xy) / mr;\n\n          float d = -iTime * 0.5;\n          float a = 0.0;\n          for (float i = 0.0; i < 8.0; ++i) {\n            a += cos(i - d - a * uv.x);\n            d += sin(uv.y * i + a);\n          }\n\n          d += iTime * 0.5;\n\n          float mixer1 = cos(uv.x * d) * 0.5 + 0.5;\n          float mixer2 = cos(uv.y * a) * 0.5 + 0.5;\n          float mixer3 = sin(d + a) * 0.5 + 0.5;\n\n          float smoothAmount = clamp(uSoftness * 0.1, 0.0, 0.9);\n          mixer1 = mix(mixer1, 0.5, smoothAmount);\n          mixer2 = mix(mixer2, 0.5, smoothAmount);\n          mixer3 = mix(mixer3, 0.5, smoothAmount);\n\n          vec3 col = mix(uColor1, uColor2, mixer1);\n          col = mix(col, uColor3, mixer2);\n          col = mix(col, uColor4, mixer3 * 0.4);\n\n          col *= uColorIntensity;\n\n          // --- Adaptive transparency based on brightness ---\n          float luminance = dot(col, vec3(0.299, 0.587, 0.114));\n          float adaptiveAlpha = mix(0.25, 0.75, 1.0 - luminance);\n\n          gl_FragColor = vec4(col, adaptiveAlpha);\n        }\n      ";
-            const camera = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["OrthographicCamera"](-1, 1, 1, -1, 0, 1);
-            const renderer = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["WebGLRenderer"]({
+            const camera = new __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["OrthographicCamera"](-1, 1, 1, -1, 0, 1);
+            const renderer = new __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$three$2f$build$2f$three$2e$module$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["WebGLRenderer"]({
                 antialias: true,
                 alpha: true
             });
@@ -34,28 +34,28 @@ function BgComponent() {
             rendererRef.current = renderer;
             renderer.setSize(window.innerWidth, window.innerHeight);
             canvasRef.current.appendChild(renderer.domElement);
-            const displayMaterial = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ShaderMaterial"]({
+            const displayMaterial = new __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ShaderMaterial"]({
                 uniforms: {
                     iTime: {
                         value: 0
                     },
                     iResolution: {
-                        value: new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector2"](window.innerWidth, window.innerHeight)
+                        value: new __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector2"](window.innerWidth, window.innerHeight)
                     },
                     uDistortionAmount: {
                         value: 2.5
                     },
                     uColor1: {
-                        value: new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0.72, 1.0, 0.96)
+                        value: new __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0.72, 1.0, 0.96)
                     },
                     uColor2: {
-                        value: new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0.43, 0.20, 0.40)
+                        value: new __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0.43, 0.20, 0.40)
                     },
                     uColor3: {
-                        value: new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0.0, 0.2, 1.0)
+                        value: new __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0.0, 0.2, 1.0)
                     },
                     uColor4: {
-                        value: new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0.4, 0.82, 0.99)
+                        value: new __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Vector3"](0.4, 0.82, 0.99)
                     },
                     uColorIntensity: {
                         value: 1.0
@@ -68,8 +68,8 @@ function BgComponent() {
                 fragmentShader: displayShader,
                 transparent: true
             });
-            const geometry = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PlaneGeometry"](2, 2);
-            const displayPlane = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Mesh"](geometry, displayMaterial);
+            const geometry = new __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PlaneGeometry"](2, 2);
+            const displayPlane = new __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$three$2f$build$2f$three$2e$core$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Mesh"](geometry, displayMaterial);
             function animate() {
                 requestAnimationFrame(animate);
                 displayMaterial.uniforms.iTime.value = performance.now() * 0.001;
