@@ -189,6 +189,16 @@ function Navbar() {
                             fileName: "[project]/mokshainvestment/components/Navbar.tsx",
                             lineNumber: 51,
                             columnNumber: 13
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                            href: "/admin/login",
+                            className: "block",
+                            onClick: ()=>setOpen(false),
+                            children: "Admin"
+                        }, void 0, false, {
+                            fileName: "[project]/mokshainvestment/components/Navbar.tsx",
+                            lineNumber: 52,
+                            columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
@@ -311,7 +321,7 @@ const images = [
 const imageContent = [
     {
         title: "What is Digital Gold?",
-        description: "Digital Gold is physical gold that is bought and stored online. You can buy it in small quantities, starting from as low as ₹1, and it's kept safe in a secure vault on your behalf."
+        description: "Digital Gold is physical gold that is bought and stored online. You can buy it in small quantities, starting from as low as ₹100, and it's kept safe in a secure vault on your behalf."
     },
     {
         title: "Why Invest in Gold?",
@@ -358,7 +368,7 @@ const FeatureCard = (param)=>{
                 })
             }, void 0, false, {
                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                lineNumber: 64,
+                lineNumber: 63,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -366,7 +376,7 @@ const FeatureCard = (param)=>{
                 children: title
             }, void 0, false, {
                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                lineNumber: 67,
+                lineNumber: 66,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -374,13 +384,13 @@ const FeatureCard = (param)=>{
                 children: description
             }, void 0, false, {
                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                lineNumber: 68,
+                lineNumber: 67,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-        lineNumber: 63,
+        lineNumber: 62,
         columnNumber: 3
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -390,6 +400,16 @@ const DigitalGoldPage = ()=>{
     _s();
     const [activeImage, setActiveImage] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
     const sectionRefs = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])([]);
+    // Function to scroll to features section
+    const scrollToFeatures = ()=>{
+        const featuresSection = document.getElementById('why-choose-digital-gold');
+        if (featuresSection) {
+            featuresSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    };
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "DigitalGoldPage.useEffect": ()=>{
             const observer = new IntersectionObserver({
@@ -429,7 +449,7 @@ const DigitalGoldPage = ()=>{
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$components$2f$BgComponent$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["BgComponent"], {}, void 0, false, {
                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                lineNumber: 106,
+                lineNumber: 116,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -437,7 +457,7 @@ const DigitalGoldPage = ()=>{
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$components$2f$Navbar$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                        lineNumber: 108,
+                        lineNumber: 118,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -452,7 +472,7 @@ const DigitalGoldPage = ()=>{
                                             className: "w-5 h-5 text-amber-400"
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                            lineNumber: 116,
+                                            lineNumber: 126,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -460,13 +480,13 @@ const DigitalGoldPage = ()=>{
                                             children: "Premium Gold Investment"
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                            lineNumber: 117,
+                                            lineNumber: 127,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                    lineNumber: 115,
+                                    lineNumber: 125,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -476,81 +496,72 @@ const DigitalGoldPage = ()=>{
                                         children: "Digital Gold"
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                        lineNumber: 122,
+                                        lineNumber: 132,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                    lineNumber: 121,
+                                    lineNumber: 131,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     className: "text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto mb-12 leading-relaxed",
                                     children: [
-                                        "Own physical gold digitally with bank-grade security. Start with just ₹1 and build your",
+                                        "Own physical gold digitally with bank-grade security. Start with just ₹100 and build your",
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             className: "text-amber-400 font-semibold",
                                             children: " golden legacy "
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                            lineNumber: 130,
+                                            lineNumber: 140,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         "with 24/7 trading and insured vault storage."
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                    lineNumber: 128,
+                                    lineNumber: 138,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "flex flex-col sm:flex-row gap-4 justify-center items-center mb-16",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                            className: "group relative px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-xl shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-amber-500/25 overflow-hidden",
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "absolute inset-0 bg-gradient-to-r from-amber-600 to-amber-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                    lineNumber: 137,
-                                                    columnNumber: 17
-                                                }, ("TURBOPACK compile-time value", void 0)),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "relative z-10 flex items-center",
-                                                    children: [
-                                                        "Start Investing Now",
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__["ArrowRight"], {
-                                                            className: "ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                            lineNumber: 140,
-                                                            columnNumber: 19
-                                                        }, ("TURBOPACK compile-time value", void 0))
-                                                    ]
-                                                }, void 0, true, {
-                                                    fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                    lineNumber: 138,
-                                                    columnNumber: 17
-                                                }, ("TURBOPACK compile-time value", void 0))
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                            lineNumber: 136,
-                                            columnNumber: 15
-                                        }, ("TURBOPACK compile-time value", void 0)),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                            className: "px-8 py-4 border-2 border-amber-400/50 text-amber-400 font-semibold rounded-xl transition-all duration-300 hover:bg-amber-400/10 hover:border-amber-400",
-                                            children: "Watch Product Tour"
-                                        }, void 0, false, {
-                                            fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                            lineNumber: 144,
-                                            columnNumber: 15
-                                        }, ("TURBOPACK compile-time value", void 0))
-                                    ]
-                                }, void 0, true, {
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        onClick: scrollToFeatures,
+                                        className: "group relative px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-xl shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-amber-500/25 overflow-hidden cursor-pointer",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "absolute inset-0 bg-gradient-to-r from-amber-600 to-amber-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
+                                                lineNumber: 150,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "relative z-10 flex items-center",
+                                                children: [
+                                                    "Start Investing Now",
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__["ArrowRight"], {
+                                                        className: "ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
+                                                        lineNumber: 153,
+                                                        columnNumber: 19
+                                                    }, ("TURBOPACK compile-time value", void 0))
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
+                                                lineNumber: 151,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0))
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
+                                        lineNumber: 146,
+                                        columnNumber: 15
+                                    }, ("TURBOPACK compile-time value", void 0))
+                                }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                    lineNumber: 135,
+                                    lineNumber: 145,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -564,7 +575,7 @@ const DigitalGoldPage = ()=>{
                                                     children: "99.9%"
                                                 }, void 0, false, {
                                                     fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                    lineNumber: 152,
+                                                    lineNumber: 165,
                                                     columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -572,13 +583,13 @@ const DigitalGoldPage = ()=>{
                                                     children: "Pure Gold"
                                                 }, void 0, false, {
                                                     fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                    lineNumber: 153,
+                                                    lineNumber: 166,
                                                     columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                            lineNumber: 151,
+                                            lineNumber: 164,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -589,7 +600,7 @@ const DigitalGoldPage = ()=>{
                                                     children: "24/7"
                                                 }, void 0, false, {
                                                     fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                    lineNumber: 156,
+                                                    lineNumber: 169,
                                                     columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -597,13 +608,13 @@ const DigitalGoldPage = ()=>{
                                                     children: "Trading"
                                                 }, void 0, false, {
                                                     fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                    lineNumber: 157,
+                                                    lineNumber: 170,
                                                     columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                            lineNumber: 155,
+                                            lineNumber: 168,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -611,10 +622,10 @@ const DigitalGoldPage = ()=>{
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "text-2xl font-bold text-amber-400 mb-2",
-                                                    children: "₹1"
+                                                    children: "₹100"
                                                 }, void 0, false, {
                                                     fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                    lineNumber: 160,
+                                                    lineNumber: 173,
                                                     columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -622,33 +633,34 @@ const DigitalGoldPage = ()=>{
                                                     children: "Minimum"
                                                 }, void 0, false, {
                                                     fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                    lineNumber: 161,
+                                                    lineNumber: 174,
                                                     columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                            lineNumber: 159,
+                                            lineNumber: 172,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                    lineNumber: 150,
+                                    lineNumber: 163,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                            lineNumber: 112,
+                            lineNumber: 122,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                        lineNumber: 111,
+                        lineNumber: 121,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
+                        id: "why-choose-digital-gold",
                         className: "py-20 bg-transparent",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "max-w-7xl mx-auto px-6",
@@ -665,14 +677,14 @@ const DigitalGoldPage = ()=>{
                                                     children: "Digital Gold"
                                                 }, void 0, false, {
                                                     fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                    lineNumber: 172,
+                                                    lineNumber: 185,
                                                     columnNumber: 28
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 "?"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                            lineNumber: 171,
+                                            lineNumber: 184,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -680,13 +692,13 @@ const DigitalGoldPage = ()=>{
                                             children: "Experience the perfect blend of traditional gold security with modern digital convenience"
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                            lineNumber: 174,
+                                            lineNumber: 187,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                    lineNumber: 170,
+                                    lineNumber: 183,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -695,46 +707,46 @@ const DigitalGoldPage = ()=>{
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FeatureCard, {
                                             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__["Shield"], {}, void 0, false, {
                                                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                lineNumber: 182,
+                                                lineNumber: 195,
                                                 columnNumber: 23
                                             }, void 0),
                                             title: "Bank-Grade Security",
                                             description: "Your gold is stored in insured vaults with trusted custodians, ensuring maximum security and peace of mind."
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                            lineNumber: 181,
+                                            lineNumber: 194,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FeatureCard, {
                                             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$zap$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Zap$3e$__["Zap"], {}, void 0, false, {
                                                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                lineNumber: 187,
+                                                lineNumber: 200,
                                                 columnNumber: 23
                                             }, void 0),
                                             title: "Instant Liquidity",
                                             description: "Buy and sell gold instantly 24/7 with real-time pricing and immediate settlement to your account."
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                            lineNumber: 186,
+                                            lineNumber: 199,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FeatureCard, {
                                             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$coins$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Coins$3e$__["Coins"], {}, void 0, false, {
                                                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                lineNumber: 192,
+                                                lineNumber: 205,
                                                 columnNumber: 23
                                             }, void 0),
                                             title: "Fractional Ownership",
-                                            description: "Start with as little as ₹1 and own pure 24K gold in precise gram measurements without storage worries."
+                                            description: "Start with as little as ₹100 and own pure 24K gold in precise gram measurements without storage worries."
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                            lineNumber: 191,
+                                            lineNumber: 204,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                    lineNumber: 180,
+                                    lineNumber: 193,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -743,44 +755,44 @@ const DigitalGoldPage = ()=>{
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FeatureCard, {
                                             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__["TrendingUp"], {}, void 0, false, {
                                                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                lineNumber: 201,
+                                                lineNumber: 214,
                                                 columnNumber: 23
                                             }, void 0),
                                             title: "Inflation Protection",
                                             description: "Gold has historically outperformed inflation, preserving your wealth during economic uncertainty."
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                            lineNumber: 200,
+                                            lineNumber: 213,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FeatureCard, {
                                             icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$house$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Home$3e$__["Home"], {}, void 0, false, {
                                                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                lineNumber: 206,
+                                                lineNumber: 219,
                                                 columnNumber: 23
                                             }, void 0),
                                             title: "Physical Delivery",
                                             description: "Redeem your digital gold for physical coins or bars delivered to your doorstep across India."
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                            lineNumber: 205,
+                                            lineNumber: 218,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                    lineNumber: 199,
+                                    lineNumber: 212,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                            lineNumber: 169,
+                            lineNumber: 182,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                        lineNumber: 168,
+                        lineNumber: 181,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -802,7 +814,7 @@ const DigitalGoldPage = ()=>{
                                                             className: "absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out ".concat(activeImage === index ? "opacity-100" : "opacity-0")
                                                         }, index, false, {
                                                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                            lineNumber: 223,
+                                                            lineNumber: 236,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0))),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -816,12 +828,12 @@ const DigitalGoldPage = ()=>{
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                            lineNumber: 235,
+                                                            lineNumber: 248,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     }, void 0, false, {
                                                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                        lineNumber: 234,
+                                                        lineNumber: 247,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -832,7 +844,7 @@ const DigitalGoldPage = ()=>{
                                                                 children: (_imageContent_activeImage = imageContent[activeImage]) === null || _imageContent_activeImage === void 0 ? void 0 : _imageContent_activeImage.title
                                                             }, void 0, false, {
                                                                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                                lineNumber: 242,
+                                                                lineNumber: 255,
                                                                 columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -840,29 +852,29 @@ const DigitalGoldPage = ()=>{
                                                                 children: (_imageContent_activeImage1 = imageContent[activeImage]) === null || _imageContent_activeImage1 === void 0 ? void 0 : _imageContent_activeImage1.description
                                                             }, void 0, false, {
                                                                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                                lineNumber: 245,
+                                                                lineNumber: 258,
                                                                 columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                        lineNumber: 241,
+                                                        lineNumber: 254,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                lineNumber: 221,
+                                                lineNumber: 234,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0))
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                            lineNumber: 220,
+                                            lineNumber: 233,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                        lineNumber: 219,
+                                        lineNumber: 232,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -872,18 +884,18 @@ const DigitalGoldPage = ()=>{
                                                 className: "h-[100vh] flex items-center justify-center"
                                             }, index, false, {
                                                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                lineNumber: 256,
+                                                lineNumber: 269,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0)))
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                        lineNumber: 254,
+                                        lineNumber: 267,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                lineNumber: 217,
+                                lineNumber: 230,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -900,7 +912,7 @@ const DigitalGoldPage = ()=>{
                                                         className: "w-full h-auto object-cover"
                                                     }, void 0, false, {
                                                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                        lineNumber: 272,
+                                                        lineNumber: 285,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -914,18 +926,18 @@ const DigitalGoldPage = ()=>{
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                            lineNumber: 280,
+                                                            lineNumber: 293,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     }, void 0, false, {
                                                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                        lineNumber: 279,
+                                                        lineNumber: 292,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                lineNumber: 271,
+                                                lineNumber: 284,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -936,7 +948,7 @@ const DigitalGoldPage = ()=>{
                                                         children: content.title
                                                     }, void 0, false, {
                                                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                        lineNumber: 287,
+                                                        lineNumber: 300,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -944,30 +956,30 @@ const DigitalGoldPage = ()=>{
                                                         children: content.description
                                                     }, void 0, false, {
                                                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                        lineNumber: 290,
+                                                        lineNumber: 303,
                                                         columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                lineNumber: 286,
+                                                lineNumber: 299,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, index, true, {
                                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                        lineNumber: 270,
+                                        lineNumber: 283,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)))
                             }, void 0, false, {
                                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                lineNumber: 268,
+                                lineNumber: 281,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                        lineNumber: 215,
+                        lineNumber: 228,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -981,7 +993,7 @@ const DigitalGoldPage = ()=>{
                                         className: "w-16 h-16 text-amber-400 mx-auto mb-6"
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                        lineNumber: 303,
+                                        lineNumber: 316,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -989,73 +1001,64 @@ const DigitalGoldPage = ()=>{
                                         children: "Ready to Secure Your Future?"
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                        lineNumber: 304,
+                                        lineNumber: 317,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         className: "text-xl text-slate-200 mb-8 max-w-2xl mx-auto leading-relaxed",
-                                        children: "Join thousands of smart investors who are building generational wealth with digital gold. Start with just ₹1 and experience the future of gold investment."
+                                        children: "Join thousands of smart investors who are building generational wealth with digital gold. Start with just ₹100 and experience the future of gold investment."
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                        lineNumber: 307,
+                                        lineNumber: 320,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "flex flex-col sm:flex-row gap-4 justify-center",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                className: "px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-xl hover:from-amber-600 hover:to-amber-700 transition-all duration-300 transform hover:scale-105 shadow-lg",
-                                                children: "Start Investing Now"
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                lineNumber: 312,
-                                                columnNumber: 17
-                                            }, ("TURBOPACK compile-time value", void 0)),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                className: "px-8 py-4 border-2 border-amber-400 text-amber-400 font-semibold rounded-xl hover:bg-amber-400/10 transition-all duration-300",
-                                                children: "Get Expert Advice"
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                                lineNumber: 315,
-                                                columnNumber: 17
-                                            }, ("TURBOPACK compile-time value", void 0))
-                                        ]
-                                    }, void 0, true, {
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                            onClick: ()=>window.location.href = '/contact',
+                                            className: "px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-xl hover:from-amber-600 hover:to-amber-700 transition-all duration-300 transform hover:scale-105 shadow-lg cursor-pointer",
+                                            children: "Get Expert Advice"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
+                                            lineNumber: 325,
+                                            columnNumber: 17
+                                        }, ("TURBOPACK compile-time value", void 0))
+                                    }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                        lineNumber: 311,
+                                        lineNumber: 324,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                                lineNumber: 302,
+                                lineNumber: 315,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                            lineNumber: 301,
+                            lineNumber: 314,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                        lineNumber: 300,
+                        lineNumber: 313,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$components$2f$Footer$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                        lineNumber: 323,
+                        lineNumber: 336,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-                lineNumber: 107,
+                lineNumber: 117,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/mokshainvestment/app/services/digital-gold/page.tsx",
-        lineNumber: 105,
+        lineNumber: 115,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };

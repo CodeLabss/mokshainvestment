@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useRef, useEffect, ReactNode } from "react";
@@ -23,7 +22,7 @@ const images = [
 const imageContent = [
   {
     title: "What is Digital Gold?",
-    description: "Digital Gold is physical gold that is bought and stored online. You can buy it in small quantities, starting from as low as ₹1, and it's kept safe in a secure vault on your behalf.",
+    description: "Digital Gold is physical gold that is bought and stored online. You can buy it in small quantities, starting from as low as ₹100, and it's kept safe in a secure vault on your behalf.",
   },
   {
     title: "Why Invest in Gold?",
@@ -72,6 +71,17 @@ const FeatureCard = ({ icon, title, description }: { icon: ReactNode; title: str
 const DigitalGoldPage = () => {
   const [activeImage, setActiveImage] = useState(0);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Function to scroll to features section
+  const scrollToFeatures = () => {
+    const featuresSection = document.getElementById('why-choose-digital-gold');
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -126,14 +136,17 @@ const DigitalGoldPage = () => {
 
             {/* Enhanced Subtitle */}
             <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto mb-12 leading-relaxed">
-              Own physical gold digitally with bank-grade security. Start with just ₹1 and build your 
+              Own physical gold digitally with bank-grade security. Start with just ₹100 and build your 
               <span className="text-amber-400 font-semibold"> golden legacy </span>
               with 24/7 trading and insured vault storage.
             </p>
 
             {/* Enhanced CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-              <button className="group relative px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-xl shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-amber-500/25 overflow-hidden">
+              <button 
+                onClick={scrollToFeatures}
+                className="group relative px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-xl shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-amber-500/25 overflow-hidden cursor-pointer"
+              >
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-amber-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <span className="relative z-10 flex items-center">
                   Start Investing Now
@@ -141,9 +154,9 @@ const DigitalGoldPage = () => {
                 </span>
               </button>
               
-              <button className="px-8 py-4 border-2 border-amber-400/50 text-amber-400 font-semibold rounded-xl transition-all duration-300 hover:bg-amber-400/10 hover:border-amber-400">
+              {/* <button className="px-8 py-4 border-2 border-amber-400/50 text-amber-400 font-semibold rounded-xl transition-all duration-300 hover:bg-amber-400/10 hover:border-amber-400">
                 Watch Product Tour
-              </button>
+              </button> */}
             </div>
 
             {/* Trust Indicators */}
@@ -157,7 +170,7 @@ const DigitalGoldPage = () => {
                 <div className="text-sm text-slate-400">Trading</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-amber-400 mb-2">₹1</div>
+                <div className="text-2xl font-bold text-amber-400 mb-2">₹100</div>
                 <div className="text-sm text-slate-400">Minimum</div>
               </div>
             </div>
@@ -165,7 +178,7 @@ const DigitalGoldPage = () => {
         </section>
 
         {/* Enhanced Features Section with Proper Alignment */}
-        <section className="py-20 bg-transparent">
+        <section id="why-choose-digital-gold" className="py-20 bg-transparent">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
@@ -191,7 +204,7 @@ const DigitalGoldPage = () => {
               <FeatureCard
                 icon={<Coins />}
                 title="Fractional Ownership"
-                description="Start with as little as ₹1 and own pure 24K gold in precise gram measurements without storage worries."
+                description="Start with as little as ₹100 and own pure 24K gold in precise gram measurements without storage worries."
               />
             </div>
 
@@ -306,15 +319,15 @@ const DigitalGoldPage = () => {
               </h2>
               <p className="text-xl text-slate-200 mb-8 max-w-2xl mx-auto leading-relaxed">
                 Join thousands of smart investors who are building generational wealth with digital gold. 
-                Start with just ₹1 and experience the future of gold investment.
+                Start with just ₹100 and experience the future of gold investment.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-xl hover:from-amber-600 hover:to-amber-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                  Start Investing Now
-                </button>
-                <button className="px-8 py-4 border-2 border-amber-400 text-amber-400 font-semibold rounded-xl hover:bg-amber-400/10 transition-all duration-300">
+                <button onClick={() => window.location.href = '/contact'} className="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-xl hover:from-amber-600 hover:to-amber-700 transition-all duration-300 transform hover:scale-105 shadow-lg cursor-pointer">
                   Get Expert Advice
                 </button>
+                {/* <button className="px-8 py-4 border-2 border-amber-400 text-amber-400 font-semibold rounded-xl hover:bg-amber-400/10 transition-all duration-300">
+                  Get Expert Advice
+                </button> */}
               </div>
             </div>
           </div>

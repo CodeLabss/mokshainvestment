@@ -1,10 +1,388 @@
 
+// different theme
+// "use client";
+
+// import React, { useState, ReactNode } from "react";
+// import Navbar from "@/components/Navbar";
+// import Footer from "@/components/Footer";
+// import { Home, Car, FileText, Bike, Calculator, Shield, X, Phone, Mail, Clock, CheckCircle, Star, Plus } from "lucide-react";
+// import Link from "next/link";
+
+// interface SubCategory {
+//   id: string;
+//   name: string;
+//   description: string;
+//   icon: ReactNode;
+//   features?: string[];
+// }
+
+// interface CategoryWithSubcategories {
+//   id: string;
+//   name: string;
+//   description: string;
+//   subcategories: SubCategory[];
+// }
+
+// // Information component for loan categories - Updated to match insurance modal
+// const LoanInformationBox = ({ 
+//   subCategory, 
+//   onClose 
+// }: { 
+//   subCategory: SubCategory; 
+//   onClose: () => void; 
+// }) => {
+//   if (!subCategory) return null;
+
+//   const handleEmailClick = () => {
+//     window.location.href = "mailto:info@yourcompany.com?subject=Loan Inquiry&body=Hello, I would like more information about your loan services.";
+//   };
+
+//   return (
+//     <div className="fixed inset-0 bg-gray-800 bg-opacity-70 flex items-center justify-center z-50 p-4">
+//       <div className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+//         {/* Header */}
+//         <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-2xl flex justify-between items-center">
+//           <div className="flex items-center">
+//             <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-amber-100 mr-4">
+//               {React.cloneElement(subCategory.icon as React.ReactElement, { className: "w-8 h-8 text-amber-600" })}
+//             </div>
+//             <div>
+//               <h2 className="text-2xl font-bold text-gray-900">{subCategory.name}</h2>
+//               <p className="text-gray-500 text-sm mt-1">Flexible financing solutions</p>
+//             </div>
+//           </div>
+//           <button 
+//             onClick={onClose}
+//             className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors"
+//             aria-label="Close modal"
+//           >
+//             <X size={24} />
+//           </button>
+//         </div>
+        
+//         {/* Content */}
+//         <div className="p-6">
+//           <div className="space-y-6">
+//             {/* Description */}
+//             <div>
+//               <h3 className="text-lg font-semibold text-gray-800 mb-3">About This Loan</h3>
+//               <p className="text-gray-700 leading-relaxed">{subCategory.description}</p>
+//             </div>
+            
+//             {/* Key Features */}
+//             {subCategory.features && (
+//               <div>
+//                 <h4 className="font-semibold text-gray-800 mb-3">Key Features</h4>
+//                 <ul className="space-y-3">
+//                   {subCategory.features.map((feature, index) => (
+//                     <li key={index} className="flex items-start">
+//                       <CheckCircle className="w-5 h-5 text-amber-500 mt-0.5 mr-3 flex-shrink-0" />
+//                       <span className="text-gray-700">{feature}</span>
+//                     </li>
+//                   ))}
+//                 </ul>
+//               </div>
+//             )}
+            
+//             {/* CTA Section */}
+//             <div className="bg-gradient-to-r from-amber-500 to-amber-400 rounded-2xl p-6 text-white">
+//               <h4 className="font-bold text-lg mb-2">Ready to Get Financing?</h4>
+//               <p className="text-amber-100 mb-4 text-sm">
+//                 Our loan specialists will find the perfect financing solution tailored to your needs and budget.
+//               </p>
+//               <div className="flex flex-col sm:flex-row gap-3">
+//                 <Link href="/contact" className="flex-1">
+//                   <button className="w-full py-3 bg-white text-amber-600 font-semibold rounded-lg hover:bg-amber-50 transition-colors flex items-center justify-center">
+//                     <Phone className="w-4 h-4 mr-2" />
+//                     Get Free Consultation
+//                   </button>
+//                 </Link>
+//                 <button 
+//                   onClick={handleEmailClick}
+//                   className="flex-1 py-3 border border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-colors flex items-center justify-center"
+//                 >
+//                   <Mail className="w-4 h-4 mr-2" />
+//                   Get Quote via Email
+//                 </button>
+//               </div>
+//             </div>
+
+//             {/* Additional Benefits */}
+//             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
+//               <div className="text-center p-4 bg-gray-50 rounded-xl">
+//                 <Clock className="w-8 h-8 text-amber-500 mx-auto mb-2" />
+//                 <h5 className="font-semibold text-gray-800 text-sm">Quick Process</h5>
+//                 <p className="text-gray-600 text-xs">Approval in 24 hours</p>
+//               </div>
+//               <div className="text-center p-4 bg-gray-50 rounded-xl">
+//                 <Shield className="w-8 h-8 text-amber-500 mx-auto mb-2" />
+//                 <h5 className="font-semibold text-gray-800 text-sm">Expert Advice</h5>
+//                 <p className="text-gray-600 text-xs">Personalized guidance</p>
+//               </div>
+//               <div className="text-center p-4 bg-gray-50 rounded-xl">
+//                 <CheckCircle className="w-8 h-8 text-amber-500 mx-auto mb-2" />
+//                 <h5 className="font-semibold text-gray-800 text-sm">Flexible Terms</h5>
+//                 <p className="text-gray-600 text-xs">Customizable options</p>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// // Enhanced Stats Section similar to Insurance page
+// const LoanStatsSection = () => {
+//   return (
+//     <section className="py-16 bg-transparent">
+//       <div className="max-w-7xl mx-auto px-6">
+//         {/* Section Header */}
+//         <div className="text-center mb-12">
+//           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20 shadow-sm mb-6">
+//             <Star className="w-5 h-5 text-amber-400" />
+//             <span className="text-base font-semibold text-white">Trusted by Thousands</span>
+//             <Star className="w-5 h-5 text-amber-400" />
+//           </div>
+//           <h3 className="text-3xl font-bold text-white mb-4">
+//             Partnered with 20+ Leading Banks
+//           </h3>
+//           <p className="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
+//             We work with the most reputable financial institutions to bring you the best loan options
+//           </p>
+//         </div>
+
+//         {/* Enhanced Stats Section */}
+//         <div className="grid grid-cols-3 gap-8 mt-8 pt-12 border-t border-white/20 max-w-2xl mx-auto">
+//           <div className="text-center">
+//             <div className="text-3xl font-bold text-amber-400 mb-3">20+</div>
+//             <div className="text-base text-gray-200 font-medium">Bank Partners</div>
+//           </div>
+//           <div className="text-center">
+//             <div className="text-3xl font-bold text-amber-400 mb-3">50K+</div>
+//             <div className="text-base text-gray-200 font-medium">Loans Sanctioned</div>
+//           </div>
+//           <div className="text-center">
+//             <div className="text-3xl font-bold text-amber-400 mb-3">24/7</div>
+//             <div className="text-base text-gray-200 font-medium">Customer Support</div>
+//           </div>
+//         </div>
+//       </div>
+//     </section>
+//   );
+// };
+
+// // Main LoanPage Component - Updated to match Insurance page UI
+// const LoanPage = () => {
+//   const [selectedSubCategory, setSelectedSubCategory] = useState<SubCategory | null>(null);
+
+//   // Loan categories with updated colors to match insurance page
+//   const loanCategories: CategoryWithSubcategories[] = [
+//     {
+//       id: "property-loans",
+//       name: "Property Loans",
+//       description: "Financing solutions for your property needs",
+//       subcategories: [
+//         { 
+//           id: "home-loan", 
+//           name: "Home Loan", 
+//           description: "Realize your dream of owning a home with our flexible home loan options. We offer competitive interest rates, long repayment tenures, and quick processing to make your home buying journey smooth.",
+//           icon: <Home className="w-8 h-8 text-rose-500" />,
+//           features: [
+//             "Competitive interest rates",
+//             "Long repayment tenure up to 30 years",
+//             "Flexible repayment options",
+//             "Top-up loan facility",
+//             "Quick processing and disbursal"
+//           ]
+//         },
+//         { 
+//           id: "mortgage-loan", 
+//           name: "Mortgage Loan", 
+//           description: "Unlock the value of your property with our mortgage loans. Get substantial funds for various needs while keeping your property as security with transparent terms and conditions.",
+//           icon: <FileText className="w-8 h-8 text-emerald-400" />,
+//           features: [
+//             "Loan against property",
+//             "High loan-to-value ratio",
+//             "Flexible end-use of funds",
+//             "Long repayment tenure",
+//             "Balance transfer facility"
+//           ]
+//         },
+//       ],
+//     },
+//     {
+//       id: "vehicle-loans",
+//       name: "Vehicle Loans",
+//       description: "Easy financing for your vehicle purchases",
+//       subcategories: [
+//         { 
+//           id: "car-loan", 
+//           name: "Car Loan", 
+//           description: "Drive home your dream car with our attractive car loan options. We offer financing for new and used cars with minimal documentation and quick approval process.",
+//           icon: <Car className="w-8 h-8 text-sky-400" />,
+//           features: [
+//             "Financing for new and used cars",
+//             "Competitive interest rates",
+//             "Minimal documentation",
+//             "Quick approval process",
+//             "Flexible repayment options"
+//           ]
+//         },
+//         { 
+//           id: "bike-loan", 
+//           name: "Bike Loan", 
+//           description: "Get on the road with your dream bike through our convenient bike loan options. We offer affordable financing for both new and pre-owned bikes with easy eligibility criteria.",
+//           icon: <Bike className="w-8 h-8 text-amber-400" />,
+//           features: [
+//             "Financing for new and used bikes",
+//             "Low interest rates",
+//             "Quick approval process",
+//             "Minimal documentation required",
+//             "Flexible repayment tenure"
+//           ]
+//         },
+//       ],
+//     }
+//   ];
+
+//   return (
+//     <main className="flex flex-col min-h-screen bg-transparent">
+//       <Navbar />
+
+//       <section className="flex-1 pt-32 pb-20 relative z-10">
+//         <div className="max-w-7xl mx-auto px-6">
+//           {/* Enhanced Header matching Insurance page */}
+//           <div className="text-center mb-16">
+//             <div className="inline-block bg-gradient-to-r from-amber-500/10 to-amber-400/10 px-8 py-6 rounded-2xl border border-amber-200/30 mb-8 backdrop-blur-sm">
+//               <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent mb-4">
+//                 Loan Services
+//               </h1>
+//             </div>
+//             <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed font-medium">
+//               Comprehensive financing solutions for every aspect of your life. 
+//               Choose from our wide range of loan products designed to fulfill your dreams.
+//             </p>
+//           </div>
+
+//           {/* Loan Categories matching Insurance page style */}
+//           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+//             {loanCategories.map((category) => (
+//               <div key={category.id} className="bg-black/20 backdrop-blur-md rounded-2xl p-8 border border-white/30 shadow-lg hover:shadow-xl transition-all duration-300">
+//                 <div className="flex items-center mb-6 pb-4 border-b border-white/30">
+//                   <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 flex items-center justify-center mr-4">
+//                     {category.id === "property-loans" ? (
+//                       <Home className="w-6 h-6 text-white" />
+//                     ) : (
+//                       <Car className="w-6 h-6 text-white" />
+//                     )}
+//                   </div>
+//                   <div>
+//                     <h2 className="text-2xl font-bold text-white">{category.name}</h2>
+//                     <p className="text-gray-200 text-sm">{category.description}</p>
+//                   </div>
+//                 </div>
+                
+//                 <div className="space-y-4">
+//                   {category.subcategories.map((sub) => (
+//                     <div
+//                       key={sub.id}
+//                       onClick={() => setSelectedSubCategory(sub)}
+//                       className="cursor-pointer group rounded-xl p-5 bg-white/20 backdrop-blur border border-white/30 hover:border-amber-400/50 hover:shadow-md transition-all duration-300"
+//                     >
+//                       <div className="flex items-center">
+//                         <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-amber-500/30 group-hover:bg-amber-500/40 transition-colors mr-4">
+//                           {React.cloneElement(sub.icon as React.ReactElement, { 
+//                             className: "w-6 h-6 text-amber-300" 
+//                           })}
+//                         </div>
+//                         <div className="flex-grow">
+//                           <h4 className="font-semibold text-white group-hover:text-amber-200 transition-colors">
+//                             {sub.name}
+//                           </h4>
+//                           <p className="text-gray-200 text-sm mt-1 line-clamp-2">
+//                             {sub.description}
+//                           </p>
+//                         </div>
+//                         <div className="text-amber-300 opacity-0 group-hover:opacity-100 transition-opacity">
+//                           <Plus className="w-5 h-5" />
+//                         </div>
+//                       </div>
+//                     </div>
+//                   ))}
+//                 </div>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+
+//         {/* Enhanced Stats Section */}
+//         <LoanStatsSection />
+
+//         {/* Main CTA Section matching Insurance page */}
+//         <div className="max-w-7xl mx-auto px-6 mt-8">
+//           <div className="bg-gradient-to-r from-amber-500 to-amber-400 rounded-2xl p-10 text-center text-white shadow-xl">
+//             <Calculator className="w-16 h-16 mx-auto mb-6" />
+//             <h2 className="text-3xl md:text-4xl font-bold mb-4">
+//               Ready to Find Your Perfect Loan?
+//             </h2>
+//             <p className="text-amber-100 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
+//               Our loan experts will analyze your needs and recommend the best financing options 
+//               from our 20+ partner banks to ensure you get optimal terms.
+//             </p>
+//             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+//               <button className="px-8 py-4 bg-white text-amber-600 font-bold rounded-lg hover:bg-amber-50 transition-colors shadow-lg">
+//                 Get Free Loan Analysis
+//               </button>
+//               <button className="px-8 py-4 border-2 border-white text-white font-bold rounded-lg hover:bg-white/10 transition-colors">
+//                 Compare Loan Offers
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       </section>
+
+//       <Footer />
+
+//       {/* Modal for loan details */}
+//       {selectedSubCategory && (
+//         <LoanInformationBox 
+//           subCategory={selectedSubCategory} 
+//           onClose={() => setSelectedSubCategory(null)} 
+//         />
+//       )}
+//     </main>
+//   );
+// };
+
+// export default LoanPage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 "use client";
 
 import React, { useState, ReactNode } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Home, Car, FileText, Bike, Calculator, Shield, X, Phone, Mail, Clock, CheckCircle } from "lucide-react";
+import { Home, Car, FileText, Bike, Calculator, Shield, X, Phone, Mail, Clock, CheckCircle, Star, Plus } from "lucide-react";
 import Link from "next/link";
 
 interface SubCategory {
@@ -22,7 +400,7 @@ interface CategoryWithSubcategories {
   subcategories: SubCategory[];
 }
 
-// Information component for loan categories
+// Information component for loan categories - Updated to match insurance modal
 const LoanInformationBox = ({ 
   subCategory, 
   onClose 
@@ -32,18 +410,14 @@ const LoanInformationBox = ({
 }) => {
   if (!subCategory) return null;
 
-  const handleEmailClick = () => {
-    window.location.href = "mailto:info@yourcompany.com?subject=Loan Inquiry&body=Hello, I would like more information about your loan services.";
-  };
-
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-70 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+      <div className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
         {/* Header */}
         <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-2xl flex justify-between items-center">
           <div className="flex items-center">
-            <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-indigo-100 mr-4">
-              {React.cloneElement(subCategory.icon as React.ReactElement, { className: "w-8 h-8 text-indigo-600" })}
+            <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-amber-100 mr-4">
+              {React.cloneElement(subCategory.icon as React.ReactElement, { className: "w-8 h-8 text-amber-600" })}
             </div>
             <div>
               <h2 className="text-2xl font-bold text-gray-900">{subCategory.name}</h2>
@@ -52,7 +426,7 @@ const LoanInformationBox = ({
           </div>
           <button 
             onClick={onClose}
-            className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors"
+            className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
             aria-label="Close modal"
           >
             <X size={24} />
@@ -61,87 +435,58 @@ const LoanInformationBox = ({
         
         {/* Content */}
         <div className="p-6">
-          <div className="grid grid-cols-1 gap-8">
-            {/* Full Width Information */}
+          <div className="space-y-6">
+            {/* Description */}
             <div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">About This Loan</h3>
-              <p className="text-gray-700 mb-6 leading-relaxed">{subCategory.description}</p>
-              
-              {subCategory.features && (
-                <>
-                  <h4 className="font-medium text-gray-800 mb-3">Key Features</h4>
-                  <ul className="space-y-2 mb-6">
-                    {subCategory.features.map((feature, index) => (
-                      <li key={index} className="flex items-start">
-                        <CheckCircle className="w-5 h-5 text-indigo-500 mt-0.5 mr-3 flex-shrink-0" />
-                        <span className="text-gray-700">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
+              <h3 className="text-lg font-semibold text-gray-800 mb-3">About This Loan</h3>
+              <p className="text-gray-700 leading-relaxed">{subCategory.description}</p>
             </div>
             
-            {/* Full Width CTA Container */}
-            <div className="bg-indigo-50 p-8 rounded-xl border border-indigo-100">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
-                  <h4 className="font-semibold text-indigo-800 mb-4 text-xl">Get Personalized Loan Options</h4>
-                  <p className="text-indigo-700 mb-5 text-lg">
-                    Our loan specialists will find the perfect financing solution for your specific needs and financial situation.
-                  </p>
-                </div>
-                <div>
-                  <div className="space-y-4">
-                    <Link href="/contact" className="block w-full">
-                      <button className="w-full py-4 bg-indigo-600 text-white rounded-lg font-semibold text-lg hover:bg-indigo-700 transition-colors flex items-center justify-center">
-                        <Phone className="w-6 h-6 mr-3" />
-                        Request a Callback
-                      </button>
-                    </Link>
-                    <button 
-                      onClick={handleEmailClick}
-                      className="w-full py-4 border-2 border-indigo-300 text-indigo-600 rounded-lg font-semibold text-lg hover:bg-indigo-50 transition-colors flex items-center justify-center cursor-pointer"
-                    >
-                      <Mail className="w-6 h-6 mr-3" />
-                      Email Inquiry
-                    </button>
-                  </div>
-                </div>
+            {/* Key Features */}
+            {subCategory.features && (
+              <div>
+                <h4 className="font-semibold text-gray-800 mb-3">Key Features</h4>
+                <ul className="space-y-3">
+                  {subCategory.features.map((feature, index) => (
+                    <li key={index} className="flex items-start">
+                      <CheckCircle className="w-5 h-5 text-amber-500 mt-0.5 mr-3 flex-shrink-0" />
+                      <span className="text-gray-700">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
+            )}
+            
+            {/* CTA Section - Updated with single bigger button */}
+            <div className="bg-gradient-to-r from-amber-500 to-amber-400 rounded-2xl p-6 text-white">
+              <h4 className="font-bold text-lg mb-2">Ready to Get Financing?</h4>
+              <p className="text-amber-100 mb-6 text-sm">
+                Our loan specialists will find the perfect financing solution tailored to your needs and budget.
+              </p>
+              <Link href="/contact" className="block">
+                <button className="w-full py-4 bg-white text-amber-600 font-bold rounded-lg hover:bg-amber-50 transition-colors flex items-center justify-center text-lg cursor-pointer">
+                  <Phone className="w-5 h-5 mr-3" />
+                  Get Free Consultation
+                </button>
+              </Link>
             </div>
 
-            {/* Why Choose Our Loans Section */}
-            <div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Why Choose Our Loans?</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="flex items-start">
-                  <div className="bg-indigo-100 p-3 rounded-lg mr-4">
-                    <Calculator className="w-6 h-6 text-indigo-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-gray-800">Competitive Rates</h4>
-                    <p className="text-gray-600">Get the best interest rates in the market</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="bg-indigo-100 p-3 rounded-lg mr-4">
-                    <Clock className="w-6 h-6 text-indigo-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-gray-800">Quick Approval</h4>
-                    <p className="text-gray-600">Fast processing and quick disbursal</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="bg-indigo-100 p-3 rounded-lg mr-4">
-                    <Shield className="w-6 h-6 text-indigo-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-gray-800">Flexible Terms</h4>
-                    <p className="text-gray-600">Customizable repayment options</p>
-                  </div>
-                </div>
+            {/* Additional Benefits */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
+              <div className="text-center p-4 bg-gray-50 rounded-xl">
+                <Clock className="w-8 h-8 text-amber-500 mx-auto mb-2" />
+                <h5 className="font-semibold text-gray-800 text-sm">Quick Process</h5>
+                <p className="text-gray-600 text-xs">Approval in 24 hours</p>
+              </div>
+              <div className="text-center p-4 bg-gray-50 rounded-xl">
+                <Shield className="w-8 h-8 text-amber-500 mx-auto mb-2" />
+                <h5 className="font-semibold text-gray-800 text-sm">Expert Advice</h5>
+                <p className="text-gray-600 text-xs">Personalized guidance</p>
+              </div>
+              <div className="text-center p-4 bg-gray-50 rounded-xl">
+                <CheckCircle className="w-8 h-8 text-amber-500 mx-auto mb-2" />
+                <h5 className="font-semibold text-gray-800 text-sm">Flexible Terms</h5>
+                <p className="text-gray-600 text-xs">Customizable options</p>
               </div>
             </div>
           </div>
@@ -151,11 +496,51 @@ const LoanInformationBox = ({
   );
 };
 
-// Main LoanPage Component
+// Enhanced Stats Section similar to Insurance page
+const LoanStatsSection = () => {
+  return (
+    <section className="py-16 bg-transparent">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20 shadow-sm mb-6">
+            <Star className="w-5 h-5 text-amber-400" />
+            <span className="text-base font-semibold text-white">Trusted by Thousands</span>
+            <Star className="w-5 h-5 text-amber-400" />
+          </div>
+          <h3 className="text-3xl font-bold text-white mb-4">
+            Partnered with 20+ Leading Banks
+          </h3>
+          <p className="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
+            We work with the most reputable financial institutions to bring you the best loan options
+          </p>
+        </div>
+
+        {/* Enhanced Stats Section */}
+        <div className="grid grid-cols-3 gap-8 mt-8 pt-12 border-t border-white/20 max-w-2xl mx-auto">
+          <div className="text-center">
+            <div className="text-3xl font-bold text-amber-400 mb-3">20+</div>
+            <div className="text-base text-gray-200 font-medium">Bank Partners</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-amber-400 mb-3">50K+</div>
+            <div className="text-base text-gray-200 font-medium">Loans Sanctioned</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-amber-400 mb-3">24/7</div>
+            <div className="text-base text-gray-200 font-medium">Customer Support</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Main LoanPage Component - Updated to match Insurance page UI
 const LoanPage = () => {
   const [selectedSubCategory, setSelectedSubCategory] = useState<SubCategory | null>(null);
 
-  // Loan categories with enhanced data
+  // Loan categories with updated colors to match insurance page
   const loanCategories: CategoryWithSubcategories[] = [
     {
       id: "property-loans",
@@ -166,7 +551,7 @@ const LoanPage = () => {
           id: "home-loan", 
           name: "Home Loan", 
           description: "Realize your dream of owning a home with our flexible home loan options. We offer competitive interest rates, long repayment tenures, and quick processing to make your home buying journey smooth.",
-          icon: <Home className="w-8 h-8 text-indigo-600" />,
+          icon: <Home className="w-8 h-8 text-rose-500" />,
           features: [
             "Competitive interest rates",
             "Long repayment tenure up to 30 years",
@@ -179,7 +564,7 @@ const LoanPage = () => {
           id: "mortgage-loan", 
           name: "Mortgage Loan", 
           description: "Unlock the value of your property with our mortgage loans. Get substantial funds for various needs while keeping your property as security with transparent terms and conditions.",
-          icon: <FileText className="w-8 h-8 text-indigo-600" />,
+          icon: <FileText className="w-8 h-8 text-emerald-400" />,
           features: [
             "Loan against property",
             "High loan-to-value ratio",
@@ -199,7 +584,7 @@ const LoanPage = () => {
           id: "car-loan", 
           name: "Car Loan", 
           description: "Drive home your dream car with our attractive car loan options. We offer financing for new and used cars with minimal documentation and quick approval process.",
-          icon: <Car className="w-8 h-8 text-indigo-600" />,
+          icon: <Car className="w-8 h-8 text-sky-400" />,
           features: [
             "Financing for new and used cars",
             "Competitive interest rates",
@@ -212,7 +597,7 @@ const LoanPage = () => {
           id: "bike-loan", 
           name: "Bike Loan", 
           description: "Get on the road with your dream bike through our convenient bike loan options. We offer affordable financing for both new and pre-owned bikes with easy eligibility criteria.",
-          icon: <Bike className="w-8 h-8 text-indigo-600" />,
+          icon: <Bike className="w-8 h-8 text-amber-400" />,
           features: [
             "Financing for new and used bikes",
             "Low interest rates",
@@ -229,43 +614,63 @@ const LoanPage = () => {
     <main className="flex flex-col min-h-screen bg-transparent">
       <Navbar />
 
-      <section className="flex-1 py-20 relative z-10">
+      <section className="flex-1 pt-32 pb-20 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-800 mb-4">
-              Loan Services
-            </h3>
-            <p className="text-gray-600">Choose a category to explore loan options</p>
+          {/* Enhanced Header matching Insurance page */}
+          <div className="text-center mb-16">
+            <div className="inline-block bg-gradient-to-r from-amber-500/10 to-amber-400/10 px-8 py-6 rounded-2xl border border-amber-200/30 mb-8 backdrop-blur-sm">
+              <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent mb-4">
+                Loan Services
+              </h1>
+            </div>
+            <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed font-medium">
+              Comprehensive financing solutions for every aspect of your life. 
+              Choose from our wide range of loan products designed to fulfill your dreams.
+            </p>
           </div>
 
-          {/* Loan Categories - Matching Insurance Page Style */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          {/* Loan Categories matching Insurance page style */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             {loanCategories.map((category) => (
-              <div key={category.id} className="bg-white/60 backdrop-blur rounded-2xl p-6 border border-slate-200 shadow-md">
-                <h2 className="text-xl font-semibold text-slate-800 mb-6 border-b border-slate-200 pb-2">{category.name}</h2>
+              <div key={category.id} className="bg-black/20 backdrop-blur-md rounded-2xl p-8 border border-white/30 shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="flex items-center mb-6 pb-4 border-b border-white/30">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 flex items-center justify-center mr-4">
+                    {category.id === "property-loans" ? (
+                      <Home className="w-6 h-6 text-white" />
+                    ) : (
+                      <Car className="w-6 h-6 text-white" />
+                    )}
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-white">{category.name}</h2>
+                    <p className="text-gray-200 text-sm">{category.description}</p>
+                  </div>
+                </div>
                 
-                <div className="space-y-6">
+                <div className="space-y-4">
                   {category.subcategories.map((sub) => (
                     <div
                       key={sub.id}
                       onClick={() => setSelectedSubCategory(sub)}
-                      className="cursor-pointer group relative rounded-2xl p-6 bg-white/60 backdrop-blur border border-slate-200 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all"
+                      className="cursor-pointer group rounded-xl p-5 bg-white/20 backdrop-blur border border-white/30 hover:border-amber-400/50 hover:shadow-md transition-all duration-300"
                     >
-                      {/* Gradient glow on hover */}
-                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity"></div>
-
-                      {/* Icon */}
-                      <div className="relative flex items-center justify-center w-12 h-12 rounded-xl bg-indigo-100 mb-4">
-                        {sub.icon}
-                      </div>
-                      
-                      <h4 className="relative text-lg font-semibold text-slate-800">{sub.name}</h4>
-                      <p className="relative mt-2 text-gray-600 text-sm">{sub.description}</p>
-                      
-                      <div className="relative mt-3">
-                        <span className="text-xs font-medium text-indigo-600 bg-indigo-100 px-2 py-1 rounded-full">
-                          Learn More
-                        </span>
+                      <div className="flex items-center">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-amber-500/30 group-hover:bg-amber-500/40 transition-colors mr-4">
+                          {React.cloneElement(sub.icon as React.ReactElement, { 
+                            className: "w-6 h-6 text-amber-300" 
+                          })}
+                        </div>
+                        <div className="flex-grow">
+                          <h4 className="font-semibold text-white group-hover:text-amber-200 transition-colors">
+                            {sub.name}
+                          </h4>
+                          <p className="text-gray-200 text-sm mt-1 line-clamp-2">
+                            {sub.description}
+                          </p>
+                        </div>
+                        <div className="text-amber-300 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Plus className="w-5 h-5" />
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -273,52 +678,28 @@ const LoanPage = () => {
               </div>
             ))}
           </div>
+        </div>
 
-          {/* Bigger CTA Section */}
-          <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-10 text-center text-white shadow-md mb-12">
+        {/* Enhanced Stats Section */}
+        <LoanStatsSection />
+
+        {/* Main CTA Section matching Insurance page - Updated with single bigger button */}
+        <div className="max-w-7xl mx-auto px-6 mt-8">
+          <div className="bg-gradient-to-r from-amber-500 to-amber-400 rounded-2xl p-10 text-center text-white shadow-xl">
             <Calculator className="w-16 h-16 mx-auto mb-6" />
-            <h2 className="text-3xl font-bold mb-4">Need Loan Assistance?</h2>
-            <p className="text-indigo-100 text-xl mb-8 max-w-2xl mx-auto">
-              Our loan specialists can help you find the perfect financing solution for your specific needs.
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Ready to Find Your Perfect Loan?
+            </h2>
+            <p className="text-amber-100 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
+              Our loan experts will analyze your needs and recommend the best financing options 
+              from our 20+ partner banks to ensure you get optimal terms.
             </p>
-            <div className="flex flex-col sm:flex-row gap-5 justify-center">
-              <Link href="/contact" className="block">
-                <button className="px-8 py-4 bg-white text-indigo-600 font-bold rounded-lg hover:bg-indigo-50 transition-colors text-lg flex items-center justify-center">
-                  <Phone className="w-6 h-6 mr-3" />
-                  Speak to an Expert
+            <div className="flex justify-center">
+              <Link href="/contact" className="block w-full max-w-md">
+                <button className="w-full px-12 py-5 bg-white text-amber-600 font-bold rounded-lg hover:bg-amber-50 transition-colors shadow-lg text-lg cursor-pointer">
+                  Get Free Loan Consultation
                 </button>
               </Link>
-              <button className="px-8 py-4 border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-indigo-600 transition-colors text-lg">
-                Get Loan Quote
-              </button>
-            </div>
-          </div>
-
-          {/* Loan Benefits Section */}
-          <div className="bg-white/60 backdrop-blur rounded-2xl p-8 border border-slate-200 shadow-md mb-12">
-            <h2 className="text-2xl font-semibold text-center text-slate-800 mb-8">Why Choose Our Loan Services?</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="bg-indigo-100 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Calculator className="w-8 h-8 text-indigo-600" />
-                </div>
-                <h3 className="font-semibold text-slate-800 mb-2">Low Interest Rates</h3>
-                <p className="text-gray-600">Competitive rates that suit your budget</p>
-              </div>
-              <div className="text-center">
-                <div className="bg-indigo-100 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Clock className="w-8 h-8 text-indigo-600" />
-                </div>
-                <h3 className="font-semibold text-slate-800 mb-2">Quick Processing</h3>
-                <p className="text-gray-600">Fast approval and disbursal of funds</p>
-              </div>
-              <div className="text-center">
-                <div className="bg-indigo-100 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Shield className="w-8 h-8 text-indigo-600" />
-                </div>
-                <h3 className="font-semibold text-slate-800 mb-2">Flexible Terms</h3>
-                <p className="text-gray-600">Customizable repayment options</p>
-              </div>
             </div>
           </div>
         </div>

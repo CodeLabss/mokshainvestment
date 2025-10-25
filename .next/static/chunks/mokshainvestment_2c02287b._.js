@@ -189,6 +189,16 @@ function Navbar() {
                             fileName: "[project]/mokshainvestment/components/Navbar.tsx",
                             lineNumber: 51,
                             columnNumber: 13
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                            href: "/admin/login",
+                            className: "block",
+                            onClick: ()=>setOpen(false),
+                            children: "Admin"
+                        }, void 0, false, {
+                            fileName: "[project]/mokshainvestment/components/Navbar.tsx",
+                            lineNumber: 52,
+                            columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
@@ -272,6 +282,479 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 "[project]/mokshainvestment/app/services/mutual-funds/page.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
+// "use client";
+// import React, { useState, ReactNode, useRef, useEffect } from "react";
+// import Navbar from "@/components/Navbar";
+// import Footer from "@/components/Footer";
+// import { ChartLine, TrendingUp, BarChart3, Shield, X, Phone, Mail, Clock, CheckCircle, ArrowRight, Building2, Users, Target, Star } from "lucide-react";
+// import Link from "next/link";
+// interface Company {
+//   id: string;
+//   name: string;
+//   logo_url: string;
+//   category?: string;
+// }
+// interface SubCategory {
+//   id: string;
+//   name: string;
+//   description: string;
+//   icon: ReactNode;
+//   companies?: Company[];
+// }
+// interface CategoryWithSubcategories {
+//   id: string;
+//   name: string;
+//   description: string;
+//   subcategories: SubCategory[];
+// }
+// // Enhanced Infinite Logo Marquee Component
+// const InfiniteLogoMarquee = ({ companies, direction = "left" }: { companies: Company[]; direction?: "left" | "right" }) => {
+//   const marqueeRef = useRef<HTMLDivElement>(null);
+//   const contentRef = useRef<HTMLDivElement>(null);
+//   const [isHovered, setIsHovered] = useState(false);
+//   // Duplicate the companies array to create seamless loop
+//   const duplicatedCompanies = [...companies, ...companies];
+//   // Auto-scroll animation
+//   useEffect(() => {
+//     const content = contentRef.current;
+//     if (!content) return;
+//     let animationId: number;
+//     const speed = direction === "left" ? -0.5 : 0.5; // Adjust speed and direction
+//     let position = 0;
+//     const animate = () => {
+//       if (!isHovered && content) {
+//         position += speed;
+//         const firstItemWidth = 160 + 48; // logo width + gap
+//         const totalWidth = duplicatedCompanies.length * firstItemWidth;
+//         // Reset position when scrolled beyond content
+//         if (Math.abs(position) >= totalWidth / 2) {
+//           position = 0;
+//         }
+//         content.style.transform = `translateX(${position}px)`;
+//       }
+//       animationId = requestAnimationFrame(animate);
+//     };
+//     animationId = requestAnimationFrame(animate);
+//     return () => cancelAnimationFrame(animationId);
+//   }, [isHovered, duplicatedCompanies.length, direction]);
+//   return (
+//     <div 
+//       className="relative"
+//       onMouseEnter={() => setIsHovered(true)}
+//       onMouseLeave={() => setIsHovered(false)}
+//     >
+//       {/* Marquee Content */}
+//       <div 
+//         ref={marqueeRef}
+//         className="overflow-hidden py-4 cursor-grab active:cursor-grabbing"
+//       >
+//         <div 
+//           ref={contentRef}
+//           className="flex gap-12 md:gap-16 items-center"
+//           style={{ willChange: 'transform' }}
+//         >
+//           {duplicatedCompanies.map((company, index) => (
+//             <div
+//               key={`${company.id}-${index}`}
+//               className="flex-shrink-0 group relative"
+//             >
+//               {/* Clean Logo Container - No Box, No Border */}
+//               <div className="w-32 h-20 md:w-40 md:h-24 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
+//                 <img
+//                   src={company.logo_url || "/dummy-logo.png"}
+//                   alt={company.name}
+//                   className="w-full h-full object-contain opacity-100 brightness-100 contrast-100"
+//                 />
+//               </div>
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+// // Dual Marquee Section Component
+// const DualMarqueeSection = () => {
+//   // First set of companies for top marquee (right to left)
+//   const topMarqueeCompanies: Company[] = [
+//     { id: "1", name: "HDFC Mutual Fund", logo_url: "/images/mutual-funds/aditya-brila.jpg" },
+//     { id: "2", name: "ICICI Prudential", logo_url: "/images/mutual-funds/bajaj.jpg" },
+//     { id: "3", name: "SBI Mutual Fund", logo_url: "/images/mutual-funds/bandhan.jpg" },
+//     { id: "4", name: "Axis Mutual Fund", logo_url: "/images/mutual-funds/canara.jpg" },
+//     { id: "5", name: "Kotak Mutual Fund", logo_url: "/images/mutual-funds/dsp.jpg" },
+//     { id: "6", name: "Aditya Birla Sun Life", logo_url: "//images/mutual-funds/franklin.jpg" },
+//   ];
+//   // Second set of companies for bottom marquee (left to right)
+//   const bottomMarqueeCompanies: Company[] = [
+//     { id: "7", name: "Nippon India", logo_url: "/images/mutual-funds/hdfc.jpg" },
+//     { id: "8", name: "UTI Mutual Fund", logo_url: "/images/mutual-funds/icici.jpg" },
+//     { id: "9", name: "Franklin Templeton", logo_url: "/images/mutual-funds/motilal.jpg" },
+//     { id: "10", name: "DSP Mutual Fund", logo_url: "/images/mutual-funds/nippon.jpg" },
+//     { id: "11", name: "Mirae Asset", logo_url: "/images/mutual-funds/parag.jpg" },
+//     { id: "12", name: "Canara Robeco", logo_url: "/images/mutual-funds/quant.jpg" },
+//   ];
+//   return (
+//     <section className="py-12 md:py-16 bg-transparent">
+//       <div className="max-w-7xl mx-auto px-6">
+//         {/* Section Header */}
+//         <div className="text-center mb-8 md:mb-12">
+//           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 md:px-6 py-2 md:py-3 rounded-full border border-white/20 shadow-sm mb-4 md:mb-6">
+//             <Star className="w-4 h-4 md:w-5 md:h-5 text-amber-400" />
+//             <span className="text-sm md:text-base font-semibold text-white">Trusted Investment Partners</span>
+//             <Star className="w-4 h-4 md:w-5 md:h-5 text-amber-400" />
+//           </div>
+//           <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 md:mb-4">
+//             Our Trusted Partners
+//           </h3>
+//           <p className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+//             Partnered with India's leading mutual fund companies to bring you the best investment opportunities
+//           </p>
+//         </div>
+//         {/* Top Marquee - Right to Left */}
+//         <div className="mb-6 md:mb-8">
+//           <InfiniteLogoMarquee companies={topMarqueeCompanies} direction="left" />
+//         </div>
+//         {/* Bottom Marquee - Left to Right */}
+//         <div>
+//           <InfiniteLogoMarquee companies={bottomMarqueeCompanies} direction="right" />
+//         </div>
+//         {/* Stats Section */}
+//         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mt-8 md:mt-16 pt-8 md:pt-12 border-t border-white/20 max-w-2xl mx-auto">
+//           <div className="text-center">
+//             <div className="text-xl md:text-3xl font-bold text-amber-400 mb-2 md:mb-3">12+</div>
+//             <div className="text-xs md:text-base text-gray-200 font-medium">Fund Houses</div>
+//           </div>
+//           <div className="text-center">
+//             <div className="text-xl md:text-3xl font-bold text-amber-400 mb-2 md:mb-3">50+</div>
+//             <div className="text-xs md:text-base text-gray-200 font-medium">Fund Schemes</div>
+//           </div>
+//           <div className="text-center">
+//             <div className="text-xl md:text-3xl font-bold text-amber-400 mb-2 md:mb-3">24/7</div>
+//             <div className="text-xs md:text-base text-gray-200 font-medium">Support</div>
+//           </div>
+//           <div className="text-center">
+//             <div className="text-xl md:text-3xl font-bold text-amber-400 mb-2 md:mb-3">100%</div>
+//             <div className="text-xs md:text-base text-gray-200 font-medium">Secure</div>
+//           </div>
+//         </div>
+//       </div>
+//     </section>
+//   );
+// };
+// // Information component for mutual fund categories
+// const MutualFundInformationBox = ({ 
+//   subCategory, 
+//   onClose 
+// }: { 
+//   subCategory: SubCategory; 
+//   onClose: () => void; 
+// }) => {
+//   if (!subCategory) return null;
+//   const handleEmailClick = () => {
+//     window.location.href = "mailto:info@yourcompany.com?subject=Mutual Fund Inquiry&body=Hello, I would like more information about your mutual fund services.";
+//   };
+//   return (
+//     <div className="fixed inset-0 bg-gray-800 bg-opacity-70 flex items-center justify-center z-50 p-4">
+//       <div className="bg-white rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+//         {/* Header */}
+//         <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-2xl flex justify-between items-center">
+//           <div className="flex items-center">
+//             <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-indigo-100 mr-4">
+//               {React.cloneElement(subCategory.icon as React.ReactElement, { className: "w-8 h-8 text-indigo-600" })}
+//             </div>
+//             <div>
+//               <h2 className="text-2xl font-bold text-gray-900">{subCategory.name}</h2>
+//               <p className="text-gray-500 text-sm mt-1">Professional investment management</p>
+//             </div>
+//           </div>
+//           <button 
+//             onClick={onClose}
+//             className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors"
+//             aria-label="Close modal"
+//           >
+//             <X size={24} />
+//           </button>
+//         </div>
+//         {/* Content */}
+//         <div className="p-6">
+//           <div className="grid grid-cols-1 gap-8">
+//             {/* Full Width Information */}
+//             <div>
+//               <h3 className="text-lg font-semibold text-gray-800 mb-4">About This Investment</h3>
+//               <p className="text-gray-700 mb-6 leading-relaxed">{subCategory.description}</p>
+//               <div className="bg-blue-50 p-5 rounded-xl border border-blue-100 mb-6">
+//                 <h4 className="font-semibold text-blue-800 mb-3">Investment Benefits</h4>
+//                 <ul className="space-y-2">
+//                   <li className="flex items-start">
+//                     <CheckCircle className="w-5 h-5 text-blue-500 mt-0.5 mr-3 flex-shrink-0" />
+//                     <span className="text-blue-700">Professional fund management</span>
+//                   </li>
+//                   <li className="flex items-start">
+//                     <CheckCircle className="w-5 h-5 text-blue-500 mt-0.5 mr-3 flex-shrink-0" />
+//                     <span className="text-blue-700">Diversification across multiple assets</span>
+//                   </li>
+//                   <li className="flex items-start">
+//                     <CheckCircle className="w-5 h-5 text-blue-500 mt-0.5 mr-3 flex-shrink-0" />
+//                     <span className="text-blue-700">Affordable investment options</span>
+//                   </li>
+//                   <li className="flex items-start">
+//                     <CheckCircle className="w-5 h-5 text-blue-500 mt-0.5 mr-3 flex-shrink-0" />
+//                     <span className="text-blue-700">Tax benefits under applicable laws</span>
+//                   </li>
+//                 </ul>
+//               </div>
+//             </div>
+//             {/* Partner Companies */}
+//             {subCategory.companies && subCategory.companies.length > 0 && (
+//               <div>
+//                 <h3 className="text-lg font-semibold text-gray-800 mb-6">Available Fund Houses</h3>
+//                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+//                   {subCategory.companies.map((company) => (
+//                     <div
+//                       key={company.id}
+//                       className="flex flex-col items-center p-4 bg-white rounded-xl border border-gray-200 hover:shadow-lg hover:border-indigo-300 transition-all group"
+//                     >
+//                       <div className="w-16 h-16 mb-3 flex items-center justify-center bg-gray-50 rounded-xl p-2 border border-gray-200 group-hover:bg-indigo-50 transition-colors">
+//                         <img
+//                           src={company.logo_url || "/dummy_logo.png"}
+//                           alt={company.name}
+//                           className="w-full h-full object-contain"
+//                         />
+//                       </div>
+//                       <span className="text-xs font-medium text-gray-700 text-center leading-tight">
+//                         {company.name}
+//                       </span>
+//                     </div>
+//                   ))}
+//                 </div>
+//               </div>
+//             )}
+//             {/* Full Width CTA Container */}
+//             <div className="bg-indigo-50 p-8 rounded-xl border border-indigo-100">
+//               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+//                 <div>
+//                   <h4 className="font-semibold text-indigo-800 mb-4 text-xl">Start Your Investment Journey</h4>
+//                   <p className="text-indigo-700 mb-5 text-lg">
+//                     Our investment specialists will help you choose the right mutual funds based on your financial goals and risk appetite.
+//                   </p>
+//                 </div>
+//                 <div>
+//                   <div className="space-y-4">
+//                     <Link href="/contact" className="block w-full">
+//                       <button className="w-full py-4 bg-indigo-600 text-white rounded-lg font-semibold text-lg hover:bg-indigo-700 transition-colors flex items-center justify-center">
+//                         <Phone className="w-6 h-6 mr-3" />
+//                         Consult an Expert
+//                       </button>
+//                     </Link>
+//                     <button 
+//                       onClick={handleEmailClick}
+//                       className="w-full py-4 border-2 border-indigo-300 text-indigo-600 rounded-lg font-semibold text-lg hover:bg-indigo-50 transition-colors flex items-center justify-center"
+//                     >
+//                       <Mail className="w-6 h-6 mr-3" />
+//                       Email Inquiry
+//                     </button>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//             {/* Why Choose Our Services Section */}
+//             <div>
+//               <h3 className="text-lg font-semibold text-gray-800 mb-4">Why Invest Through Us?</h3>
+//               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+//                 <div className="flex items-start">
+//                   <div className="bg-indigo-100 p-3 rounded-lg mr-4">
+//                     <Users className="w-6 h-6 text-indigo-600" />
+//                   </div>
+//                   <div>
+//                     <h4 className="font-medium text-gray-800">Expert Guidance</h4>
+//                     <p className="text-gray-600">Professional advice tailored to your goals</p>
+//                   </div>
+//                 </div>
+//                 <div className="flex items-start">
+//                   <div className="bg-indigo-100 p-3 rounded-lg mr-4">
+//                     <Shield className="w-6 h-6 text-indigo-600" />
+//                   </div>
+//                   <div>
+//                     <h4 className="font-medium text-gray-800">Secure Platform</h4>
+//                     <p className="text-gray-600">Safe and regulated investment environment</p>
+//                   </div>
+//                 </div>
+//                 <div className="flex items-start">
+//                   <div className="bg-indigo-100 p-3 rounded-lg mr-4">
+//                     <Target className="w-6 h-6 text-indigo-600" />
+//                   </div>
+//                   <div>
+//                     <h4 className="font-medium text-gray-800">Goal-Based Investing</h4>
+//                     <p className="text-gray-600">Customized plans for your financial objectives</p>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+// // Main MutualFundsPage Component
+// const MutualFundsPage = () => {
+//   const [selectedSubCategory, setSelectedSubCategory] = useState<SubCategory | null>(null);
+//   // Sample mutual fund companies
+//   const allCompanies: Company[] = [
+//     { id: "1", name: "HDFC Mutual Fund", logo_url: "/images/mutual-funds/hdfc.jpg", category: "large-cap" },
+//     { id: "2", name: "ICICI Prudential", logo_url: "/images/mutual-funds/icici.jpg", category: "large-cap" },
+//     { id: "3", name: "SBI Mutual Fund", logo_url: "/images/mutual-funds/sbi.jpg", category: "large-cap" },
+//     { id: "4", name: "Tata Mutual Fund", logo_url: "/images/mutual-funds/tata.jpg", category: "large-cap" },
+//     { id: "5", name: "Kotak Mutual Fund", logo_url: "/images/mutual-funds/kotak.jpg", category: "mid-cap" },
+//     { id: "6", name: "Aditya Birla Sun Life", logo_url: "/images/mutual-funds/aditya-birla.jpg", category: "mid-cap" },
+//     { id: "7", name: "Nippon India", logo_url: "/images/mutual-funds/nippon.jpg", category: "mid-cap" },
+//     { id: "8", name: "Bajaj Mutual Fund", logo_url: "/images/mutual-funds/bajaj.jpg", category: "mid-cap" },
+//     { id: "9", name: "Franklin Templeton", logo_url: "/images/mutual-funds/franklin.jpg", category: "debt" },
+//     { id: "10", name: "DSP Mutual Fund", logo_url: "/images/mutual-funds/dsp.jpg", category: "hybrid" },
+//     { id: "11", name: "Canara Robeco", logo_url: "/images/mutual-funds/canara.jpg", category: "debt" },
+//   ];
+//   // Mutual fund categories with enhanced data
+//   const mutualFundCategories: CategoryWithSubcategories[] = [
+//     {
+//       id: "equity-funds",
+//       name: "Equity Funds",
+//       description: "Growth-oriented investments in stocks",
+//       subcategories: [
+//         { 
+//           id: "large-cap", 
+//           name: "Large Cap Funds", 
+//           description: "Invest in established companies with large market capitalization. These funds offer stability and consistent returns by investing in well-established, financially sound companies.",
+//           icon: <BarChart3 className="w-8 h-8 text-indigo-600" />,
+//           companies: allCompanies.filter(company => company.category === "large-cap")
+//         },
+//         { 
+//           id: "mid-cap", 
+//           name: "Mid Cap Funds", 
+//           description: "Focus on medium-sized companies with high growth potential. These funds aim for higher returns by investing in companies that are beyond the startup phase and experiencing rapid growth.",
+//           icon: <TrendingUp className="w-8 h-8 text-indigo-600" />,
+//           companies: allCompanies.filter(company => company.category === "mid-cap")
+//         },
+//       ],
+//     },
+//     {
+//       id: "debt-funds",
+//       name: "Debt Funds",
+//       description: "Stable returns through fixed income instruments",
+//       subcategories: [
+//         { 
+//           id: "liquid-funds", 
+//           name: "Liquid Funds", 
+//           description: "Short-term investments with high liquidity and stability. Ideal for parking surplus funds with minimal risk and easy withdrawal options.",
+//           icon: <ChartLine className="w-8 h-8 text-indigo-600" />,
+//           companies: allCompanies.filter(company => company.category === "debt")
+//         },
+//         { 
+//           id: "income-funds", 
+//           name: "Income Funds", 
+//           description: "Long-term debt investments for regular income generation. These funds invest in government securities, bonds, and other fixed income instruments.",
+//           icon: <TrendingUp className="w-8 h-8 text-indigo-600" />,
+//           companies: allCompanies.filter(company => company.category === "debt")
+//         },
+//       ],
+//     }
+//   ];
+//   return (
+//     <main className="flex flex-col min-h-screen bg-transparent">
+//       <Navbar />
+//       <section className="flex-1 pt-28 md:pt-32 pb-20 relative z-10">
+//         <div className="max-w-7xl mx-auto px-6">
+//           {/* Enhanced Header with Better Color Contrast */}
+//           <div className="text-center mb-12 md:mb-16">
+//             <div className="inline-block bg-gradient-to-r from-blue-600/10 to-cyan-600/10 px-6 md:px-8 py-4 md:py-6 rounded-2xl border border-blue-300/30 mb-6 md:mb-8 backdrop-blur-sm">
+//               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent mb-3 md:mb-4">
+//                 Mutual Fund Services
+//               </h1>
+//             </div>
+//             <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed font-medium">
+//               Partnering with India's leading fund houses to bring you the best investment opportunities
+//             </p>
+//           </div>
+//           {/* Investment Categories - Moved directly below title */}
+//           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12 md:mb-16">
+//             {mutualFundCategories.map((category) => (
+//               <div key={category.id} className="bg-black/20 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-white/30 shadow-lg hover:shadow-xl transition-all duration-300">
+//                 <div className="flex items-center mb-4 md:mb-6 pb-3 md:pb-4 border-b border-white/30">
+//                   <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center mr-3 md:mr-4">
+//                     {category.id === "equity-funds" ? (
+//                       <TrendingUp className="w-5 h-5 md:w-6 md:h-6 text-white" />
+//                     ) : (
+//                       <ChartLine className="w-5 h-5 md:w-6 md:h-6 text-white" />
+//                     )}
+//                   </div>
+//                   <div>
+//                     <h2 className="text-xl md:text-2xl font-bold text-white">{category.name}</h2>
+//                     <p className="text-gray-300 text-xs md:text-sm">{category.description}</p>
+//                   </div>
+//                 </div>
+//                 <div className="space-y-4 md:space-y-6">
+//                   {category.subcategories.map((sub) => (
+//                     <div
+//                       key={sub.id}
+//                       onClick={() => setSelectedSubCategory(sub)}
+//                       className="cursor-pointer group rounded-xl p-4 md:p-5 bg-white/20 backdrop-blur border border-white/30 hover:border-blue-400/50 hover:shadow-md transition-all duration-300"
+//                     >
+//                       <div className="flex items-center">
+//                         <div className="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-lg bg-blue-500/30 group-hover:bg-blue-500/40 transition-colors mr-3 md:mr-4">
+//                           {React.cloneElement(sub.icon as React.ReactElement, { 
+//                             className: "w-4 h-4 md:w-6 md:h-6 text-blue-300" 
+//                           })}
+//                         </div>
+//                         <div className="flex-grow">
+//                           <h4 className="font-semibold text-white group-hover:text-blue-200 transition-colors text-sm md:text-base">
+//                             {sub.name}
+//                           </h4>
+//                           <p className="text-gray-300 text-xs md:text-sm mt-1 line-clamp-2">
+//                             {sub.description}
+//                           </p>
+//                         </div>
+//                         <div className="text-blue-300 opacity-0 group-hover:opacity-100 transition-opacity">
+//                           <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
+//                         </div>
+//                       </div>
+//                     </div>
+//                   ))}
+//                 </div>
+//               </div>
+//             ))}
+//           </div>
+//           {/* Dual Marquee Section */}
+//           <DualMarqueeSection />
+//           {/* CTA Section */}
+//           <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-8 md:p-10 text-center text-white shadow-md mt-12 md:mt-16">
+//             <ChartLine className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-4 md:mb-6" />
+//             <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">Start Your Investment Journey</h2>
+//             <p className="text-indigo-100 text-base md:text-lg mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed">
+//               Our investment experts will help you build a portfolio that matches your financial goals and risk tolerance.
+//             </p>
+//             <div className="flex flex-col sm:flex-row gap-4 md:gap-5 justify-center">
+//               <Link href="/contact" className="block">
+//                 <button className="px-6 py-3 md:px-8 md:py-4 bg-white text-indigo-600 font-bold rounded-lg hover:bg-indigo-50 transition-colors text-base md:text-lg flex items-center justify-center w-full sm:w-auto">
+//                   <Phone className="w-5 h-5 md:w-6 md:h-6 mr-2 md:mr-3" />
+//                   Consult an Expert
+//                 </button>
+//               </Link>
+//             </div>
+//           </div>
+//         </div>
+//       </section>
+//       <Footer />
+//       {/* Modal for mutual fund details */}
+//       {selectedSubCategory && (
+//         <MutualFundInformationBox 
+//           subCategory={selectedSubCategory} 
+//           onClose={() => setSelectedSubCategory(null)} 
+//         />
+//       )}
+//     </main>
+//   );
+// };
+// export default MutualFundsPage;
+// new theme
 __turbopack_context__.s([
     "default",
     ()=>__TURBOPACK__default__export__
@@ -286,12 +769,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_mod
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/shield.js [app-client] (ecmascript) <export default as Shield>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/x.js [app-client] (ecmascript) <export default as X>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$phone$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Phone$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/phone.js [app-client] (ecmascript) <export default as Phone>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mail$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Mail$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/mail.js [app-client] (ecmascript) <export default as Mail>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2d$big$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/circle-check-big.js [app-client] (ecmascript) <export default as CheckCircle>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/arrow-right.js [app-client] (ecmascript) <export default as ArrowRight>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/users.js [app-client] (ecmascript) <export default as Users>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$target$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Target$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/target.js [app-client] (ecmascript) <export default as Target>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$star$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Star$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/star.js [app-client] (ecmascript) <export default as Star>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$plus$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Plus$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/plus.js [app-client] (ecmascript) <export default as Plus>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.signature();
@@ -369,32 +851,32 @@ const InfiniteLogoMarquee = (param)=>{
                                 className: "w-full h-full object-contain opacity-100 brightness-100 contrast-100"
                             }, void 0, false, {
                                 fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                lineNumber: 92,
+                                lineNumber: 609,
                                 columnNumber: 17
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                            lineNumber: 91,
+                            lineNumber: 608,
                             columnNumber: 15
                         }, ("TURBOPACK compile-time value", void 0))
                     }, "".concat(company.id, "-").concat(index), false, {
                         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                        lineNumber: 86,
+                        lineNumber: 603,
                         columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0)))
             }, void 0, false, {
                 fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                lineNumber: 80,
+                lineNumber: 597,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0))
         }, void 0, false, {
             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-            lineNumber: 76,
+            lineNumber: 593,
             columnNumber: 7
         }, ("TURBOPACK compile-time value", void 0))
     }, void 0, false, {
         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-        lineNumber: 70,
+        lineNumber: 587,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -432,7 +914,7 @@ const DualMarqueeSection = ()=>{
         {
             id: "6",
             name: "Aditya Birla Sun Life",
-            logo_url: "//images/mutual-funds/franklin.jpg"
+            logo_url: "/images/mutual-funds/franklin.jpg"
         }
     ];
     // Second set of companies for bottom marquee (left to right)
@@ -483,7 +965,7 @@ const DualMarqueeSection = ()=>{
                                     className: "w-4 h-4 md:w-5 md:h-5 text-amber-400"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 134,
+                                    lineNumber: 651,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -491,20 +973,20 @@ const DualMarqueeSection = ()=>{
                                     children: "Trusted Investment Partners"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 135,
+                                    lineNumber: 652,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$star$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Star$3e$__["Star"], {
                                     className: "w-4 h-4 md:w-5 md:h-5 text-amber-400"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 136,
+                                    lineNumber: 653,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                            lineNumber: 133,
+                            lineNumber: 650,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -512,7 +994,7 @@ const DualMarqueeSection = ()=>{
                             children: "Our Trusted Partners"
                         }, void 0, false, {
                             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                            lineNumber: 138,
+                            lineNumber: 655,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -520,13 +1002,13 @@ const DualMarqueeSection = ()=>{
                             children: "Partnered with India's leading mutual fund companies to bring you the best investment opportunities"
                         }, void 0, false, {
                             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                            lineNumber: 141,
+                            lineNumber: 658,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                    lineNumber: 132,
+                    lineNumber: 649,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -536,12 +1018,12 @@ const DualMarqueeSection = ()=>{
                         direction: "left"
                     }, void 0, false, {
                         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                        lineNumber: 148,
+                        lineNumber: 665,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                    lineNumber: 147,
+                    lineNumber: 664,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -550,12 +1032,12 @@ const DualMarqueeSection = ()=>{
                         direction: "right"
                     }, void 0, false, {
                         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                        lineNumber: 153,
+                        lineNumber: 670,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                    lineNumber: 152,
+                    lineNumber: 669,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -569,7 +1051,7 @@ const DualMarqueeSection = ()=>{
                                     children: "12+"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 159,
+                                    lineNumber: 676,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -577,13 +1059,13 @@ const DualMarqueeSection = ()=>{
                                     children: "Fund Houses"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 160,
+                                    lineNumber: 677,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                            lineNumber: 158,
+                            lineNumber: 675,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -594,7 +1076,7 @@ const DualMarqueeSection = ()=>{
                                     children: "50+"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 163,
+                                    lineNumber: 680,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -602,13 +1084,13 @@ const DualMarqueeSection = ()=>{
                                     children: "Fund Schemes"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 164,
+                                    lineNumber: 681,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                            lineNumber: 162,
+                            lineNumber: 679,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -619,7 +1101,7 @@ const DualMarqueeSection = ()=>{
                                     children: "24/7"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 167,
+                                    lineNumber: 684,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -627,13 +1109,13 @@ const DualMarqueeSection = ()=>{
                                     children: "Support"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 168,
+                                    lineNumber: 685,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                            lineNumber: 166,
+                            lineNumber: 683,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -644,7 +1126,7 @@ const DualMarqueeSection = ()=>{
                                     children: "100%"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 171,
+                                    lineNumber: 688,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -652,45 +1134,42 @@ const DualMarqueeSection = ()=>{
                                     children: "Secure"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 172,
+                                    lineNumber: 689,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                            lineNumber: 170,
+                            lineNumber: 687,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                    lineNumber: 157,
+                    lineNumber: 674,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             ]
         }, void 0, true, {
             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-            lineNumber: 130,
+            lineNumber: 647,
             columnNumber: 7
         }, ("TURBOPACK compile-time value", void 0))
     }, void 0, false, {
         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-        lineNumber: 129,
+        lineNumber: 646,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
 _c1 = DualMarqueeSection;
-// Information component for mutual fund categories
+// Information component for mutual fund categories - Updated to match theme
 const MutualFundInformationBox = (param)=>{
     let { subCategory, onClose } = param;
     if (!subCategory) return null;
-    const handleEmailClick = ()=>{
-        window.location.href = "mailto:info@yourcompany.com?subject=Mutual Fund Inquiry&body=Hello, I would like more information about your mutual fund services.";
-    };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "fixed inset-0 bg-gray-800 bg-opacity-70 flex items-center justify-center z-50 p-4",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "bg-white rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto shadow-2xl",
+            className: "bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-2xl flex justify-between items-center",
@@ -699,13 +1178,13 @@ const MutualFundInformationBox = (param)=>{
                             className: "flex items-center",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex items-center justify-center w-14 h-14 rounded-xl bg-indigo-100 mr-4",
+                                    className: "flex items-center justify-center w-14 h-14 rounded-xl bg-amber-100 mr-4",
                                     children: /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].cloneElement(subCategory.icon, {
-                                        className: "w-8 h-8 text-indigo-600"
+                                        className: "w-8 h-8 text-amber-600"
                                     })
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 200,
+                                    lineNumber: 713,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -715,7 +1194,7 @@ const MutualFundInformationBox = (param)=>{
                                             children: subCategory.name
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                            lineNumber: 204,
+                                            lineNumber: 717,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -723,539 +1202,299 @@ const MutualFundInformationBox = (param)=>{
                                             children: "Professional investment management"
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                            lineNumber: 205,
+                                            lineNumber: 718,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 203,
+                                    lineNumber: 716,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                            lineNumber: 199,
+                            lineNumber: 712,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: onClose,
-                            className: "p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors",
+                            className: "p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors cursor-pointer",
                             "aria-label": "Close modal",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__["X"], {
                                 size: 24
                             }, void 0, false, {
                                 fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                lineNumber: 213,
+                                lineNumber: 726,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                            lineNumber: 208,
+                            lineNumber: 721,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                    lineNumber: 198,
+                    lineNumber: 711,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "p-6",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "grid grid-cols-1 gap-8",
+                        className: "space-y-6",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                        className: "text-lg font-semibold text-gray-800 mb-4",
+                                        className: "text-lg font-semibold text-gray-800 mb-3",
                                         children: "About This Investment"
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                        lineNumber: 222,
+                                        lineNumber: 735,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "text-gray-700 mb-6 leading-relaxed",
+                                        className: "text-gray-700 leading-relaxed",
                                         children: subCategory.description
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                        lineNumber: 223,
-                                        columnNumber: 15
-                                    }, ("TURBOPACK compile-time value", void 0)),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "bg-blue-50 p-5 rounded-xl border border-blue-100 mb-6",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                                className: "font-semibold text-blue-800 mb-3",
-                                                children: "Investment Benefits"
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                lineNumber: 226,
-                                                columnNumber: 17
-                                            }, ("TURBOPACK compile-time value", void 0)),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
-                                                className: "space-y-2",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                                        className: "flex items-start",
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2d$big$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle$3e$__["CheckCircle"], {
-                                                                className: "w-5 h-5 text-blue-500 mt-0.5 mr-3 flex-shrink-0"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                lineNumber: 229,
-                                                                columnNumber: 21
-                                                            }, ("TURBOPACK compile-time value", void 0)),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: "text-blue-700",
-                                                                children: "Professional fund management"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                lineNumber: 230,
-                                                                columnNumber: 21
-                                                            }, ("TURBOPACK compile-time value", void 0))
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                        lineNumber: 228,
-                                                        columnNumber: 19
-                                                    }, ("TURBOPACK compile-time value", void 0)),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                                        className: "flex items-start",
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2d$big$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle$3e$__["CheckCircle"], {
-                                                                className: "w-5 h-5 text-blue-500 mt-0.5 mr-3 flex-shrink-0"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                lineNumber: 233,
-                                                                columnNumber: 21
-                                                            }, ("TURBOPACK compile-time value", void 0)),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: "text-blue-700",
-                                                                children: "Diversification across multiple assets"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                lineNumber: 234,
-                                                                columnNumber: 21
-                                                            }, ("TURBOPACK compile-time value", void 0))
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                        lineNumber: 232,
-                                                        columnNumber: 19
-                                                    }, ("TURBOPACK compile-time value", void 0)),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                                        className: "flex items-start",
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2d$big$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle$3e$__["CheckCircle"], {
-                                                                className: "w-5 h-5 text-blue-500 mt-0.5 mr-3 flex-shrink-0"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                lineNumber: 237,
-                                                                columnNumber: 21
-                                                            }, ("TURBOPACK compile-time value", void 0)),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: "text-blue-700",
-                                                                children: "Affordable investment options"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                lineNumber: 238,
-                                                                columnNumber: 21
-                                                            }, ("TURBOPACK compile-time value", void 0))
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                        lineNumber: 236,
-                                                        columnNumber: 19
-                                                    }, ("TURBOPACK compile-time value", void 0)),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                                        className: "flex items-start",
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2d$big$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle$3e$__["CheckCircle"], {
-                                                                className: "w-5 h-5 text-blue-500 mt-0.5 mr-3 flex-shrink-0"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                lineNumber: 241,
-                                                                columnNumber: 21
-                                                            }, ("TURBOPACK compile-time value", void 0)),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: "text-blue-700",
-                                                                children: "Tax benefits under applicable laws"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                lineNumber: 242,
-                                                                columnNumber: 21
-                                                            }, ("TURBOPACK compile-time value", void 0))
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                        lineNumber: 240,
-                                                        columnNumber: 19
-                                                    }, ("TURBOPACK compile-time value", void 0))
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                lineNumber: 227,
-                                                columnNumber: 17
-                                            }, ("TURBOPACK compile-time value", void 0))
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                        lineNumber: 225,
+                                        lineNumber: 736,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                lineNumber: 221,
+                                lineNumber: 734,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
-                            subCategory.companies && subCategory.companies.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            subCategory.features && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                        className: "text-lg font-semibold text-gray-800 mb-6",
-                                        children: "Available Fund Houses"
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                        className: "font-semibold text-gray-800 mb-3",
+                                        children: "Key Features"
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                        lineNumber: 251,
+                                        lineNumber: 742,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0)),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4",
-                                        children: subCategory.companies.map((company)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "flex flex-col items-center p-4 bg-white rounded-xl border border-gray-200 hover:shadow-lg hover:border-indigo-300 transition-all group",
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
+                                        className: "space-y-3",
+                                        children: subCategory.features.map((feature, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                                className: "flex items-start",
                                                 children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "w-16 h-16 mb-3 flex items-center justify-center bg-gray-50 rounded-xl p-2 border border-gray-200 group-hover:bg-indigo-50 transition-colors",
-                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                                            src: company.logo_url || "/dummy_logo.png",
-                                                            alt: company.name,
-                                                            className: "w-full h-full object-contain"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                            lineNumber: 259,
-                                                            columnNumber: 25
-                                                        }, ("TURBOPACK compile-time value", void 0))
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2d$big$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle$3e$__["CheckCircle"], {
+                                                        className: "w-5 h-5 text-amber-500 mt-0.5 mr-3 flex-shrink-0"
                                                     }, void 0, false, {
                                                         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                        lineNumber: 258,
+                                                        lineNumber: 746,
                                                         columnNumber: 23
                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                        className: "text-xs font-medium text-gray-700 text-center leading-tight",
-                                                        children: company.name
+                                                        className: "text-gray-700",
+                                                        children: feature
                                                     }, void 0, false, {
                                                         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                        lineNumber: 265,
+                                                        lineNumber: 747,
                                                         columnNumber: 23
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 ]
-                                            }, company.id, true, {
+                                            }, index, true, {
                                                 fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                lineNumber: 254,
+                                                lineNumber: 745,
                                                 columnNumber: 21
                                             }, ("TURBOPACK compile-time value", void 0)))
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                        lineNumber: 252,
+                                        lineNumber: 743,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                lineNumber: 250,
+                                lineNumber: 741,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "bg-indigo-50 p-8 rounded-xl border border-indigo-100",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "grid grid-cols-1 lg:grid-cols-2 gap-8",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "bg-gradient-to-r from-amber-500 to-amber-400 rounded-2xl p-6 text-white",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                        className: "font-bold text-lg mb-2",
+                                        children: "Ready to Start Investing?"
+                                    }, void 0, false, {
+                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                        lineNumber: 756,
+                                        columnNumber: 15
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-amber-100 mb-6 text-sm",
+                                        children: "Our investment specialists will help you choose the right mutual funds based on your financial goals and risk appetite."
+                                    }, void 0, false, {
+                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                        lineNumber: 757,
+                                        columnNumber: 15
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                        href: "/contact",
+                                        className: "block",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                            className: "w-full py-4 bg-white text-amber-600 font-bold rounded-lg hover:bg-amber-50 transition-colors flex items-center justify-center text-lg cursor-pointer",
                                             children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                                    className: "font-semibold text-indigo-800 mb-4 text-xl",
-                                                    children: "Start Your Investment Journey"
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$phone$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Phone$3e$__["Phone"], {
+                                                    className: "w-5 h-5 mr-3"
                                                 }, void 0, false, {
                                                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                    lineNumber: 278,
+                                                    lineNumber: 762,
                                                     columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0)),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "text-indigo-700 mb-5 text-lg",
-                                                    children: "Our investment specialists will help you choose the right mutual funds based on your financial goals and risk appetite."
-                                                }, void 0, false, {
-                                                    fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                    lineNumber: 279,
-                                                    columnNumber: 19
-                                                }, ("TURBOPACK compile-time value", void 0))
+                                                "Get Free Consultation"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                            lineNumber: 277,
-                                            columnNumber: 17
-                                        }, ("TURBOPACK compile-time value", void 0)),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "space-y-4",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                                        href: "/contact",
-                                                        className: "block w-full",
-                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                            className: "w-full py-4 bg-indigo-600 text-white rounded-lg font-semibold text-lg hover:bg-indigo-700 transition-colors flex items-center justify-center",
-                                                            children: [
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$phone$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Phone$3e$__["Phone"], {
-                                                                    className: "w-6 h-6 mr-3"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                    lineNumber: 287,
-                                                                    columnNumber: 25
-                                                                }, ("TURBOPACK compile-time value", void 0)),
-                                                                "Consult an Expert"
-                                                            ]
-                                                        }, void 0, true, {
-                                                            fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                            lineNumber: 286,
-                                                            columnNumber: 23
-                                                        }, ("TURBOPACK compile-time value", void 0))
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                        lineNumber: 285,
-                                                        columnNumber: 21
-                                                    }, ("TURBOPACK compile-time value", void 0)),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                        onClick: handleEmailClick,
-                                                        className: "w-full py-4 border-2 border-indigo-300 text-indigo-600 rounded-lg font-semibold text-lg hover:bg-indigo-50 transition-colors flex items-center justify-center",
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mail$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Mail$3e$__["Mail"], {
-                                                                className: "w-6 h-6 mr-3"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                lineNumber: 295,
-                                                                columnNumber: 23
-                                                            }, ("TURBOPACK compile-time value", void 0)),
-                                                            "Email Inquiry"
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                        lineNumber: 291,
-                                                        columnNumber: 21
-                                                    }, ("TURBOPACK compile-time value", void 0))
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                lineNumber: 284,
-                                                columnNumber: 19
-                                            }, ("TURBOPACK compile-time value", void 0))
-                                        }, void 0, false, {
-                                            fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                            lineNumber: 283,
+                                            lineNumber: 761,
                                             columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0))
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 276,
-                                    columnNumber: 15
-                                }, ("TURBOPACK compile-time value", void 0))
-                            }, void 0, false, {
-                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                lineNumber: 275,
-                                columnNumber: 13
-                            }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                        className: "text-lg font-semibold text-gray-800 mb-4",
-                                        children: "Why Invest Through Us?"
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                        lineNumber: 305,
-                                        columnNumber: 15
-                                    }, ("TURBOPACK compile-time value", void 0)),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "grid grid-cols-1 md:grid-cols-3 gap-6",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "flex items-start",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "bg-indigo-100 p-3 rounded-lg mr-4",
-                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__["Users"], {
-                                                            className: "w-6 h-6 text-indigo-600"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                            lineNumber: 309,
-                                                            columnNumber: 21
-                                                        }, ("TURBOPACK compile-time value", void 0))
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                        lineNumber: 308,
-                                                        columnNumber: 19
-                                                    }, ("TURBOPACK compile-time value", void 0)),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                                                className: "font-medium text-gray-800",
-                                                                children: "Expert Guidance"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                lineNumber: 312,
-                                                                columnNumber: 21
-                                                            }, ("TURBOPACK compile-time value", void 0)),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-gray-600",
-                                                                children: "Professional advice tailored to your goals"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                lineNumber: 313,
-                                                                columnNumber: 21
-                                                            }, ("TURBOPACK compile-time value", void 0))
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                        lineNumber: 311,
-                                                        columnNumber: 19
-                                                    }, ("TURBOPACK compile-time value", void 0))
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                lineNumber: 307,
-                                                columnNumber: 17
-                                            }, ("TURBOPACK compile-time value", void 0)),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "flex items-start",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "bg-indigo-100 p-3 rounded-lg mr-4",
-                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__["Shield"], {
-                                                            className: "w-6 h-6 text-indigo-600"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                            lineNumber: 318,
-                                                            columnNumber: 21
-                                                        }, ("TURBOPACK compile-time value", void 0))
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                        lineNumber: 317,
-                                                        columnNumber: 19
-                                                    }, ("TURBOPACK compile-time value", void 0)),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                                                className: "font-medium text-gray-800",
-                                                                children: "Secure Platform"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                lineNumber: 321,
-                                                                columnNumber: 21
-                                                            }, ("TURBOPACK compile-time value", void 0)),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-gray-600",
-                                                                children: "Safe and regulated investment environment"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                lineNumber: 322,
-                                                                columnNumber: 21
-                                                            }, ("TURBOPACK compile-time value", void 0))
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                        lineNumber: 320,
-                                                        columnNumber: 19
-                                                    }, ("TURBOPACK compile-time value", void 0))
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                lineNumber: 316,
-                                                columnNumber: 17
-                                            }, ("TURBOPACK compile-time value", void 0)),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "flex items-start",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "bg-indigo-100 p-3 rounded-lg mr-4",
-                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$target$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Target$3e$__["Target"], {
-                                                            className: "w-6 h-6 text-indigo-600"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                            lineNumber: 327,
-                                                            columnNumber: 21
-                                                        }, ("TURBOPACK compile-time value", void 0))
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                        lineNumber: 326,
-                                                        columnNumber: 19
-                                                    }, ("TURBOPACK compile-time value", void 0)),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                                                className: "font-medium text-gray-800",
-                                                                children: "Goal-Based Investing"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                lineNumber: 330,
-                                                                columnNumber: 21
-                                                            }, ("TURBOPACK compile-time value", void 0)),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-gray-600",
-                                                                children: "Customized plans for your financial objectives"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                lineNumber: 331,
-                                                                columnNumber: 21
-                                                            }, ("TURBOPACK compile-time value", void 0))
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                        lineNumber: 329,
-                                                        columnNumber: 19
-                                                    }, ("TURBOPACK compile-time value", void 0))
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                lineNumber: 325,
-                                                columnNumber: 17
-                                            }, ("TURBOPACK compile-time value", void 0))
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                        lineNumber: 306,
+                                        lineNumber: 760,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                lineNumber: 304,
+                                lineNumber: 755,
+                                columnNumber: 13
+                            }, ("TURBOPACK compile-time value", void 0)),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "grid grid-cols-1 md:grid-cols-3 gap-4 pt-4",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "text-center p-4 bg-gray-50 rounded-xl",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__["Users"], {
+                                                className: "w-8 h-8 text-amber-500 mx-auto mb-2"
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                lineNumber: 771,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h5", {
+                                                className: "font-semibold text-gray-800 text-sm",
+                                                children: "Expert Guidance"
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                lineNumber: 772,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-gray-600 text-xs",
+                                                children: "Professional advice"
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                lineNumber: 773,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0))
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                        lineNumber: 770,
+                                        columnNumber: 15
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "text-center p-4 bg-gray-50 rounded-xl",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__["Shield"], {
+                                                className: "w-8 h-8 text-amber-500 mx-auto mb-2"
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                lineNumber: 776,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h5", {
+                                                className: "font-semibold text-gray-800 text-sm",
+                                                children: "Secure Platform"
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                lineNumber: 777,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-gray-600 text-xs",
+                                                children: "Safe investments"
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                lineNumber: 778,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0))
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                        lineNumber: 775,
+                                        columnNumber: 15
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "text-center p-4 bg-gray-50 rounded-xl",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$target$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Target$3e$__["Target"], {
+                                                className: "w-8 h-8 text-amber-500 mx-auto mb-2"
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                lineNumber: 781,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h5", {
+                                                className: "font-semibold text-gray-800 text-sm",
+                                                children: "Goal-Based"
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                lineNumber: 782,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-gray-600 text-xs",
+                                                children: "Customized plans"
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                lineNumber: 783,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0))
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                        lineNumber: 780,
+                                        columnNumber: 15
+                                    }, ("TURBOPACK compile-time value", void 0))
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                lineNumber: 769,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                        lineNumber: 219,
+                        lineNumber: 732,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                    lineNumber: 218,
+                    lineNumber: 731,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             ]
         }, void 0, true, {
             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-            lineNumber: 196,
+            lineNumber: 709,
             columnNumber: 7
         }, ("TURBOPACK compile-time value", void 0))
     }, void 0, false, {
         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-        lineNumber: 195,
+        lineNumber: 708,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
 _c2 = MutualFundInformationBox;
-// Main MutualFundsPage Component
+// Main MutualFundsPage Component - Updated to match theme
 const MutualFundsPage = ()=>{
     _s1();
     const [selectedSubCategory, setSelectedSubCategory] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
@@ -1340,12 +1579,19 @@ const MutualFundsPage = ()=>{
                     name: "Large Cap Funds",
                     description: "Invest in established companies with large market capitalization. These funds offer stability and consistent returns by investing in well-established, financially sound companies.",
                     icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$column$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__BarChart3$3e$__["BarChart3"], {
-                        className: "w-8 h-8 text-indigo-600"
+                        className: "w-8 h-8 text-rose-500"
                     }, void 0, false, {
                         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                        lineNumber: 373,
+                        lineNumber: 823,
                         columnNumber: 17
                     }, ("TURBOPACK compile-time value", void 0)),
+                    features: [
+                        "Invest in top 100 companies by market cap",
+                        "Lower risk compared to mid/small caps",
+                        "Stable returns with consistent performance",
+                        "Ideal for long-term wealth creation",
+                        "Professional fund management"
+                    ],
                     companies: allCompanies.filter((company)=>company.category === "large-cap")
                 },
                 {
@@ -1353,12 +1599,19 @@ const MutualFundsPage = ()=>{
                     name: "Mid Cap Funds",
                     description: "Focus on medium-sized companies with high growth potential. These funds aim for higher returns by investing in companies that are beyond the startup phase and experiencing rapid growth.",
                     icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__["TrendingUp"], {
-                        className: "w-8 h-8 text-indigo-600"
+                        className: "w-8 h-8 text-emerald-400"
                     }, void 0, false, {
                         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                        lineNumber: 380,
+                        lineNumber: 837,
                         columnNumber: 17
                     }, ("TURBOPACK compile-time value", void 0)),
+                    features: [
+                        "Higher growth potential than large caps",
+                        "Invest in companies ranked 101-250 by market cap",
+                        "Balanced risk-reward profile",
+                        "Potential for superior returns",
+                        "Diversified portfolio approach"
+                    ],
                     companies: allCompanies.filter((company)=>company.category === "mid-cap")
                 }
             ]
@@ -1373,12 +1626,19 @@ const MutualFundsPage = ()=>{
                     name: "Liquid Funds",
                     description: "Short-term investments with high liquidity and stability. Ideal for parking surplus funds with minimal risk and easy withdrawal options.",
                     icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$line$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChartLine$3e$__["ChartLine"], {
-                        className: "w-8 h-8 text-indigo-600"
+                        className: "w-8 h-8 text-sky-400"
                     }, void 0, false, {
                         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                        lineNumber: 394,
+                        lineNumber: 858,
                         columnNumber: 17
                     }, ("TURBOPACK compile-time value", void 0)),
+                    features: [
+                        "High liquidity with instant redemption",
+                        "Lower risk than equity funds",
+                        "Better returns than savings accounts",
+                        "Ideal for short-term goals",
+                        "Minimal interest rate risk"
+                    ],
                     companies: allCompanies.filter((company)=>company.category === "debt")
                 },
                 {
@@ -1386,12 +1646,19 @@ const MutualFundsPage = ()=>{
                     name: "Income Funds",
                     description: "Long-term debt investments for regular income generation. These funds invest in government securities, bonds, and other fixed income instruments.",
                     icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__["TrendingUp"], {
-                        className: "w-8 h-8 text-indigo-600"
+                        className: "w-8 h-8 text-amber-400"
                     }, void 0, false, {
                         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                        lineNumber: 401,
+                        lineNumber: 872,
                         columnNumber: 17
                     }, ("TURBOPACK compile-time value", void 0)),
+                    features: [
+                        "Regular income through dividends",
+                        "Lower volatility than equity funds",
+                        "Tax-efficient returns",
+                        "Ideal for conservative investors",
+                        "Professional credit risk management"
+                    ],
                     companies: allCompanies.filter((company)=>company.category === "debt")
                 }
             ]
@@ -1402,271 +1669,271 @@ const MutualFundsPage = ()=>{
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$components$2f$Navbar$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                lineNumber: 410,
+                lineNumber: 888,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
-                className: "flex-1 pt-28 md:pt-32 pb-20 relative z-10",
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "max-w-7xl mx-auto px-6",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "text-center mb-12 md:mb-16",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "inline-block bg-gradient-to-r from-blue-600/10 to-cyan-600/10 px-6 md:px-8 py-4 md:py-6 rounded-2xl border border-blue-300/30 mb-6 md:mb-8 backdrop-blur-sm",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                        className: "text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent mb-3 md:mb-4",
-                                        children: "Mutual Fund Services"
+                className: "flex-1 pt-32 pb-20 relative z-10",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "max-w-7xl mx-auto px-6",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "text-center mb-16",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "inline-block bg-gradient-to-r from-amber-500/10 to-amber-400/10 px-8 py-6 rounded-2xl border border-amber-200/30 mb-8 backdrop-blur-sm",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                                            className: "text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent mb-4",
+                                            children: "Mutual Fund Services"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                            lineNumber: 895,
+                                            columnNumber: 15
+                                        }, ("TURBOPACK compile-time value", void 0))
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                        lineNumber: 417,
-                                        columnNumber: 15
+                                        lineNumber: 894,
+                                        columnNumber: 13
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed font-medium",
+                                        children: "Partnering with India's leading fund houses to bring you the best investment opportunities"
+                                    }, void 0, false, {
+                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                        lineNumber: 899,
+                                        columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 416,
-                                    columnNumber: 13
-                                }, ("TURBOPACK compile-time value", void 0)),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-lg md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed font-medium",
-                                    children: "Partnering with India's leading fund houses to bring you the best investment opportunities"
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 421,
-                                    columnNumber: 13
-                                }, ("TURBOPACK compile-time value", void 0))
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                            lineNumber: 415,
-                            columnNumber: 11
-                        }, ("TURBOPACK compile-time value", void 0)),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12 md:mb-16",
-                            children: mutualFundCategories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-black/20 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-white/30 shadow-lg hover:shadow-xl transition-all duration-300",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "flex items-center mb-4 md:mb-6 pb-3 md:pb-4 border-b border-white/30",
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center mr-3 md:mr-4",
-                                                    children: category.id === "equity-funds" ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__["TrendingUp"], {
-                                                        className: "w-5 h-5 md:w-6 md:h-6 text-white"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                        lineNumber: 433,
-                                                        columnNumber: 23
-                                                    }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$line$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChartLine$3e$__["ChartLine"], {
-                                                        className: "w-5 h-5 md:w-6 md:h-6 text-white"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                        lineNumber: 435,
-                                                        columnNumber: 23
-                                                    }, ("TURBOPACK compile-time value", void 0))
-                                                }, void 0, false, {
-                                                    fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                    lineNumber: 431,
-                                                    columnNumber: 19
-                                                }, ("TURBOPACK compile-time value", void 0)),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                                            className: "text-xl md:text-2xl font-bold text-white",
-                                                            children: category.name
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                lineNumber: 893,
+                                columnNumber: 11
+                            }, ("TURBOPACK compile-time value", void 0)),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "grid grid-cols-1 md:grid-cols-2 gap-8 mb-8",
+                                children: mutualFundCategories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "bg-black/20 backdrop-blur-md rounded-2xl p-8 border border-white/30 shadow-lg hover:shadow-xl transition-all duration-300",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flex items-center mb-6 pb-4 border-b border-white/30",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "w-12 h-12 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 flex items-center justify-center mr-4",
+                                                        children: category.id === "equity-funds" ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__["TrendingUp"], {
+                                                            className: "w-6 h-6 text-white"
                                                         }, void 0, false, {
                                                             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                            lineNumber: 439,
-                                                            columnNumber: 21
-                                                        }, ("TURBOPACK compile-time value", void 0)),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                            className: "text-gray-300 text-xs md:text-sm",
-                                                            children: category.description
+                                                            lineNumber: 911,
+                                                            columnNumber: 23
+                                                        }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$line$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChartLine$3e$__["ChartLine"], {
+                                                            className: "w-6 h-6 text-white"
                                                         }, void 0, false, {
                                                             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                            lineNumber: 440,
-                                                            columnNumber: 21
+                                                            lineNumber: 913,
+                                                            columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0))
-                                                    ]
-                                                }, void 0, true, {
-                                                    fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                    lineNumber: 438,
-                                                    columnNumber: 19
-                                                }, ("TURBOPACK compile-time value", void 0))
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                            lineNumber: 430,
-                                            columnNumber: 17
-                                        }, ("TURBOPACK compile-time value", void 0)),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "space-y-4 md:space-y-6",
-                                            children: category.subcategories.map((sub)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    onClick: ()=>setSelectedSubCategory(sub),
-                                                    className: "cursor-pointer group rounded-xl p-4 md:p-5 bg-white/20 backdrop-blur border border-white/30 hover:border-blue-400/50 hover:shadow-md transition-all duration-300",
-                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "flex items-center",
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                        lineNumber: 909,
+                                                        columnNumber: 19
+                                                    }, ("TURBOPACK compile-time value", void 0)),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-lg bg-blue-500/30 group-hover:bg-blue-500/40 transition-colors mr-3 md:mr-4",
-                                                                children: /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].cloneElement(sub.icon, {
-                                                                    className: "w-4 h-4 md:w-6 md:h-6 text-blue-300"
-                                                                })
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                                                className: "text-2xl font-bold text-white",
+                                                                children: category.name
                                                             }, void 0, false, {
                                                                 fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                lineNumber: 452,
-                                                                columnNumber: 25
+                                                                lineNumber: 917,
+                                                                columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0)),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "flex-grow",
-                                                                children: [
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                                                        className: "font-semibold text-white group-hover:text-blue-200 transition-colors text-sm md:text-base",
-                                                                        children: sub.name
-                                                                    }, void 0, false, {
-                                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                        lineNumber: 458,
-                                                                        columnNumber: 27
-                                                                    }, ("TURBOPACK compile-time value", void 0)),
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                        className: "text-gray-300 text-xs md:text-sm mt-1 line-clamp-2",
-                                                                        children: sub.description
-                                                                    }, void 0, false, {
-                                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                        lineNumber: 461,
-                                                                        columnNumber: 27
-                                                                    }, ("TURBOPACK compile-time value", void 0))
-                                                                ]
-                                                            }, void 0, true, {
-                                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                lineNumber: 457,
-                                                                columnNumber: 25
-                                                            }, ("TURBOPACK compile-time value", void 0)),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "text-blue-300 opacity-0 group-hover:opacity-100 transition-opacity",
-                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__["ArrowRight"], {
-                                                                    className: "w-4 h-4 md:w-5 md:h-5"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                    lineNumber: 466,
-                                                                    columnNumber: 27
-                                                                }, ("TURBOPACK compile-time value", void 0))
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "text-gray-200 text-sm",
+                                                                children: category.description
                                                             }, void 0, false, {
                                                                 fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                                lineNumber: 465,
-                                                                columnNumber: 25
+                                                                lineNumber: 918,
+                                                                columnNumber: 21
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                        lineNumber: 451,
-                                                        columnNumber: 23
+                                                        lineNumber: 916,
+                                                        columnNumber: 19
                                                     }, ("TURBOPACK compile-time value", void 0))
-                                                }, sub.id, false, {
-                                                    fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                    lineNumber: 446,
-                                                    columnNumber: 21
-                                                }, ("TURBOPACK compile-time value", void 0)))
-                                        }, void 0, false, {
-                                            fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                            lineNumber: 444,
-                                            columnNumber: 17
-                                        }, ("TURBOPACK compile-time value", void 0))
-                                    ]
-                                }, category.id, true, {
-                                    fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 429,
-                                    columnNumber: 15
-                                }, ("TURBOPACK compile-time value", void 0)))
-                        }, void 0, false, {
-                            fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                            lineNumber: 427,
-                            columnNumber: 11
-                        }, ("TURBOPACK compile-time value", void 0)),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DualMarqueeSection, {}, void 0, false, {
-                            fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                            lineNumber: 477,
-                            columnNumber: 11
-                        }, ("TURBOPACK compile-time value", void 0)),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-8 md:p-10 text-center text-white shadow-md mt-12 md:mt-16",
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                lineNumber: 908,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "space-y-4",
+                                                children: category.subcategories.map((sub)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        onClick: ()=>setSelectedSubCategory(sub),
+                                                        className: "cursor-pointer group rounded-xl p-5 bg-white/20 backdrop-blur border border-white/30 hover:border-amber-400/50 hover:shadow-md transition-all duration-300",
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "flex items-center",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                    className: "flex items-center justify-center w-10 h-10 rounded-lg bg-amber-500/30 group-hover:bg-amber-500/40 transition-colors mr-4",
+                                                                    children: /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].cloneElement(sub.icon, {
+                                                                        className: "w-6 h-6 text-amber-300"
+                                                                    })
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                                    lineNumber: 930,
+                                                                    columnNumber: 25
+                                                                }, ("TURBOPACK compile-time value", void 0)),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                    className: "flex-grow",
+                                                                    children: [
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                                            className: "font-semibold text-white group-hover:text-amber-200 transition-colors",
+                                                                            children: sub.name
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                                            lineNumber: 936,
+                                                                            columnNumber: 27
+                                                                        }, ("TURBOPACK compile-time value", void 0)),
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                            className: "text-gray-200 text-sm mt-1 line-clamp-2",
+                                                                            children: sub.description
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                                            lineNumber: 939,
+                                                                            columnNumber: 27
+                                                                        }, ("TURBOPACK compile-time value", void 0))
+                                                                    ]
+                                                                }, void 0, true, {
+                                                                    fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                                    lineNumber: 935,
+                                                                    columnNumber: 25
+                                                                }, ("TURBOPACK compile-time value", void 0)),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                    className: "text-amber-300 opacity-0 group-hover:opacity-100 transition-opacity",
+                                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$plus$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Plus$3e$__["Plus"], {
+                                                                        className: "w-5 h-5"
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                                        lineNumber: 944,
+                                                                        columnNumber: 27
+                                                                    }, ("TURBOPACK compile-time value", void 0))
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                                    lineNumber: 943,
+                                                                    columnNumber: 25
+                                                                }, ("TURBOPACK compile-time value", void 0))
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                            lineNumber: 929,
+                                                            columnNumber: 23
+                                                        }, ("TURBOPACK compile-time value", void 0))
+                                                    }, sub.id, false, {
+                                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                        lineNumber: 924,
+                                                        columnNumber: 21
+                                                    }, ("TURBOPACK compile-time value", void 0)))
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                                lineNumber: 922,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0))
+                                        ]
+                                    }, category.id, true, {
+                                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                        lineNumber: 907,
+                                        columnNumber: 15
+                                    }, ("TURBOPACK compile-time value", void 0)))
+                            }, void 0, false, {
+                                fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                                lineNumber: 905,
+                                columnNumber: 11
+                            }, ("TURBOPACK compile-time value", void 0))
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                        lineNumber: 891,
+                        columnNumber: 9
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DualMarqueeSection, {}, void 0, false, {
+                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                        lineNumber: 956,
+                        columnNumber: 9
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "max-w-7xl mx-auto px-6 mt-8",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "bg-gradient-to-r from-amber-500 to-amber-400 rounded-2xl p-10 text-center text-white shadow-xl",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$line$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChartLine$3e$__["ChartLine"], {
-                                    className: "w-12 h-12 md:w-16 md:h-16 mx-auto mb-4 md:mb-6"
+                                    className: "w-16 h-16 mx-auto mb-6"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 481,
+                                    lineNumber: 961,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                    className: "text-2xl md:text-3xl font-bold mb-3 md:mb-4",
-                                    children: "Start Your Investment Journey"
+                                    className: "text-3xl md:text-4xl font-bold mb-4",
+                                    children: "Ready to Start Your Investment Journey?"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 482,
+                                    lineNumber: 962,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-indigo-100 text-base md:text-lg mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed",
-                                    children: "Our investment experts will help you build a portfolio that matches your financial goals and risk tolerance."
+                                    className: "text-amber-100 text-lg mb-8 max-w-2xl mx-auto leading-relaxed",
+                                    children: "Our investment experts will analyze your needs and recommend the best mutual funds from our 12+ partner fund houses to ensure you get optimal returns."
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 483,
+                                    lineNumber: 965,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex flex-col sm:flex-row gap-4 md:gap-5 justify-center",
+                                    className: "flex justify-center",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                         href: "/contact",
-                                        className: "block",
+                                        className: "block w-full max-w-md",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                            className: "px-6 py-3 md:px-8 md:py-4 bg-white text-indigo-600 font-bold rounded-lg hover:bg-indigo-50 transition-colors text-base md:text-lg flex items-center justify-center w-full sm:w-auto",
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$phone$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Phone$3e$__["Phone"], {
-                                                    className: "w-5 h-5 md:w-6 md:h-6 mr-2 md:mr-3"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                                    lineNumber: 489,
-                                                    columnNumber: 19
-                                                }, ("TURBOPACK compile-time value", void 0)),
-                                                "Consult an Expert"
-                                            ]
-                                        }, void 0, true, {
+                                            className: "w-full px-12 py-5 bg-white text-amber-600 font-bold rounded-lg hover:bg-amber-50 transition-colors shadow-lg text-lg cursor-pointer",
+                                            children: "Get Free Investment Consultation"
+                                        }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                            lineNumber: 488,
+                                            lineNumber: 971,
                                             columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0))
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                        lineNumber: 487,
+                                        lineNumber: 970,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                                    lineNumber: 486,
+                                    lineNumber: 969,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                            lineNumber: 480,
+                            lineNumber: 960,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                    lineNumber: 413,
-                    columnNumber: 9
-                }, ("TURBOPACK compile-time value", void 0))
-            }, void 0, false, {
+                    }, void 0, false, {
+                        fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
+                        lineNumber: 959,
+                        columnNumber: 9
+                    }, ("TURBOPACK compile-time value", void 0))
+                ]
+            }, void 0, true, {
                 fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                lineNumber: 412,
+                lineNumber: 890,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$components$2f$Footer$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                lineNumber: 498,
+                lineNumber: 980,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             selectedSubCategory && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(MutualFundInformationBox, {
@@ -1674,13 +1941,13 @@ const MutualFundsPage = ()=>{
                 onClose: ()=>setSelectedSubCategory(null)
             }, void 0, false, {
                 fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-                lineNumber: 502,
+                lineNumber: 984,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/mokshainvestment/app/services/mutual-funds/page.tsx",
-        lineNumber: 409,
+        lineNumber: 887,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };

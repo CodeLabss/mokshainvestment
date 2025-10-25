@@ -119,6 +119,12 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   handler satisfies AppPageConfig<"/services/nfo">
 }
 
+// Validate ../../app/services/sif/page.tsx
+{
+  const handler = {} as typeof import("../../app/services/sif/page.js")
+  handler satisfies AppPageConfig<"/services/sif">
+}
+
 // Validate ../../app/api/admin/content/route.ts
 {
   const handler = {} as typeof import("../../app/api/admin/content/route.js")
