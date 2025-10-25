@@ -135,8 +135,8 @@ export default function LoanAgainstMFPage() {
   const [rate, setRate] = useState<number>(12); // annual %
   const [tenureMonths, setTenureMonths] = useState<number>(12); // months
 
-  const pyramidRef = useRef<HTMLElement | null>(null);
-  const reveal = useReveal(pyramidRef, 0.15);
+const pyramidRef = useRef<HTMLElement>(null);
+const reveal = useReveal(pyramidRef as React.RefObject<HTMLElement>, 0.15);
 
   // Derived
   const availLoan = Math.max(0, (portfolioValue * ltv) / 100);

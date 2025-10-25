@@ -25,8 +25,9 @@ export async function POST(req: Request) {
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
-    // Make public (if bucket is public), get public URL
-    const publicURL = supabaseAdmin.storage.from(bucket).getPublicUrl(data.path).publicUrl;
+    // getPublicUrl returns { data: { publicUrl: string } }
+    const { data: publicData } = supabaseAdmin.storage.from(bucket).getPublicUrl(data.path);
+    const publicURL = publicData?.publicUrl ?? null;
     return NextResponse.json({ path: data.path, publicURL });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });

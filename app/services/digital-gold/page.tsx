@@ -61,7 +61,7 @@ const imageContent = [
 const FeatureCard = ({ icon, title, description }: { icon: ReactNode; title: string; description: string }) => (
   <div className="flex flex-col items-center text-center p-8 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 shadow-xl transition-all duration-300 ease-in-out hover:scale-105 hover:border-amber-400 hover:shadow-2xl">
     <div className="w-16 h-16 flex items-center justify-center rounded-2xl bg-gradient-to-br from-amber-400/20 to-amber-600/20 mb-6">
-      {React.cloneElement(icon as React.ReactElement, { className: "w-8 h-8 text-amber-400" })}
+      {React.cloneElement(icon as React.ReactElement<{ className?: string }>, { className: "w-8 h-8 text-amber-400" })}
     </div>
     <h3 className="text-xl font-bold text-white mb-4">{title}</h3>
     <p className="text-slate-200 leading-relaxed">{description}</p>
@@ -268,7 +268,7 @@ const DigitalGoldPage = () => {
               {imageContent.map((_, index) => (
                 <div
                   key={index}
-                  ref={(el) => (sectionRefs.current[index] = el)}
+                  ref={(el) => { sectionRefs.current[index] = el; }}
                   className="h-[100vh] flex items-center justify-center"
                 >
                   {/* Invisible trigger point */}

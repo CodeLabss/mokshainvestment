@@ -328,18 +328,19 @@ export default function AdminLoginPage() {
           </div>
 
           {/* Back to Home Link */}
+                    {/* Back to Home Link */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
             className="text-center mt-4 md:mt-6"
           >
-            <link
+            <Link
               href="/"
               className="text-slate-400 hover:text-white text-sm transition-colors"
             >
               ← Back to Homepage
-            </link>
+            </Link>
           </motion.div>
         </motion.div>
       </div>

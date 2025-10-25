@@ -503,8 +503,8 @@ function PillarCard({
 
 export default function FinancialPlanningPage() {
   const [showContact, setShowContact] = useState(false);
-  const pyramidRef = useRef<HTMLElement | null>(null);
-  const inView = useSectionInView(pyramidRef, 0.18);
+const pyramidRef = useRef<HTMLElement>(null);
+const inView = useSectionInView(pyramidRef as React.RefObject<HTMLElement>, 0.18);
   const ordered = [pillars[2], pillars[1], pillars[0]]; // SIP -> HIP -> TIP
 
   return (

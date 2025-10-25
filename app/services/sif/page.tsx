@@ -197,7 +197,7 @@ const StrategyDetailModal = ({
         <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-2xl flex justify-between items-center">
           <div className="flex items-center">
             <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-amber-100 mr-4">
-              {React.cloneElement(strategy.icon as React.ReactElement, { className: "w-8 h-8 text-amber-600" })}
+              {React.cloneElement(strategy.icon as React.ReactElement<{ className?: string }>, { className: "w-8 h-8 text-amber-600" })}
             </div>
             <div>
               <h2 className="text-2xl font-bold text-gray-900">{strategy.name}</h2>
@@ -395,7 +395,7 @@ const SIFPage = () => {
                     >
                       <div className="flex items-center">
                         <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-amber-500/30 group-hover:bg-amber-500/40 transition-colors mr-4">
-                          {React.cloneElement(strategy.icon as React.ReactElement, { 
+                          {React.cloneElement(strategy.icon as React.ReactElement<{ className?: string }>, { 
                             className: "w-6 h-6 text-amber-300" 
                           })}
                         </div>

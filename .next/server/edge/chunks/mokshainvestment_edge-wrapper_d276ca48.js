@@ -1,0 +1,3 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["chunks/mokshainvestment_edge-wrapper_d276ca48.js",56913,(e,t,h)=>{self._ENTRIES||={};let n=Promise.resolve().then(()=>e.i(16135));n.catch(()=>{}),self._ENTRIES.middleware_middleware=new Proxy(n,{get(e,t){if("then"===t)return(t,h)=>e.then(t,h);let h=(...h)=>e.then(e=>(0,e[t])(...h));return h.then=(h,n)=>e.then(e=>e[t]).then(h,n),h}})}]);
+
+//# sourceMappingURL=mokshainvestment_edge-wrapper_d276ca48.js.map

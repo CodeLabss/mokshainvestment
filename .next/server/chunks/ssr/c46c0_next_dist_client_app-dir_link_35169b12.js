@@ -1,0 +1,3 @@
+module.exports=[251,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(56091);a.n(d("[project]/mokshainvestment/node_modules/next/dist/client/app-dir/link.js <module evaluation>"))},50942,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(56091);a.n(d("[project]/mokshainvestment/node_modules/next/dist/client/app-dir/link.js"))},96330,a=>{"use strict";a.i(251);var b=a.i(50942);a.n(b)}];
+
+//# sourceMappingURL=c46c0_next_dist_client_app-dir_link_35169b12.js.map
