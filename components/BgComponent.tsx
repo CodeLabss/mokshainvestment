@@ -96,14 +96,25 @@
         transparent: true,
       })
 
-      const geometry = new THREE.PlaneGeometry(2, 2)
-      const displayPlane = new THREE.Mesh(geometry, displayMaterial)
+      // const geometry = new THREE.PlaneGeometry(2, 2)
+      // const displayPlane = new THREE.Mesh(geometry, displayMaterial)
 
-      function animate() {
-        requestAnimationFrame(animate)
-        displayMaterial.uniforms.iTime.value = performance.now() * 0.001
-        renderer.render(displayPlane, camera)
-      }
+      // function animate() {
+      //   requestAnimationFrame(animate)
+      //   displayMaterial.uniforms.iTime.value = performance.now() * 0.001
+      //   renderer.render(displayPlane, camera)
+      // }
+      const geometry = new THREE.PlaneGeometry(2, 2)
+const displayPlane = new THREE.Mesh(geometry, displayMaterial)
+const scene = new THREE.Scene()
+scene.add(displayPlane)
+
+function animate() {
+  requestAnimationFrame(animate)
+  displayMaterial.uniforms.iTime.value = performance.now() * 0.001
+  renderer.render(scene, camera)
+}
+
 
       const handleResize = () => {
         const width = window.innerWidth
