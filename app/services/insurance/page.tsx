@@ -1,10 +1,30 @@
-// new theme
 "use client";
 
 import React, { useState, ReactNode, useRef, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Heart, Plus, Car, Store, Plane, Shield, X, Phone, Mail, Clock, CheckCircle, Star } from "lucide-react";
+import { 
+  Shield,
+  Heart,
+  Car,
+  Home,
+  Plane,
+  X, 
+  Phone,
+  Clock,
+  CheckCircle,
+  Star,
+  Umbrella,
+  Stethoscope,
+  Globe,
+  Zap,
+  Users,
+  ShieldCheck,
+  Building,
+  Sprout,
+  Gem,
+  Briefcase
+} from "lucide-react";
 import Link from "next/link";
 
 interface Company {
@@ -55,7 +75,8 @@ const InfiniteLogoMarquee = () => {
   const marqueeRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
-const animationRef = useRef<number | null>(null);
+  const animationRef = useRef<number | null>(null);
+  
   // Duplicate the companies array to create seamless loop
   const duplicatedCompanies = [...allCompanies, ...allCompanies];
 
@@ -133,7 +154,6 @@ const animationRef = useRef<number | null>(null);
                       src={company.logo_url || "/dummy-logo.png"}
                       alt={company.name}
                       className="w-full h-full object-contain opacity-100 brightness-100 contrast-100"
-                      // Removed grayscale filter and hover effects
                     />
                   </div>
                 </div>
@@ -179,7 +199,9 @@ const CategoryDetailModal = ({
         <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-2xl flex justify-between items-center">
           <div className="flex items-center">
             <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-amber-100 mr-4">
-              {React.cloneElement(subCategory.icon as React.ReactElement<{ className?: string }>, { className: "w-8 h-8 text-amber-600" })}
+              {React.cloneElement(subCategory.icon as React.ReactElement<{ className?: string }>, { 
+                className: "w-8 h-8 text-amber-600" 
+              })}
             </div>
             <div>
               <h2 className="text-2xl font-bold text-gray-900">{subCategory.name}</h2>
@@ -272,9 +294,9 @@ const InsurancePage = () => {
           id: "life", 
           name: "Life Insurance", 
           description: "Secure your family's financial future with comprehensive life insurance plans that provide financial stability and peace of mind. Our plans offer flexible coverage options, tax benefits, and additional riders for complete protection.",
-          icon: <Heart className="w-8 h-8 text-rose-500" />,
+          icon: <Sprout className="w-8 h-8 text-amber-400" />,
           features: [
-            "Flexible coverage amounts from ₹10L to ₹5Cr",
+            "Flexible coverage amounts from ₹1L to ₹5Cr",
             "Critical illness protection included",
             "Tax benefits under Section 80C & 10(10D)",
             "Additional riders for enhanced protection",
@@ -284,13 +306,13 @@ const InsurancePage = () => {
         { 
           id: "mediclaim", 
           name: "Health Insurance", 
-          description: "Comprehensive health coverage for you and your family with cashless treatment across 10,000+ hospitals nationwide. Protect your savings from medical emergencies with our extensive health insurance plans.",
-          icon: <Plus className="w-8 h-8 text-emerald-400" />,
+          description: "Comprehensive health coverage for you and your family with cashless treatment across 5,000+ hospitals nationwide. Protect your savings from medical emergencies with our extensive health insurance plans.",
+          icon: <Heart className="w-8 h-8 text-amber-400" />,
           features: [
-            "Cashless hospitalization at 10,000+ network hospitals",
+            "Cashless hospitalization at 5,000+ network hospitals",
             "Pre and post hospitalization cover up to 60 days",
             "Annual health check-ups included",
-            "No claim bonus up to 100%",
+            "No claim bonus up to 1000%",
             "Cover for pre-existing diseases after waiting period"
           ]
         },
@@ -298,12 +320,12 @@ const InsurancePage = () => {
           id: "travel", 
           name: "Travel Insurance", 
           description: "Travel with confidence knowing you're protected against unforeseen circumstances. Our travel insurance covers medical emergencies, trip cancellations, lost baggage, and more for domestic and international travel.",
-          icon: <Plane className="w-8 h-8 text-sky-400" />,
+          icon: <Plane className="w-8 h-8 text-amber-400" />,
           features: [
-            "Emergency medical coverage up to $500,000",
+            "Emergency medical coverage up to ₹500,000",
             "Trip cancellation and interruption protection",
             "Lost baggage and personal effects compensation",
-            "Personal liability coverage up to $1,000,000",
+            "Personal liability coverage up to ₹1,000,000",
             "24/7 emergency assistance worldwide"
           ]
         },
@@ -317,7 +339,7 @@ const InsurancePage = () => {
         { 
           id: "car", 
           name: "Car Insurance", 
-          description: "Comprehensive protection for your vehicle against accidents, theft, and natural disasters. Our car insurance policies offer cashless repairs, quick claim settlement, and additional coverage options for complete peace of mind.",
+          description: "Comprehensive and zero debt protection for your vehicle against accidents, theft, and natural disasters. Our car insurance policies offer cashless repairs, quick claim settlement, and additional coverage options for complete peace of mind.",
           icon: <Car className="w-8 h-8 text-amber-400" />,
           features: [
             "Own damage and third party liability coverage",
@@ -328,16 +350,16 @@ const InsurancePage = () => {
           ]
         },
         { 
-          id: "business", 
-          name: "Business Insurance", 
-          description: "Safeguard your business against unexpected events with comprehensive coverage solutions. Protect your assets, employees, and operations from various risks that could impact your business continuity and growth.",
-          icon: <Store className="w-8 h-8 text-violet-500" />,
+          id: "home", 
+          name: "Home Insurance", 
+          description: "Comprehensive protection for your home and belongings against fire, theft, natural disasters, and other risks. Our home insurance policies safeguard your most valuable asset and provide financial security for your family's shelter.",
+          icon: <Home className="w-8 h-8 text-amber-400" />,
           features: [
-            "Property and asset protection against fire & theft",
-            "Business interruption coverage for revenue loss",
-            "Liability protection for third-party injuries",
-            "Equipment breakdown and cyber attack coverage",
-            "Customizable policy options for different industries"
+            "Structure coverage for building and construction",
+            "Contents protection for furniture and personal belongings",
+            "Fire, theft, and natural disaster coverage",
+            "Alternative accommodation expenses during repairs",
+            "Liability coverage for third-party injuries on property"
           ]
         },
       ],
@@ -370,9 +392,9 @@ const InsurancePage = () => {
                 <div className="flex items-center mb-6 pb-4 border-b border-white/30">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 flex items-center justify-center mr-4">
                     {category.id === "personal" ? (
-                      <Heart className="w-6 h-6 text-white" />
+                      <Users className="w-6 h-6 text-white" />
                     ) : (
-                      <Shield className="w-6 h-6 text-white" />
+                      <Gem className="w-6 h-6 text-white" />
                     )}
                   </div>
                   <div>
@@ -389,10 +411,8 @@ const InsurancePage = () => {
                       className="cursor-pointer group rounded-xl p-5 bg-white/20 backdrop-blur border border-white/30 hover:border-amber-400/50 hover:shadow-md transition-all duration-300"
                     >
                       <div className="flex items-center">
-                                                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-amber-500/30 group-hover:bg-amber-500/40 transition-colors mr-4">
-                          {React.cloneElement(sub.icon as React.ReactElement<{ className?: string }>, {
-                            className: "w-6 h-6 text-amber-300"
-                          })}
+                        <div className="flex items-center justify-center w-10 h-10 rounded-lg mr-4">
+                          {sub.icon}
                         </div>
                         <div className="flex-grow">
                           <h4 className="font-semibold text-white group-hover:text-amber-200 transition-colors">
@@ -403,7 +423,7 @@ const InsurancePage = () => {
                           </p>
                         </div>
                         <div className="text-amber-300 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <Plus className="w-5 h-5" />
+                          <X className="w-5 h-5 transform rotate-45" />
                         </div>
                       </div>
                     </div>
@@ -452,4 +472,4 @@ const InsurancePage = () => {
   );
 };
 
-export default InsurancePage; 
+export default InsurancePage;

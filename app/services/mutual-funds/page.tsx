@@ -897,7 +897,7 @@ const MutualFundsPage = () => {
               </h1>
             </div>
             <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed font-medium">
-              Partnering with India's leading fund houses to bring you the best investment opportunities
+              Achieve goal like education, dream home, marraige and retirement with curated mutual fund solutions from India's leading fund houses.
             </p>
           </div>
 

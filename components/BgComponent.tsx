@@ -6,7 +6,8 @@
   export function BgComponent() {
     const containerRef = useRef<HTMLDivElement>(null)
     const canvasRef = useRef<HTMLDivElement>(null)
-    const rendererRef = useRef<THREE.WebGLRenderer | null>(null)
+    // const rendererRef = useRef<THREE.WebGLRenderer | null>(null)
+const rendererRef = useRef<WebGLRenderer | null>(null)
 
     useEffect(() => {
       if (!containerRef.current || !canvasRef.current) return

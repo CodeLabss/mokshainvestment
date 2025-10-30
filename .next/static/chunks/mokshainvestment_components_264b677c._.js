@@ -229,56 +229,6 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 "[project]/mokshainvestment/components/Hero.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-// looks best
-// "use client";
-// import Image from "next/image";
-// export default function Hero() {
-//   return (
-//     <section className="relative py-20 bg-transparent overflow-hidden">
-//       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-//         {/* Left: Milestone Image */}
-//         <div className="flex justify-center relative">
-//           <div className="w-full max-w-md rounded-2xl shadow-xl overflow-hidden">
-//             <Image
-//               src="/milestone.jpg"
-//               alt="Prudent SIP Milestone"
-//               width={500}
-//               height={500}
-//               className="w-full h-auto object-cover rounded-2xl"
-//               priority
-//             />
-//           </div>
-//         </div>
-//         {/* Right: Text Content */}
-//         <div className="text-center lg:text-left space-y-6">
-//           <h1 className="text-4xl md:text-5xl font-extrabold leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 drop-shadow-sm">
-//             Celebrating a Landmark Achievement
-//           </h1>
-//           <p className="text-lg md:text-xl text-slate-100/90 leading-relaxed">
-//             We’re proud to be part of Prudent’s{" "}
-//             <span className="font-semibold text-pink-300">₹1,000 Cr SIP Book</span>{" "}
-//             milestone, with{" "}
-//             <span className="font-semibold text-indigo-300">33.5 Lakh</span> live SIPs.
-//           </p>
-//           <p className="text-lg text-slate-200/90">
-//             Personally contributing{" "}
-//             <span className="font-semibold text-purple-300">520 SIPs</span> to this
-//             achievement.
-//           </p>
-//           {/* CTA Button */}
-//           <div className="mt-4">
-//             <a
-//               href="#services"
-//               className="inline-block px-8 py-3 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold shadow-lg hover:opacity-90 transition"
-//             >
-//               Explore Our Services
-//             </a>
-//           </div>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
 __turbopack_context__.s([
     "default",
     ()=>Hero
@@ -306,17 +256,17 @@ function Hero() {
                             className: "w-full h-auto object-cover rounded-2xl"
                         }, void 0, false, {
                             fileName: "[project]/mokshainvestment/components/Hero.tsx",
-                            lineNumber: 78,
+                            lineNumber: 22,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/mokshainvestment/components/Hero.tsx",
-                        lineNumber: 69,
+                        lineNumber: 13,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/mokshainvestment/components/Hero.tsx",
-                    lineNumber: 68,
+                    lineNumber: 12,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -327,7 +277,7 @@ function Hero() {
                             children: "Celebrating a Landmark Achievement"
                         }, void 0, false, {
                             fileName: "[project]/mokshainvestment/components/Hero.tsx",
-                            lineNumber: 85,
+                            lineNumber: 29,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -340,7 +290,7 @@ function Hero() {
                                     children: "₹1,000 Cr SIP Book"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/components/Hero.tsx",
-                                    lineNumber: 95,
+                                    lineNumber: 39,
                                     columnNumber: 13
                                 }, this),
                                 " ",
@@ -351,14 +301,14 @@ function Hero() {
                                     children: "33.5 Lakh"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/components/Hero.tsx",
-                                    lineNumber: 97,
+                                    lineNumber: 41,
                                     columnNumber: 13
                                 }, this),
                                 " live SIPs."
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/components/Hero.tsx",
-                            lineNumber: 93,
+                            lineNumber: 37,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -371,47 +321,47 @@ function Hero() {
                                     children: "520 SIPs"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/components/Hero.tsx",
-                                    lineNumber: 102,
+                                    lineNumber: 46,
                                     columnNumber: 13
                                 }, this),
                                 " to this achievement."
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/components/Hero.tsx",
-                            lineNumber: 100,
+                            lineNumber: 44,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "mt-4",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                href: "#services",
+                                href: "/services",
                                 className: "inline-block px-8 py-3 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold shadow-lg hover:opacity-90 transition",
                                 children: "Explore Our Services"
                             }, void 0, false, {
                                 fileName: "[project]/mokshainvestment/components/Hero.tsx",
-                                lineNumber: 108,
+                                lineNumber: 52,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/mokshainvestment/components/Hero.tsx",
-                            lineNumber: 107,
+                            lineNumber: 51,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/mokshainvestment/components/Hero.tsx",
-                    lineNumber: 84,
+                    lineNumber: 28,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/mokshainvestment/components/Hero.tsx",
-            lineNumber: 65,
+            lineNumber: 9,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/mokshainvestment/components/Hero.tsx",
-        lineNumber: 64,
+        lineNumber: 8,
         columnNumber: 5
     }, this);
 }
@@ -608,99 +558,6 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 "[project]/mokshainvestment/components/Services.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-// "use client";
-// import { useRouter } from "next/navigation";
-// import { Shield, Briefcase, UserCheck, ChartLine, Gift, Target, ArrowRightLeft } from "lucide-react";
-// export default function Services() {
-//   const router = useRouter();
-//   const services = [
-//     {
-//       name: "Life Insurance",
-//       desc: "Coverage tailored to your life goals.",
-//       icon: (
-//         <svg xmlns="http://www.w3.org/2000/svg"
-//           fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-//           stroke="currentColor" className="w-8 h-8 text-indigo-600">
-//           <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75c-3.5 0-6.75 1.5-6.75 4.5s3.25 4.5 6.75 4.5 6.75-1.5 6.75-4.5-3.25-4.5-6.75-4.5z" />
-//           <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75V3.75m0 15.75v-3" />
-//         </svg>
-//       ),
-//       href: "/services/insurance"
-//     },
-//     { 
-//       name: "Loan", 
-//       desc: "Flexible loans for personal and business needs.", 
-//       icon: <Briefcase className="w-8 h-8 text-indigo-600" />, 
-//       href: "/services/loan" 
-//     },
-//     { 
-//       name: "Mutual Funds", 
-//       desc: "Grow wealth with disciplined investing.", 
-//       icon: <ChartLine className="w-8 h-8 text-indigo-600" />, 
-//       href: "/services/mutual-funds" 
-//     },
-//     { 
-//       name: "Bonds", 
-//       desc: "Stable income with secure bond investments.", 
-//       icon: <UserCheck className="w-8 h-8 text-indigo-600" />, 
-//       href: "/services/bonds" 
-//     },
-//     { 
-//       name: "Upcoming NFO", 
-//       desc: "Discover new fund opportunities.", 
-//       icon: <Gift className="w-8 h-8 text-indigo-600" />, 
-//       href: "/services/nfo" 
-//     },
-//     { 
-//       name: "Digital Gold", 
-//       desc: "Invest in gold digitally with ease.", 
-//       icon: <Shield className="w-8 h-8 text-indigo-600" />, 
-//       href: "/services/digital-gold" 
-//     },
-//     { 
-//       name: "Financial Planning", 
-//       desc: "Comprehensive financial roadmap for your future.", 
-//       icon: <Target className="w-8 h-8 text-indigo-600" />, 
-//       href: "/services/financial-planning" 
-//     },
-//     { 
-//       name: "Mutual Funds Against Loan", 
-//       desc: "Leverage your mutual fund investments for loans.", 
-//       icon: <ArrowRightLeft className="w-8 h-8 text-indigo-600" />, 
-//       href: "/services/mutual-funds-loan" 
-//     },
-//   ];
-//   return (
-//     <section className="py-20 bg-transparent">
-//       <div className="max-w-7xl mx-auto px-6">
-//         <div className="mb-12 text-center">
-//           <h3 className="text-3xl md:text-4xl font-bold tracking-tight">Our Services</h3>
-//           <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-//             Comprehensive solutions across protection, health, investments, and long-term wealth creation.
-//           </p>
-//         </div>
-//         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-//           {services.map((s) => (
-//             <div
-//               key={s.name}
-//               onClick={() => router.push(s.href)}
-//               className="cursor-pointer group relative rounded-2xl p-6 bg-white/60 backdrop-blur border border-slate-200 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all"
-//             >
-//               {/* Gradient glow on hover */}
-//               <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity"></div>
-//               {/* Icon */}
-//               <div className="relative flex items-center justify-center w-12 h-12 rounded-xl bg-indigo-100 mb-4">
-//                 {s.icon}
-//               </div>
-//               <h4 className="relative text-lg font-semibold text-slate-800">{s.name}</h4>
-//               <p className="relative mt-2 text-gray-600 text-sm">{s.desc}</p>
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
 __turbopack_context__.s([
     "default",
     ()=>Services
@@ -741,7 +598,7 @@ function Services() {
                         d: "M12 6.75c-3.5 0-6.75 1.5-6.75 4.5s3.25 4.5 6.75 4.5 6.75-1.5 6.75-4.5-3.25-4.5-6.75-4.5z"
                     }, void 0, false, {
                         fileName: "[project]/mokshainvestment/components/Services.tsx",
-                        lineNumber: 126,
+                        lineNumber: 19,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
@@ -750,13 +607,13 @@ function Services() {
                         d: "M12 6.75V3.75m0 15.75v-3"
                     }, void 0, false, {
                         fileName: "[project]/mokshainvestment/components/Services.tsx",
-                        lineNumber: 127,
+                        lineNumber: 20,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/mokshainvestment/components/Services.tsx",
-                lineNumber: 123,
+                lineNumber: 16,
                 columnNumber: 9
             }, this),
             href: "/services/insurance"
@@ -768,7 +625,7 @@ function Services() {
                 className: "w-8 h-8 text-indigo-600"
             }, void 0, false, {
                 fileName: "[project]/mokshainvestment/components/Services.tsx",
-                lineNumber: 135,
+                lineNumber: 28,
                 columnNumber: 13
             }, this),
             href: "/services/loan"
@@ -780,7 +637,7 @@ function Services() {
                 className: "w-8 h-8 text-indigo-600"
             }, void 0, false, {
                 fileName: "[project]/mokshainvestment/components/Services.tsx",
-                lineNumber: 141,
+                lineNumber: 34,
                 columnNumber: 13
             }, this),
             href: "/services/mutual-funds"
@@ -792,7 +649,7 @@ function Services() {
                 className: "w-8 h-8 text-indigo-600"
             }, void 0, false, {
                 fileName: "[project]/mokshainvestment/components/Services.tsx",
-                lineNumber: 147,
+                lineNumber: 40,
                 columnNumber: 13
             }, this),
             href: "/services/bonds"
@@ -804,7 +661,7 @@ function Services() {
                 className: "w-8 h-8 text-indigo-600"
             }, void 0, false, {
                 fileName: "[project]/mokshainvestment/components/Services.tsx",
-                lineNumber: 153,
+                lineNumber: 46,
                 columnNumber: 13
             }, this),
             href: "/services/nfo"
@@ -816,7 +673,7 @@ function Services() {
                 className: "w-8 h-8 text-indigo-600"
             }, void 0, false, {
                 fileName: "[project]/mokshainvestment/components/Services.tsx",
-                lineNumber: 159,
+                lineNumber: 52,
                 columnNumber: 13
             }, this),
             href: "/services/digital-gold"
@@ -828,7 +685,7 @@ function Services() {
                 className: "w-8 h-8 text-indigo-600"
             }, void 0, false, {
                 fileName: "[project]/mokshainvestment/components/Services.tsx",
-                lineNumber: 165,
+                lineNumber: 58,
                 columnNumber: 13
             }, this),
             href: "/services/financial-planning"
@@ -840,7 +697,7 @@ function Services() {
                 className: "w-8 h-8 text-indigo-600"
             }, void 0, false, {
                 fileName: "[project]/mokshainvestment/components/Services.tsx",
-                lineNumber: 171,
+                lineNumber: 64,
                 columnNumber: 13
             }, this),
             href: "/services/mutual-funds-loan"
@@ -852,7 +709,7 @@ function Services() {
                 className: "w-8 h-8 text-indigo-600"
             }, void 0, false, {
                 fileName: "[project]/mokshainvestment/components/Services.tsx",
-                lineNumber: 177,
+                lineNumber: 70,
                 columnNumber: 13
             }, this),
             href: "/services/sif"
@@ -871,7 +728,7 @@ function Services() {
                             children: "Our Services"
                         }, void 0, false, {
                             fileName: "[project]/mokshainvestment/components/Services.tsx",
-                            lineNumber: 186,
+                            lineNumber: 79,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -879,13 +736,13 @@ function Services() {
                             children: "Comprehensive solutions across protection, health, investments, and long-term wealth creation."
                         }, void 0, false, {
                             fileName: "[project]/mokshainvestment/components/Services.tsx",
-                            lineNumber: 187,
+                            lineNumber: 80,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/mokshainvestment/components/Services.tsx",
-                    lineNumber: 185,
+                    lineNumber: 78,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -898,7 +755,7 @@ function Services() {
                                     className: "absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/components/Services.tsx",
-                                    lineNumber: 200,
+                                    lineNumber: 93,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -906,7 +763,7 @@ function Services() {
                                     children: s.icon
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/components/Services.tsx",
-                                    lineNumber: 203,
+                                    lineNumber: 96,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -914,7 +771,7 @@ function Services() {
                                     children: s.name
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/components/Services.tsx",
-                                    lineNumber: 207,
+                                    lineNumber: 100,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -922,29 +779,29 @@ function Services() {
                                     children: s.desc
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/components/Services.tsx",
-                                    lineNumber: 208,
+                                    lineNumber: 101,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, s.name, true, {
                             fileName: "[project]/mokshainvestment/components/Services.tsx",
-                            lineNumber: 194,
+                            lineNumber: 87,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/mokshainvestment/components/Services.tsx",
-                    lineNumber: 192,
+                    lineNumber: 85,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/mokshainvestment/components/Services.tsx",
-            lineNumber: 184,
+            lineNumber: 77,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/mokshainvestment/components/Services.tsx",
-        lineNumber: 183,
+        lineNumber: 76,
         columnNumber: 5
     }, this);
 }

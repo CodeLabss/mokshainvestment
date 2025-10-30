@@ -282,6 +282,302 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 "[project]/mokshainvestment/app/services/sif/page.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
+// // v1
+// "use client";
+// import React, { useState, ReactNode } from "react";
+// import Navbar from "@/components/Navbar";
+// import Footer from "@/components/Footer";
+// import { Target, Shield, TrendingUp, BarChart3, X, Phone, CheckCircle, Lock, Globe, Users, Zap, Calendar, ArrowRight } from "lucide-react";
+// import Link from "next/link";
+// // Strategy Detail Modal (keeping this for when users want more details)
+// const StrategyDetailModal = ({ 
+//   strategy, 
+//   onClose 
+// }: { 
+//   strategy: any; 
+//   onClose: () => void; 
+// }) => {
+//   if (!strategy) return null;
+//   return (
+//     <div className="fixed inset-0 bg-gray-800 bg-opacity-70 flex items-center justify-center z-50 p-4">
+//       <div className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+//         {/* Header */}
+//         <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-2xl flex justify-between items-center">
+//           <div className="flex items-center">
+//             <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-amber-100 mr-4">
+//               {React.cloneElement(strategy.icon as React.ReactElement<{ className?: string }>, { className: "w-8 h-8 text-amber-600" })}
+//             </div>
+//             <div>
+//               <h2 className="text-2xl font-bold text-gray-900">{strategy.name}</h2>
+//               <p className="text-gray-500 text-sm mt-1">Professional Investment Access</p>
+//             </div>
+//           </div>
+//           <button 
+//             onClick={onClose}
+//             className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
+//             aria-label="Close modal"
+//           >
+//             <X size={24} />
+//           </button>
+//         </div>
+//         {/* Content */}
+//         <div className="p-6">
+//           <div className="space-y-6">
+//             {/* Description */}
+//             <div>
+//               <h3 className="text-lg font-semibold text-gray-800 mb-3">Investment Approach</h3>
+//               <p className="text-gray-700 leading-relaxed">{strategy.description}</p>
+//             </div>
+//             {/* CTA Section */}
+//             <div className="bg-gradient-to-r from-amber-500 to-amber-400 rounded-2xl p-6 text-white">
+//               <h4 className="font-bold text-lg mb-2">Ready to Get Started?</h4>
+//               <p className="text-amber-100 mb-6 text-sm">
+//                 Connect with our investment specialists to discuss your eligibility and investment objectives.
+//               </p>
+//               <Link href="/contact" className="block">
+//                 <button className="w-full py-4 bg-white text-amber-600 font-bold rounded-lg hover:bg-amber-50 transition-colors flex items-center justify-center text-lg cursor-pointer">
+//                   <Phone className="w-5 h-5 mr-3" />
+//                   Schedule Consultation
+//                 </button>
+//               </Link>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+// // Main SIF Page Component
+// const SIFPage = () => {
+//   const [selectedStrategy, setSelectedStrategy] = useState<any>(null);
+//   // Key features highlighting the SIF value proposition
+//   const keyFeatures = [
+//     {
+//       icon: <Shield className="w-6 h-6" />,
+//       title: "Accredited Investor Access",
+//       description: "Exclusive opportunities typically reserved for institutional clients and high-net-worth individuals"
+//     },
+//     {
+//       icon: <TrendingUp className="w-6 h-6" />,
+//       title: "Professional Management",
+//       description: "Expert fund managers with proven track records in alternative investments"
+//     },
+//     {
+//       icon: <Lock className="w-6 h-6" />,
+//       title: "Minimum Investment ₹10 Lakhs",
+//       description: "Structured entry point for serious investors seeking sophisticated strategies"
+//     },
+//     {
+//       icon: <Globe className="w-6 h-6" />,
+//       title: "Diversified Portfolios",
+//       description: "Access to multiple asset classes and investment strategies in a single fund"
+//     },
+//     {
+//       icon: <Users className="w-6 h-6" />,
+//       title: "Institutional Standards",
+//       description: "Same rigorous due diligence and investment processes used by large institutions"
+//     },
+//     {
+//       icon: <Zap className="w-6 h-6" />,
+//       title: "Growth Potential",
+//       description: "Opportunities for enhanced returns through private markets and alternative assets"
+//     }
+//   ];
+//   // Simple investment options
+//   const investmentOptions = [
+//     {
+//       id: "private-equity",
+//       name: "Private Equity Access",
+//       description: "Participate in growth-stage companies and buyout opportunities before they go public",
+//       icon: <TrendingUp className="w-8 h-8 text-amber-400" />,
+//       shortDesc: "Pre-IPO and growth capital investments"
+//     },
+//     {
+//       id: "real-assets",
+//       name: "Real Assets",
+//       description: "Invest in real estate, infrastructure, and other physical assets generating stable income",
+//       icon: <BarChart3 className="w-8 h-8 text-amber-400" />,
+//       shortDesc: "Tangible assets with income potential"
+//     }
+//   ];
+//   return (
+//     <main className="flex flex-col min-h-screen bg-transparent">
+//       <Navbar />
+//       <section className="flex-1 pt-32 pb-20 relative z-10">
+//         <div className="max-w-6xl mx-auto px-6">
+//           {/* Enhanced Header with Focus on Value Proposition */}
+//           <div className="text-center mb-16">
+//             <div className="inline-block bg-gradient-to-r from-amber-500/10 to-amber-400/10 px-8 py-6 rounded-2xl border border-amber-200/30 mb-8 backdrop-blur-sm">
+//               <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent mb-4">
+//                 Specialised Investment Funds
+//               </h1>
+//             </div>
+//             {/* Main Value Proposition - Made More Prominent */}
+//             <div className="bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/20 max-w-4xl mx-auto mb-8">
+//               <p className="text-2xl md:text-3xl text-white font-light leading-relaxed mb-6">
+//                 Professionally managed investment capital for accredited investors to access exclusive alternative investments typically reserved for institutional clients.
+//               </p>
+//               <div className="inline-flex items-center gap-2 bg-amber-500/20 px-6 py-3 rounded-full border border-amber-400/30">
+//                 <Target className="w-5 h-5 text-amber-400" />
+//                 <span className="text-amber-300 font-semibold text-lg">Minimum Investment: ₹10,00,000</span>
+//               </div>
+//             </div>
+//           </div>
+//           {/* Key Features Grid - Highlighting the Core Benefits */}
+//           <div className="mb-16">
+//             <div className="text-center mb-12">
+//               <h2 className="text-3xl font-bold text-white mb-4">
+//                 Why Choose Specialised Investment Funds?
+//               </h2>
+//               <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+//                 Access institutional-grade investment opportunities with professional management and structured oversight.
+//               </p>
+//             </div>
+//             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+//               {keyFeatures.map((feature, index) => (
+//                 <div 
+//                   key={index}
+//                   className="bg-white/5 backdrop-blur-md rounded-xl p-6 border border-white/10 hover:border-amber-400/30 transition-all duration-300 group hover:transform hover:-translate-y-1"
+//                 >
+//                   <div className="flex items-start space-x-4">
+//                     <div className="flex-shrink-0 w-12 h-12 bg-amber-500/20 rounded-lg flex items-center justify-center group-hover:bg-amber-500/30 transition-colors">
+//                       {React.cloneElement(feature.icon as React.ReactElement<{ className?: string }>, { 
+//                         className: "w-6 h-6 text-amber-400" 
+//                       })}
+//                     </div>
+//                     <div>
+//                       <h3 className="text-lg font-semibold text-white mb-2">
+//                         {feature.title}
+//                       </h3>
+//                       <p className="text-gray-300 text-sm leading-relaxed">
+//                         {feature.description}
+//                       </p>
+//                     </div>
+//                   </div>
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+//           {/* Simplified Investment Options */}
+//           <div className="mb-16">
+//             <div className="text-center mb-12">
+//               <h2 className="text-3xl font-bold text-white mb-4">
+//                 Investment Opportunities
+//               </h2>
+//               <p className="text-gray-300 text-lg">
+//                 Choose from carefully curated investment strategies
+//               </p>
+//             </div>
+//             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+//               {investmentOptions.map((option) => (
+//                 <div
+//                   key={option.id}
+//                   onClick={() => setSelectedStrategy(option)}
+//                   className="cursor-pointer group bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/10 hover:border-amber-400/50 hover:shadow-lg transition-all duration-300"
+//                 >
+//                   <div className="flex items-center mb-4">
+//                     <div className="w-14 h-14 bg-amber-500/20 rounded-xl flex items-center justify-center mr-4 group-hover:bg-amber-500/30 transition-colors">
+//                       {option.icon}
+//                     </div>
+//                     <div>
+//                       <h3 className="text-xl font-bold text-white group-hover:text-amber-200 transition-colors">
+//                         {option.name}
+//                       </h3>
+//                       <p className="text-amber-400 text-sm font-medium">{option.shortDesc}</p>
+//                     </div>
+//                   </div>
+//                   <p className="text-gray-300 mb-4 leading-relaxed">
+//                     {option.description}
+//                   </p>
+//                   <div className="flex items-center text-amber-400 font-semibold group-hover:text-amber-300 transition-colors">
+//                     <span>Learn more</span>
+//                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+//                   </div>
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+//           {/* Process Overview */}
+//           <div className="bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/10 mb-16">
+//             <div className="text-center mb-8">
+//               <h2 className="text-3xl font-bold text-white mb-4">
+//                 How It Works
+//               </h2>
+//               <p className="text-gray-300 text-lg">
+//                 Simple process to start your institutional investment journey
+//               </p>
+//             </div>
+//             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+//               <div className="text-center p-6">
+//                 <div className="w-16 h-16 bg-amber-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+//                   <Users className="w-8 h-8 text-amber-400" />
+//                 </div>
+//                 <h3 className="text-lg font-semibold text-white mb-2">1. Eligibility Check</h3>
+//                 <p className="text-gray-300 text-sm">
+//                   Verify accredited investor status and discuss investment objectives
+//                 </p>
+//               </div>
+//               <div className="text-center p-6">
+//                 <div className="w-16 h-16 bg-amber-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+//                   <Calendar className="w-8 h-8 text-amber-400" />
+//                 </div>
+//                 <h3 className="text-lg font-semibold text-white mb-2">2. Portfolio Construction</h3>
+//                 <p className="text-gray-300 text-sm">
+//                   Customized investment strategy based on your goals and risk profile
+//                 </p>
+//               </div>
+//               <div className="text-center p-6">
+//                 <div className="w-16 h-16 bg-amber-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+//                   <TrendingUp className="w-8 h-8 text-amber-400" />
+//                 </div>
+//                 <h3 className="text-lg font-semibold text-white mb-2">3. Professional Management</h3>
+//                 <p className="text-gray-300 text-sm">
+//                   Ongoing monitoring and management by experienced investment professionals
+//                 </p>
+//               </div>
+//             </div>
+//           </div>
+//           {/* Main CTA Section */}
+//           <div className="bg-gradient-to-r from-amber-500 to-amber-400 rounded-2xl p-10 text-center text-white shadow-xl">
+//             <div className="max-w-2xl mx-auto">
+//               <Target className="w-16 h-16 mx-auto mb-6" />
+//               <h2 className="text-3xl md:text-4xl font-bold mb-4">
+//                 Start Your Institutional Investment Journey
+//               </h2>
+//               <p className="text-amber-100 text-lg mb-8 leading-relaxed">
+//                 Join other accredited investors accessing sophisticated investment strategies with professional oversight and institutional standards.
+//               </p>
+//               <div className="flex flex-col sm:flex-row gap-4 justify-center">
+//                 <Link href="/contact" className="block flex-1 max-w-md">
+//                   <button className="w-full px-8 py-4 bg-white text-amber-600 font-bold rounded-lg hover:bg-amber-50 transition-colors shadow-lg cursor-pointer">
+//                     Schedule Consultation
+//                   </button>
+//                 </Link>
+//                 <div className="flex-1 max-w-md">
+//                   <button className="w-full px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
+//                     Download Brochure
+//                   </button>
+//                 </div>
+//               </div>
+//               <p className="text-amber-200 text-sm mt-6">
+//                 Minimum investment: ₹10,00,000 • Accredited investors only
+//               </p>
+//             </div>
+//           </div>
+//         </div>
+//       </section>
+//       <Footer />
+//       {/* Modal for Strategy Details */}
+//       {selectedStrategy && (
+//         <StrategyDetailModal 
+//           strategy={selectedStrategy} 
+//           onClose={() => setSelectedStrategy(null)} 
+//         />
+//       )}
+//     </main>
+//   );
+// };
+// export default SIFPage;
 __turbopack_context__.s([
     "default",
     ()=>__TURBOPACK__default__export__
@@ -291,342 +587,26 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_mod
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$components$2f$Navbar$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/mokshainvestment/components/Navbar.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$components$2f$Footer$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/mokshainvestment/components/Footer.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$target$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Target$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/target.js [app-client] (ecmascript) <export default as Target>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$building$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Building2$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/building-2.js [app-client] (ecmascript) <export default as Building2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/shield.js [app-client] (ecmascript) <export default as Shield>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/trending-up.js [app-client] (ecmascript) <export default as TrendingUp>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$column$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__BarChart3$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/chart-column.js [app-client] (ecmascript) <export default as BarChart3>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/x.js [app-client] (ecmascript) <export default as X>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$phone$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Phone$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/phone.js [app-client] (ecmascript) <export default as Phone>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2d$big$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/circle-check-big.js [app-client] (ecmascript) <export default as CheckCircle>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$plus$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Plus$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/plus.js [app-client] (ecmascript) <export default as Plus>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$lock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Lock$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/lock.js [app-client] (ecmascript) <export default as Lock>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$globe$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Globe$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/globe.js [app-client] (ecmascript) <export default as Globe>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$award$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Award$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/award.js [app-client] (ecmascript) <export default as Award>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/users.js [app-client] (ecmascript) <export default as Users>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$zap$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Zap$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/zap.js [app-client] (ecmascript) <export default as Zap>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calendar$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Calendar$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/calendar.js [app-client] (ecmascript) <export default as Calendar>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/lucide-react/dist/esm/icons/arrow-right.js [app-client] (ecmascript) <export default as ArrowRight>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/mokshainvestment/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
 ;
-var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.signature();
+var _s = __turbopack_context__.k.signature();
 "use client";
 ;
 ;
 ;
 ;
 ;
-// Enhanced fund houses data
-const allFundHouses = [
-    {
-        id: "1",
-        name: "Blackstone Alternatives",
-        logo_url: "/images/sif/blackstone.jpg",
-        specialty: "Private Equity & Real Estate"
-    },
-    {
-        id: "2",
-        name: "KKR & Co.",
-        logo_url: "/images/sif/kkr.jpg",
-        specialty: "Alternative Investments"
-    },
-    {
-        id: "3",
-        name: "Brookfield Asset Management",
-        logo_url: "/images/sif/brookfield.jpg",
-        specialty: "Real Assets & Infrastructure"
-    },
-    {
-        id: "4",
-        name: "Carlyle Group",
-        logo_url: "/images/sif/carlyle.jpg",
-        specialty: "Global Private Equity"
-    },
-    {
-        id: "5",
-        name: "Apollo Global Management",
-        logo_url: "/images/sif/apollo.jpg",
-        specialty: "Credit & Private Equity"
-    },
-    {
-        id: "6",
-        name: "Ares Management",
-        logo_url: "/images/sif/ares.jpg",
-        specialty: "Alternative Credit"
-    }
-];
-// Enhanced Infinite Logo Marquee Component for SIF
-const SIFLogoMarquee = ()=>{
-    _s();
-    const marqueeRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const contentRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const [isHovered, setIsHovered] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
-    // Duplicate the fund houses array to create seamless loop
-    const duplicatedFundHouses = [
-        ...allFundHouses,
-        ...allFundHouses
-    ];
-    // Auto-scroll animation
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "SIFLogoMarquee.useEffect": ()=>{
-            const content = contentRef.current;
-            if (!content) return;
-            let animationId;
-            const speed = 0.5;
-            let position = 0;
-            const animate = {
-                "SIFLogoMarquee.useEffect.animate": ()=>{
-                    if (!isHovered && content) {
-                        position -= speed;
-                        const firstItemWidth = 160 + 48;
-                        const totalWidth = duplicatedFundHouses.length * firstItemWidth;
-                        if (Math.abs(position) >= totalWidth / 2) {
-                            position = 0;
-                        }
-                        content.style.transform = "translateX(".concat(position, "px)");
-                    }
-                    animationId = requestAnimationFrame(animate);
-                }
-            }["SIFLogoMarquee.useEffect.animate"];
-            animationId = requestAnimationFrame(animate);
-            return ({
-                "SIFLogoMarquee.useEffect": ()=>cancelAnimationFrame(animationId)
-            })["SIFLogoMarquee.useEffect"];
-        }
-    }["SIFLogoMarquee.useEffect"], [
-        isHovered,
-        duplicatedFundHouses.length
-    ]);
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
-        className: "py-16 bg-transparent",
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "max-w-7xl mx-auto px-6",
-            children: [
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "text-center mb-12",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20 shadow-sm mb-6",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$award$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Award$3e$__["Award"], {
-                                    className: "w-5 h-5 text-amber-400"
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                    lineNumber: 114,
-                                    columnNumber: 13
-                                }, ("TURBOPACK compile-time value", void 0)),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-base font-semibold text-white",
-                                    children: "Elite Investment Partners"
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                    lineNumber: 115,
-                                    columnNumber: 13
-                                }, ("TURBOPACK compile-time value", void 0)),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$award$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Award$3e$__["Award"], {
-                                    className: "w-5 h-5 text-amber-400"
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                    lineNumber: 116,
-                                    columnNumber: 13
-                                }, ("TURBOPACK compile-time value", void 0))
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                            lineNumber: 113,
-                            columnNumber: 11
-                        }, ("TURBOPACK compile-time value", void 0)),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                            className: "text-3xl font-bold text-white mb-4",
-                            children: "Partnered with Global Alternative Investment Leaders"
-                        }, void 0, false, {
-                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                            lineNumber: 118,
-                            columnNumber: 11
-                        }, ("TURBOPACK compile-time value", void 0)),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed",
-                            children: "Access exclusive investment opportunities through our partnerships with world-class alternative investment managers"
-                        }, void 0, false, {
-                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                            lineNumber: 121,
-                            columnNumber: 11
-                        }, ("TURBOPACK compile-time value", void 0))
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                    lineNumber: 112,
-                    columnNumber: 9
-                }, ("TURBOPACK compile-time value", void 0)),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "relative",
-                    onMouseEnter: ()=>setIsHovered(true),
-                    onMouseLeave: ()=>setIsHovered(false),
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        ref: marqueeRef,
-                        className: "overflow-hidden py-4 cursor-grab active:cursor-grabbing",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            ref: contentRef,
-                            className: "flex gap-16 items-center",
-                            style: {
-                                willChange: 'transform'
-                            },
-                            children: duplicatedFundHouses.map((fundHouse, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex-shrink-0 group relative",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "w-40 h-24 flex items-center justify-center transition-all duration-300 group-hover:scale-110",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                            src: fundHouse.logo_url || "/dummy-logo.png",
-                                            alt: fundHouse.name,
-                                            className: "w-full h-full object-contain opacity-100 brightness-100 contrast-100"
-                                        }, void 0, false, {
-                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                            lineNumber: 147,
-                                            columnNumber: 21
-                                        }, ("TURBOPACK compile-time value", void 0))
-                                    }, void 0, false, {
-                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                        lineNumber: 146,
-                                        columnNumber: 19
-                                    }, ("TURBOPACK compile-time value", void 0))
-                                }, "".concat(fundHouse.id, "-").concat(index), false, {
-                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                    lineNumber: 142,
-                                    columnNumber: 17
-                                }, ("TURBOPACK compile-time value", void 0)))
-                        }, void 0, false, {
-                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                            lineNumber: 136,
-                            columnNumber: 13
-                        }, ("TURBOPACK compile-time value", void 0))
-                    }, void 0, false, {
-                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                        lineNumber: 132,
-                        columnNumber: 11
-                    }, ("TURBOPACK compile-time value", void 0))
-                }, void 0, false, {
-                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                    lineNumber: 127,
-                    columnNumber: 9
-                }, ("TURBOPACK compile-time value", void 0)),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "grid grid-cols-4 gap-8 mt-16 pt-12 border-t border-white/20 max-w-3xl mx-auto",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "text-center",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "text-3xl font-bold text-amber-400 mb-3",
-                                    children: "$50B+"
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                    lineNumber: 162,
-                                    columnNumber: 13
-                                }, ("TURBOPACK compile-time value", void 0)),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "text-base text-gray-200 font-medium",
-                                    children: "Assets Under Advice"
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                    lineNumber: 163,
-                                    columnNumber: 13
-                                }, ("TURBOPACK compile-time value", void 0))
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                            lineNumber: 161,
-                            columnNumber: 11
-                        }, ("TURBOPACK compile-time value", void 0)),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "text-center",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "text-3xl font-bold text-amber-400 mb-3",
-                                    children: "15+"
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                    lineNumber: 166,
-                                    columnNumber: 13
-                                }, ("TURBOPACK compile-time value", void 0)),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "text-base text-gray-200 font-medium",
-                                    children: "Years Track Record"
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                    lineNumber: 167,
-                                    columnNumber: 13
-                                }, ("TURBOPACK compile-time value", void 0))
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                            lineNumber: 165,
-                            columnNumber: 11
-                        }, ("TURBOPACK compile-time value", void 0)),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "text-center",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "text-3xl font-bold text-amber-400 mb-3",
-                                    children: "100+"
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                    lineNumber: 170,
-                                    columnNumber: 13
-                                }, ("TURBOPACK compile-time value", void 0)),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "text-base text-gray-200 font-medium",
-                                    children: "Institutional Clients"
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                    lineNumber: 171,
-                                    columnNumber: 13
-                                }, ("TURBOPACK compile-time value", void 0))
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                            lineNumber: 169,
-                            columnNumber: 11
-                        }, ("TURBOPACK compile-time value", void 0)),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "text-center",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "text-3xl font-bold text-amber-400 mb-3",
-                                    children: "24/7"
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                    lineNumber: 174,
-                                    columnNumber: 13
-                                }, ("TURBOPACK compile-time value", void 0)),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "text-base text-gray-200 font-medium",
-                                    children: "Wealth Advisory"
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                    lineNumber: 175,
-                                    columnNumber: 13
-                                }, ("TURBOPACK compile-time value", void 0))
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                            lineNumber: 173,
-                            columnNumber: 11
-                        }, ("TURBOPACK compile-time value", void 0))
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                    lineNumber: 160,
-                    columnNumber: 9
-                }, ("TURBOPACK compile-time value", void 0))
-            ]
-        }, void 0, true, {
-            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-            lineNumber: 110,
-            columnNumber: 7
-        }, ("TURBOPACK compile-time value", void 0))
-    }, void 0, false, {
-        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-        lineNumber: 109,
-        columnNumber: 5
-    }, ("TURBOPACK compile-time value", void 0));
-};
-_s(SIFLogoMarquee, "w7+NOKnrludukUzZzpe63lYi88w=");
-_c = SIFLogoMarquee;
 // Strategy Detail Modal
 const StrategyDetailModal = (param)=>{
     let { strategy, onClose } = param;
@@ -649,7 +629,7 @@ const StrategyDetailModal = (param)=>{
                                     })
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                    lineNumber: 199,
+                                    lineNumber: 343,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -659,27 +639,27 @@ const StrategyDetailModal = (param)=>{
                                             children: strategy.name
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                            lineNumber: 203,
+                                            lineNumber: 347,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-gray-500 text-sm mt-1",
-                                            children: "Sophisticated Investment Strategy"
+                                            className: "text-gray-500 text-base mt-1",
+                                            children: "Professional Investment Access"
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                            lineNumber: 204,
+                                            lineNumber: 348,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                    lineNumber: 202,
+                                    lineNumber: 346,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                            lineNumber: 198,
+                            lineNumber: 342,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -690,369 +670,214 @@ const StrategyDetailModal = (param)=>{
                                 size: 24
                             }, void 0, false, {
                                 fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                lineNumber: 212,
+                                lineNumber: 352,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         }, void 0, false, {
                             fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                            lineNumber: 207,
+                            lineNumber: 351,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                    lineNumber: 197,
+                    lineNumber: 341,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "p-6",
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "space-y-6",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                        className: "text-lg font-semibold text-gray-800 mb-3",
-                                        children: "Investment Strategy Overview"
-                                    }, void 0, false, {
-                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                        lineNumber: 221,
-                                        columnNumber: 15
-                                    }, ("TURBOPACK compile-time value", void 0)),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "text-gray-700 leading-relaxed",
-                                        children: strategy.description
-                                    }, void 0, false, {
-                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                        lineNumber: 222,
-                                        columnNumber: 15
-                                    }, ("TURBOPACK compile-time value", void 0))
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                lineNumber: 220,
-                                columnNumber: 13
-                            }, ("TURBOPACK compile-time value", void 0)),
-                            strategy.features && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                        className: "font-semibold text-gray-800 mb-3",
-                                        children: "Strategic Advantages"
-                                    }, void 0, false, {
-                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                        lineNumber: 228,
-                                        columnNumber: 17
-                                    }, ("TURBOPACK compile-time value", void 0)),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
-                                        className: "space-y-3",
-                                        children: strategy.features.map((feature, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                                className: "flex items-start",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2d$big$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle$3e$__["CheckCircle"], {
-                                                        className: "w-5 h-5 text-amber-500 mt-0.5 mr-3 flex-shrink-0"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                        lineNumber: 232,
-                                                        columnNumber: 23
-                                                    }, ("TURBOPACK compile-time value", void 0)),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                        className: "text-gray-700",
-                                                        children: feature
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                        lineNumber: 233,
-                                                        columnNumber: 23
-                                                    }, ("TURBOPACK compile-time value", void 0))
-                                                ]
-                                            }, index, true, {
-                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                lineNumber: 231,
-                                                columnNumber: 21
-                                            }, ("TURBOPACK compile-time value", void 0)))
-                                    }, void 0, false, {
-                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                        lineNumber: 229,
-                                        columnNumber: 17
-                                    }, ("TURBOPACK compile-time value", void 0))
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                lineNumber: 227,
-                                columnNumber: 15
-                            }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "bg-gradient-to-r from-amber-500 to-amber-400 rounded-2xl p-6 text-white",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                        className: "font-bold text-lg mb-2",
-                                        children: "Ready to Access Elite Investments?"
-                                    }, void 0, false, {
-                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                        lineNumber: 242,
-                                        columnNumber: 15
-                                    }, ("TURBOPACK compile-time value", void 0)),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "text-amber-100 mb-6 text-sm",
-                                        children: "Our specialized investment advisors will guide you through the qualification process and portfolio construction."
-                                    }, void 0, false, {
-                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                        lineNumber: 243,
-                                        columnNumber: 15
-                                    }, ("TURBOPACK compile-time value", void 0)),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                        href: "/contact",
-                                        className: "block",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                            className: "w-full py-4 bg-white text-amber-600 font-bold rounded-lg hover:bg-amber-50 transition-colors flex items-center justify-center text-lg cursor-pointer",
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$phone$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Phone$3e$__["Phone"], {
-                                                    className: "w-5 h-5 mr-3"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                    lineNumber: 248,
-                                                    columnNumber: 19
-                                                }, ("TURBOPACK compile-time value", void 0)),
-                                                "Schedule Private Consultation"
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                            lineNumber: 247,
-                                            columnNumber: 17
-                                        }, ("TURBOPACK compile-time value", void 0))
-                                    }, void 0, false, {
-                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                        lineNumber: 246,
-                                        columnNumber: 15
-                                    }, ("TURBOPACK compile-time value", void 0))
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                lineNumber: 241,
-                                columnNumber: 13
-                            }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "grid grid-cols-1 md:grid-cols-3 gap-4 pt-4",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "text-center p-4 bg-gray-50 rounded-xl",
+                    className: "p-6 space-y-6",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                    className: "text-lg font-semibold text-gray-800 mb-3",
+                                    children: "Investment Approach"
+                                }, void 0, false, {
+                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                    lineNumber: 359,
+                                    columnNumber: 13
+                                }, ("TURBOPACK compile-time value", void 0)),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "text-gray-700 text-base leading-relaxed",
+                                    children: strategy.description
+                                }, void 0, false, {
+                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                    lineNumber: 360,
+                                    columnNumber: 13
+                                }, ("TURBOPACK compile-time value", void 0))
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                            lineNumber: 358,
+                            columnNumber: 11
+                        }, ("TURBOPACK compile-time value", void 0)),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "bg-gradient-to-r from-amber-500 to-amber-400 rounded-2xl p-6 text-white",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                    className: "font-bold text-lg mb-2",
+                                    children: "Ready to Get Started?"
+                                }, void 0, false, {
+                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                    lineNumber: 363,
+                                    columnNumber: 13
+                                }, ("TURBOPACK compile-time value", void 0)),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "text-amber-100 mb-6 text-base",
+                                    children: "Connect with our investment specialists to discuss your eligibility and investment objectives."
+                                }, void 0, false, {
+                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                    lineNumber: 364,
+                                    columnNumber: 13
+                                }, ("TURBOPACK compile-time value", void 0)),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                    href: "/contact",
+                                    className: "block",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        className: "w-full py-4 bg-white text-amber-600 font-bold rounded-lg hover:bg-amber-50 transition-colors flex items-center justify-center text-lg cursor-pointer",
                                         children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$lock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Lock$3e$__["Lock"], {
-                                                className: "w-8 h-8 text-amber-500 mx-auto mb-2"
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$phone$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Phone$3e$__["Phone"], {
+                                                className: "w-5 h-5 mr-3"
                                             }, void 0, false, {
                                                 fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                lineNumber: 257,
+                                                lineNumber: 369,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0)),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h5", {
-                                                className: "font-semibold text-gray-800 text-sm",
-                                                children: "Accredited Investors"
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                lineNumber: 258,
-                                                columnNumber: 17
-                                            }, ("TURBOPACK compile-time value", void 0)),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-gray-600 text-xs",
-                                                children: "Qualified individuals & institutions"
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                lineNumber: 259,
-                                                columnNumber: 17
-                                            }, ("TURBOPACK compile-time value", void 0))
+                                            "Schedule Consultation"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                        lineNumber: 256,
-                                        columnNumber: 15
-                                    }, ("TURBOPACK compile-time value", void 0)),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "text-center p-4 bg-gray-50 rounded-xl",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__["Shield"], {
-                                                className: "w-8 h-8 text-amber-500 mx-auto mb-2"
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                lineNumber: 262,
-                                                columnNumber: 17
-                                            }, ("TURBOPACK compile-time value", void 0)),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h5", {
-                                                className: "font-semibold text-gray-800 text-sm",
-                                                children: "Enhanced Due Diligence"
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                lineNumber: 263,
-                                                columnNumber: 17
-                                            }, ("TURBOPACK compile-time value", void 0)),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-gray-600 text-xs",
-                                                children: "Rigorous investment analysis"
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                lineNumber: 264,
-                                                columnNumber: 17
-                                            }, ("TURBOPACK compile-time value", void 0))
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                        lineNumber: 261,
-                                        columnNumber: 15
-                                    }, ("TURBOPACK compile-time value", void 0)),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "text-center p-4 bg-gray-50 rounded-xl",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$globe$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Globe$3e$__["Globe"], {
-                                                className: "w-8 h-8 text-amber-500 mx-auto mb-2"
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                lineNumber: 267,
-                                                columnNumber: 17
-                                            }, ("TURBOPACK compile-time value", void 0)),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h5", {
-                                                className: "font-semibold text-gray-800 text-sm",
-                                                children: "Global Opportunities"
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                lineNumber: 268,
-                                                columnNumber: 17
-                                            }, ("TURBOPACK compile-time value", void 0)),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-gray-600 text-xs",
-                                                children: "Diversified international exposure"
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                lineNumber: 269,
-                                                columnNumber: 17
-                                            }, ("TURBOPACK compile-time value", void 0))
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                        lineNumber: 266,
+                                        lineNumber: 368,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                lineNumber: 255,
-                                columnNumber: 13
-                            }, ("TURBOPACK compile-time value", void 0))
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                        lineNumber: 218,
-                        columnNumber: 11
-                    }, ("TURBOPACK compile-time value", void 0))
-                }, void 0, false, {
+                                }, void 0, false, {
+                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                    lineNumber: 367,
+                                    columnNumber: 13
+                                }, ("TURBOPACK compile-time value", void 0))
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                            lineNumber: 362,
+                            columnNumber: 11
+                        }, ("TURBOPACK compile-time value", void 0))
+                    ]
+                }, void 0, true, {
                     fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                    lineNumber: 217,
+                    lineNumber: 357,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             ]
         }, void 0, true, {
             fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-            lineNumber: 195,
+            lineNumber: 339,
             columnNumber: 7
         }, ("TURBOPACK compile-time value", void 0))
     }, void 0, false, {
         fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-        lineNumber: 194,
+        lineNumber: 338,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
-_c1 = StrategyDetailModal;
-// Main SIF Page Component
+_c = StrategyDetailModal;
+// Main SIF Page
 const SIFPage = ()=>{
-    _s1();
+    _s();
     const [selectedStrategy, setSelectedStrategy] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    const sifCategories = [
+    const keyFeatures = [
         {
-            id: "private-markets",
-            name: "Private Markets",
-            description: "Exclusive access to non-public investment opportunities",
-            strategies: [
-                {
-                    id: "private-equity",
-                    name: "Private Equity",
-                    description: "Direct investments in private companies with high growth potential. Access to venture capital, growth equity, and buyout opportunities typically unavailable to public market investors.",
-                    icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__["TrendingUp"], {
-                        className: "w-8 h-8 text-rose-500"
-                    }, void 0, false, {
-                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                        lineNumber: 293,
-                        columnNumber: 17
-                    }, ("TURBOPACK compile-time value", void 0)),
-                    features: [
-                        "Access to pre-IPO companies",
-                        "Active ownership and value creation",
-                        "Long-term capital appreciation",
-                        "Diversification from public markets",
-                        "Professional management oversight"
-                    ]
-                },
-                {
-                    id: "real-estate",
-                    name: "Real Estate Funds",
-                    description: "Institutional-grade real estate investments across commercial, residential, and industrial properties. Target income generation and capital appreciation through strategic property acquisitions.",
-                    icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$building$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Building2$3e$__["Building2"], {
-                        className: "w-8 h-8 text-emerald-400"
-                    }, void 0, false, {
-                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                        lineNumber: 306,
-                        columnNumber: 17
-                    }, ("TURBOPACK compile-time value", void 0)),
-                    features: [
-                        "Institutional property portfolios",
-                        "Stable income through rentals",
-                        "Inflation hedging characteristics",
-                        "Geographic diversification",
-                        "Professional property management"
-                    ]
-                }
-            ]
+            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__["Shield"], {
+                className: "w-6 h-6"
+            }, void 0, false, {
+                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                lineNumber: 385,
+                columnNumber: 13
+            }, ("TURBOPACK compile-time value", void 0)),
+            title: "Accredited Investor Access",
+            description: "Exclusive opportunities typically reserved for institutional clients and high-net-worth individuals"
         },
         {
-            id: "alternative-strategies",
-            name: "Alternative Strategies",
-            description: "Sophisticated investment approaches beyond traditional assets",
-            strategies: [
-                {
-                    id: "hedge-funds",
-                    name: "Hedge Funds",
-                    description: "Advanced investment strategies employing leverage, short-selling, and derivatives to generate returns in various market conditions. Designed to provide absolute returns with low correlation to traditional markets.",
-                    icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$column$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__BarChart3$3e$__["BarChart3"], {
-                        className: "w-8 h-8 text-sky-400"
-                    }, void 0, false, {
-                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                        lineNumber: 326,
-                        columnNumber: 17
-                    }, ("TURBOPACK compile-time value", void 0)),
-                    features: [
-                        "Absolute return focus",
-                        "Low correlation to stocks/bonds",
-                        "Sophisticated risk management",
-                        "Multiple strategy approaches",
-                        "Professional trading expertise"
-                    ]
-                },
-                {
-                    id: "infrastructure",
-                    name: "Infrastructure Funds",
-                    description: "Investments in essential public assets and services including transportation, utilities, and social infrastructure. Provides stable, long-term cash flows with inflation-linked revenue streams.",
-                    icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$target$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Target$3e$__["Target"], {
-                        className: "w-8 h-8 text-amber-400"
-                    }, void 0, false, {
-                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                        lineNumber: 339,
-                        columnNumber: 17
-                    }, ("TURBOPACK compile-time value", void 0)),
-                    features: [
-                        "Essential service assets",
-                        "Long-term stable cash flows",
-                        "Inflation-protected returns",
-                        "Government contracted revenues",
-                        "Low economic sensitivity"
-                    ]
-                }
-            ]
+            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__["TrendingUp"], {
+                className: "w-6 h-6"
+            }, void 0, false, {
+                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                lineNumber: 386,
+                columnNumber: 13
+            }, ("TURBOPACK compile-time value", void 0)),
+            title: "Professional Management",
+            description: "Expert fund managers with proven track records in alternative investments"
+        },
+        {
+            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$lock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Lock$3e$__["Lock"], {
+                className: "w-6 h-6"
+            }, void 0, false, {
+                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                lineNumber: 387,
+                columnNumber: 13
+            }, ("TURBOPACK compile-time value", void 0)),
+            title: "Minimum Investment ₹10 Lakhs",
+            description: "Structured entry point for serious investors seeking sophisticated strategies"
+        },
+        {
+            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$globe$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Globe$3e$__["Globe"], {
+                className: "w-6 h-6"
+            }, void 0, false, {
+                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                lineNumber: 388,
+                columnNumber: 13
+            }, ("TURBOPACK compile-time value", void 0)),
+            title: "Diversified Portfolios",
+            description: "Access to multiple asset classes and investment strategies in a single fund"
+        },
+        {
+            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__["Users"], {
+                className: "w-6 h-6"
+            }, void 0, false, {
+                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                lineNumber: 389,
+                columnNumber: 13
+            }, ("TURBOPACK compile-time value", void 0)),
+            title: "Institutional Standards",
+            description: "Same rigorous due diligence and investment processes used by large institutions"
+        },
+        {
+            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$zap$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Zap$3e$__["Zap"], {
+                className: "w-6 h-6"
+            }, void 0, false, {
+                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                lineNumber: 390,
+                columnNumber: 13
+            }, ("TURBOPACK compile-time value", void 0)),
+            title: "Growth Potential",
+            description: "Opportunities for enhanced returns through private markets and alternative assets"
+        }
+    ];
+    const investmentOptions = [
+        {
+            id: "private-equity",
+            name: "Private Equity Access",
+            description: "Participate in growth-stage companies and buyout opportunities before they go public",
+            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__["TrendingUp"], {
+                className: "w-8 h-8 text-amber-400"
+            }, void 0, false, {
+                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                lineNumber: 398,
+                columnNumber: 13
+            }, ("TURBOPACK compile-time value", void 0)),
+            shortDesc: "Pre-IPO and growth capital investments"
+        },
+        {
+            id: "real-assets",
+            name: "Real Assets",
+            description: "Invest in real estate, infrastructure, and other physical assets generating stable income",
+            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$column$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__BarChart3$3e$__["BarChart3"], {
+                className: "w-8 h-8 text-amber-400"
+            }, void 0, false, {
+                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                lineNumber: 405,
+                columnNumber: 13
+            }, ("TURBOPACK compile-time value", void 0)),
+            shortDesc: "Tangible assets with income potential"
         }
     ];
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -1060,271 +885,502 @@ const SIFPage = ()=>{
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$components$2f$Navbar$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                lineNumber: 354,
+                lineNumber: 412,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
                 className: "flex-1 pt-32 pb-20 relative z-10",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "max-w-7xl mx-auto px-6",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "text-center mb-16",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "inline-block bg-gradient-to-r from-amber-500/10 to-amber-400/10 px-8 py-6 rounded-2xl border border-amber-200/30 mb-8 backdrop-blur-sm",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                            className: "text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent mb-4",
-                                            children: "Specialised Investment Funds"
-                                        }, void 0, false, {
-                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                            lineNumber: 361,
-                                            columnNumber: 15
-                                        }, ("TURBOPACK compile-time value", void 0))
-                                    }, void 0, false, {
-                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                        lineNumber: 360,
-                                        columnNumber: 13
-                                    }, ("TURBOPACK compile-time value", void 0)),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed font-medium",
-                                        children: "Exclusive investment opportunities for accredited investors seeking sophisticated strategies beyond traditional public markets. Minimum investment thresholds apply."
-                                    }, void 0, false, {
-                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                        lineNumber: 365,
-                                        columnNumber: 13
-                                    }, ("TURBOPACK compile-time value", void 0))
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                lineNumber: 359,
-                                columnNumber: 11
-                            }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "grid grid-cols-1 md:grid-cols-2 gap-8 mb-8",
-                                children: sifCategories.map((category)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "bg-black/20 backdrop-blur-md rounded-2xl p-8 border border-white/30 shadow-lg hover:shadow-xl transition-all duration-300",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "flex items-center mb-6 pb-4 border-b border-white/30",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "w-12 h-12 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 flex items-center justify-center mr-4",
-                                                        children: category.id === "private-markets" ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$building$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Building2$3e$__["Building2"], {
-                                                            className: "w-6 h-6 text-white"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                            lineNumber: 378,
-                                                            columnNumber: 23
-                                                        }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$column$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__BarChart3$3e$__["BarChart3"], {
-                                                            className: "w-6 h-6 text-white"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                            lineNumber: 380,
-                                                            columnNumber: 23
-                                                        }, ("TURBOPACK compile-time value", void 0))
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                        lineNumber: 376,
-                                                        columnNumber: 19
-                                                    }, ("TURBOPACK compile-time value", void 0)),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                                                className: "text-2xl font-bold text-white",
-                                                                children: category.name
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                                lineNumber: 384,
-                                                                columnNumber: 21
-                                                            }, ("TURBOPACK compile-time value", void 0)),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-gray-200 text-sm",
-                                                                children: category.description
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                                lineNumber: 385,
-                                                                columnNumber: 21
-                                                            }, ("TURBOPACK compile-time value", void 0))
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                        lineNumber: 383,
-                                                        columnNumber: 19
-                                                    }, ("TURBOPACK compile-time value", void 0))
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                lineNumber: 375,
-                                                columnNumber: 17
-                                            }, ("TURBOPACK compile-time value", void 0)),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "space-y-4",
-                                                children: category.strategies.map((strategy)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        onClick: ()=>setSelectedStrategy(strategy),
-                                                        className: "cursor-pointer group rounded-xl p-5 bg-white/20 backdrop-blur border border-white/30 hover:border-amber-400/50 hover:shadow-md transition-all duration-300",
-                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "flex items-center",
-                                                            children: [
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                    className: "flex items-center justify-center w-10 h-10 rounded-lg bg-amber-500/30 group-hover:bg-amber-500/40 transition-colors mr-4",
-                                                                    children: /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].cloneElement(strategy.icon, {
-                                                                        className: "w-6 h-6 text-amber-300"
-                                                                    })
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                                    lineNumber: 397,
-                                                                    columnNumber: 25
-                                                                }, ("TURBOPACK compile-time value", void 0)),
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                    className: "flex-grow",
-                                                                    children: [
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                                                            className: "font-semibold text-white group-hover:text-amber-200 transition-colors",
-                                                                            children: strategy.name
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                                            lineNumber: 403,
-                                                                            columnNumber: 27
-                                                                        }, ("TURBOPACK compile-time value", void 0)),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                            className: "text-gray-200 text-sm mt-1 line-clamp-2",
-                                                                            children: strategy.description
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                                            lineNumber: 406,
-                                                                            columnNumber: 27
-                                                                        }, ("TURBOPACK compile-time value", void 0))
-                                                                    ]
-                                                                }, void 0, true, {
-                                                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                                    lineNumber: 402,
-                                                                    columnNumber: 25
-                                                                }, ("TURBOPACK compile-time value", void 0)),
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                    className: "text-amber-300 opacity-0 group-hover:opacity-100 transition-opacity",
-                                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$plus$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Plus$3e$__["Plus"], {
-                                                                        className: "w-5 h-5"
-                                                                    }, void 0, false, {
-                                                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                                        lineNumber: 411,
-                                                                        columnNumber: 27
-                                                                    }, ("TURBOPACK compile-time value", void 0))
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                                    lineNumber: 410,
-                                                                    columnNumber: 25
-                                                                }, ("TURBOPACK compile-time value", void 0))
-                                                            ]
-                                                        }, void 0, true, {
-                                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                            lineNumber: 396,
-                                                            columnNumber: 23
-                                                        }, ("TURBOPACK compile-time value", void 0))
-                                                    }, strategy.id, false, {
-                                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                        lineNumber: 391,
-                                                        columnNumber: 21
-                                                    }, ("TURBOPACK compile-time value", void 0)))
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                                lineNumber: 389,
-                                                columnNumber: 17
-                                            }, ("TURBOPACK compile-time value", void 0))
-                                        ]
-                                    }, category.id, true, {
-                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                        lineNumber: 374,
-                                        columnNumber: 15
-                                    }, ("TURBOPACK compile-time value", void 0)))
-                            }, void 0, false, {
-                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                lineNumber: 372,
-                                columnNumber: 11
-                            }, ("TURBOPACK compile-time value", void 0))
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                        lineNumber: 357,
-                        columnNumber: 9
-                    }, ("TURBOPACK compile-time value", void 0)),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SIFLogoMarquee, {}, void 0, false, {
-                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                        lineNumber: 423,
-                        columnNumber: 9
-                    }, ("TURBOPACK compile-time value", void 0)),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "max-w-7xl mx-auto px-6 mt-8",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "bg-gradient-to-r from-amber-500 to-amber-400 rounded-2xl p-10 text-center text-white shadow-xl",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "max-w-6xl mx-auto px-6",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "text-center mb-16",
                             children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$target$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Target$3e$__["Target"], {
-                                    className: "w-16 h-16 mx-auto mb-6"
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "inline-block bg-gradient-to-r from-amber-500/10 to-amber-400/10 px-8 py-6 rounded-2xl border border-amber-200/30 mb-8 backdrop-blur-sm",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                                        className: "text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent mb-4",
+                                        children: "Specialised Investment Funds"
+                                    }, void 0, false, {
+                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                        lineNumber: 420,
+                                        columnNumber: 15
+                                    }, ("TURBOPACK compile-time value", void 0))
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                    lineNumber: 428,
-                                    columnNumber: 13
-                                }, ("TURBOPACK compile-time value", void 0)),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                    className: "text-3xl md:text-4xl font-bold mb-4",
-                                    children: "Ready to Access Elite Investment Opportunities?"
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                    lineNumber: 429,
-                                    columnNumber: 13
-                                }, ("TURBOPACK compile-time value", void 0)),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-amber-100 text-lg mb-8 max-w-2xl mx-auto leading-relaxed",
-                                    children: "Our specialized investment advisors provide exclusive access to sophisticated strategies and conduct thorough due diligence to ensure optimal portfolio construction for qualified investors."
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                    lineNumber: 432,
+                                    lineNumber: 419,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex justify-center",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                        href: "/contact",
-                                        className: "block w-full max-w-md",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                            className: "w-full px-12 py-5 bg-white text-amber-600 font-bold rounded-lg hover:bg-amber-50 transition-colors shadow-lg text-lg cursor-pointer",
-                                            children: "Request Accredited Investor Consultation"
+                                    className: "bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/20 max-w-4xl mx-auto mb-8",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "text-2xl md:text-3xl text-white font-light leading-relaxed mb-6",
+                                            children: "Professionally managed investment capital for accredited investors to access exclusive alternative investments typically reserved for institutional clients."
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                            lineNumber: 438,
-                                            columnNumber: 17
+                                            lineNumber: 426,
+                                            columnNumber: 15
+                                        }, ("TURBOPACK compile-time value", void 0)),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "inline-flex items-center gap-2 bg-amber-500/20 px-6 py-3 rounded-full border border-amber-400/30",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$target$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Target$3e$__["Target"], {
+                                                    className: "w-5 h-5 text-amber-400"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                    lineNumber: 430,
+                                                    columnNumber: 17
+                                                }, ("TURBOPACK compile-time value", void 0)),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    className: "text-amber-300 font-semibold text-lg",
+                                                    children: "Minimum Investment: ₹10,00,000"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                    lineNumber: 431,
+                                                    columnNumber: 17
+                                                }, ("TURBOPACK compile-time value", void 0))
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                            lineNumber: 429,
+                                            columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
-                                    }, void 0, false, {
-                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                        lineNumber: 437,
-                                        columnNumber: 15
-                                    }, ("TURBOPACK compile-time value", void 0))
-                                }, void 0, false, {
+                                    ]
+                                }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                                    lineNumber: 436,
+                                    lineNumber: 425,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                            lineNumber: 427,
+                            lineNumber: 418,
+                            columnNumber: 11
+                        }, ("TURBOPACK compile-time value", void 0)),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "mb-16",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "text-center mb-12",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                            className: "text-3xl font-bold bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent mb-4",
+                                            children: "Why Choose Specialised Investment Funds?"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                            lineNumber: 439,
+                                            columnNumber: 15
+                                        }, ("TURBOPACK compile-time value", void 0)),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "text-gray-300 text-lg max-w-2xl mx-auto",
+                                            children: "Access institutional-grade investment opportunities with professional management and structured oversight."
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                            lineNumber: 442,
+                                            columnNumber: 15
+                                        }, ("TURBOPACK compile-time value", void 0))
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                    lineNumber: 438,
+                                    columnNumber: 13
+                                }, ("TURBOPACK compile-time value", void 0)),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
+                                    children: keyFeatures.map((feature, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 hover:border-amber-400/40 transition-all duration-300 group hover:shadow-lg hover:shadow-amber-500/20 hover:-translate-y-1",
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flex items-start space-x-4",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "flex-shrink-0 w-12 h-12 bg-amber-500/25 rounded-lg flex items-center justify-center group-hover:bg-amber-500/40 transition-colors",
+                                                        children: /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].cloneElement(feature.icon, {
+                                                            className: "w-6 h-6 text-amber-400"
+                                                        })
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                        lineNumber: 454,
+                                                        columnNumber: 21
+                                                    }, ("TURBOPACK compile-time value", void 0)),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                                className: "text-lg font-semibold text-white mb-2",
+                                                                children: feature.title
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                                lineNumber: 458,
+                                                                columnNumber: 23
+                                                            }, ("TURBOPACK compile-time value", void 0)),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                className: "text-gray-300 text-base leading-relaxed",
+                                                                children: feature.description
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                                lineNumber: 459,
+                                                                columnNumber: 23
+                                                            }, ("TURBOPACK compile-time value", void 0))
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                        lineNumber: 457,
+                                                        columnNumber: 21
+                                                    }, ("TURBOPACK compile-time value", void 0))
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                lineNumber: 453,
+                                                columnNumber: 19
+                                            }, ("TURBOPACK compile-time value", void 0))
+                                        }, index, false, {
+                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                            lineNumber: 449,
+                                            columnNumber: 17
+                                        }, ("TURBOPACK compile-time value", void 0)))
+                                }, void 0, false, {
+                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                    lineNumber: 447,
+                                    columnNumber: 13
+                                }, ("TURBOPACK compile-time value", void 0))
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                            lineNumber: 437,
+                            columnNumber: 11
+                        }, ("TURBOPACK compile-time value", void 0)),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "mb-16",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "text-center mb-12",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                            className: "text-3xl font-bold bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent mb-4",
+                                            children: "Investment Opportunities"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                            lineNumber: 470,
+                                            columnNumber: 15
+                                        }, ("TURBOPACK compile-time value", void 0)),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "text-gray-300 text-lg",
+                                            children: "Choose from carefully curated investment strategies"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                            lineNumber: 473,
+                                            columnNumber: 15
+                                        }, ("TURBOPACK compile-time value", void 0))
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                    lineNumber: 469,
+                                    columnNumber: 13
+                                }, ("TURBOPACK compile-time value", void 0)),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto",
+                                    children: investmentOptions.map((option)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            onClick: ()=>setSelectedStrategy(option),
+                                            className: "cursor-pointer group bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 hover:border-amber-400/50 hover:shadow-lg hover:shadow-amber-500/20 transition-all duration-300",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "flex items-center mb-4",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "w-14 h-14 bg-amber-500/25 rounded-xl flex items-center justify-center mr-4 group-hover:bg-amber-500/40 transition-colors",
+                                                            children: option.icon
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                            lineNumber: 484,
+                                                            columnNumber: 21
+                                                        }, ("TURBOPACK compile-time value", void 0)),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                                    className: "text-xl font-bold text-white group-hover:text-amber-200 transition-colors",
+                                                                    children: option.name
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                                    lineNumber: 488,
+                                                                    columnNumber: 23
+                                                                }, ("TURBOPACK compile-time value", void 0)),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                    className: "text-amber-400 text-base font-medium",
+                                                                    children: option.shortDesc
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                                    lineNumber: 491,
+                                                                    columnNumber: 23
+                                                                }, ("TURBOPACK compile-time value", void 0))
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                            lineNumber: 487,
+                                                            columnNumber: 21
+                                                        }, ("TURBOPACK compile-time value", void 0))
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                    lineNumber: 483,
+                                                    columnNumber: 19
+                                                }, ("TURBOPACK compile-time value", void 0)),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                    className: "text-gray-300 text-base mb-4 leading-relaxed",
+                                                    children: option.description
+                                                }, void 0, false, {
+                                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                    lineNumber: 494,
+                                                    columnNumber: 19
+                                                }, ("TURBOPACK compile-time value", void 0)),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "flex items-center text-amber-400 font-semibold group-hover:text-amber-300 transition-colors",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            children: "Learn more"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                            lineNumber: 496,
+                                                            columnNumber: 21
+                                                        }, ("TURBOPACK compile-time value", void 0)),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__["ArrowRight"], {
+                                                            className: "w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                            lineNumber: 497,
+                                                            columnNumber: 21
+                                                        }, ("TURBOPACK compile-time value", void 0))
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                    lineNumber: 495,
+                                                    columnNumber: 19
+                                                }, ("TURBOPACK compile-time value", void 0))
+                                            ]
+                                        }, option.id, true, {
+                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                            lineNumber: 478,
+                                            columnNumber: 17
+                                        }, ("TURBOPACK compile-time value", void 0)))
+                                }, void 0, false, {
+                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                    lineNumber: 476,
+                                    columnNumber: 13
+                                }, ("TURBOPACK compile-time value", void 0))
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                            lineNumber: 468,
+                            columnNumber: 11
+                        }, ("TURBOPACK compile-time value", void 0)),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 mb-16",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "text-center mb-8",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                            className: "text-3xl font-bold bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent mb-4",
+                                            children: "How It Works"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                            lineNumber: 507,
+                                            columnNumber: 15
+                                        }, ("TURBOPACK compile-time value", void 0)),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "text-gray-300 text-lg",
+                                            children: "Simple process to start your institutional investment journey"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                            lineNumber: 510,
+                                            columnNumber: 15
+                                        }, ("TURBOPACK compile-time value", void 0))
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                    lineNumber: 506,
+                                    columnNumber: 13
+                                }, ("TURBOPACK compile-time value", void 0)),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto",
+                                    children: [
+                                        {
+                                            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__["Users"], {
+                                                className: "w-8 h-8 text-amber-400"
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                lineNumber: 515,
+                                                columnNumber: 25
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            title: "1. Eligibility Check",
+                                            desc: "Verify accredited investor status and discuss investment objectives"
+                                        },
+                                        {
+                                            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calendar$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Calendar$3e$__["Calendar"], {
+                                                className: "w-8 h-8 text-amber-400"
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                lineNumber: 516,
+                                                columnNumber: 25
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            title: "2. Portfolio Construction",
+                                            desc: "Customized investment strategy based on your goals and risk profile"
+                                        },
+                                        {
+                                            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__["TrendingUp"], {
+                                                className: "w-8 h-8 text-amber-400"
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                lineNumber: 517,
+                                                columnNumber: 25
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            title: "3. Professional Management",
+                                            desc: "Ongoing monitoring and management by experienced investment professionals"
+                                        }
+                                    ].map((step, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "text-center p-6",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "w-16 h-16 bg-amber-500/25 rounded-full flex items-center justify-center mx-auto mb-4",
+                                                    children: step.icon
+                                                }, void 0, false, {
+                                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                    lineNumber: 520,
+                                                    columnNumber: 19
+                                                }, ("TURBOPACK compile-time value", void 0)),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                    className: "text-lg font-semibold text-white mb-2",
+                                                    children: step.title
+                                                }, void 0, false, {
+                                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                    lineNumber: 523,
+                                                    columnNumber: 19
+                                                }, ("TURBOPACK compile-time value", void 0)),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                    className: "text-gray-300 text-base leading-relaxed",
+                                                    children: step.desc
+                                                }, void 0, false, {
+                                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                    lineNumber: 524,
+                                                    columnNumber: 19
+                                                }, ("TURBOPACK compile-time value", void 0))
+                                            ]
+                                        }, i, true, {
+                                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                            lineNumber: 519,
+                                            columnNumber: 17
+                                        }, ("TURBOPACK compile-time value", void 0)))
+                                }, void 0, false, {
+                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                    lineNumber: 513,
+                                    columnNumber: 13
+                                }, ("TURBOPACK compile-time value", void 0))
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                            lineNumber: 505,
+                            columnNumber: 11
+                        }, ("TURBOPACK compile-time value", void 0)),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "bg-gradient-to-r from-amber-500 to-amber-400 rounded-2xl p-10 text-center text-white shadow-xl",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "max-w-2xl mx-auto",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$target$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Target$3e$__["Target"], {
+                                        className: "w-16 h-16 mx-auto mb-6"
+                                    }, void 0, false, {
+                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                        lineNumber: 533,
+                                        columnNumber: 15
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                        className: "text-3xl md:text-4xl font-bold mb-4",
+                                        children: "Start Your Institutional Investment Journey"
+                                    }, void 0, false, {
+                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                        lineNumber: 534,
+                                        columnNumber: 15
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-amber-100 text-lg mb-8 leading-relaxed",
+                                        children: "Join other accredited investors accessing sophisticated investment strategies with professional oversight and institutional standards."
+                                    }, void 0, false, {
+                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                        lineNumber: 535,
+                                        columnNumber: 15
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "flex flex-col sm:flex-row gap-4 justify-center",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                                href: "/contact",
+                                                className: "block flex-1 max-w-md",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                    className: "w-full px-8 py-4 bg-white text-amber-600 font-bold rounded-lg hover:bg-amber-50 transition-colors shadow-lg cursor-pointer",
+                                                    children: "Schedule Consultation"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                    lineNumber: 540,
+                                                    columnNumber: 19
+                                                }, ("TURBOPACK compile-time value", void 0))
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                lineNumber: 539,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0)),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flex-1 max-w-md",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                    className: "w-full px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white/10 transition-colors cursor-pointer",
+                                                    children: "Download Brochure"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                    lineNumber: 545,
+                                                    columnNumber: 19
+                                                }, ("TURBOPACK compile-time value", void 0))
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                                lineNumber: 544,
+                                                columnNumber: 17
+                                            }, ("TURBOPACK compile-time value", void 0))
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                        lineNumber: 538,
+                                        columnNumber: 15
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-amber-200 text-sm mt-6",
+                                        children: "Minimum investment: ₹10,00,000 • Accredited investors only"
+                                    }, void 0, false, {
+                                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                        lineNumber: 550,
+                                        columnNumber: 15
+                                    }, ("TURBOPACK compile-time value", void 0))
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                                lineNumber: 532,
+                                columnNumber: 13
+                            }, ("TURBOPACK compile-time value", void 0))
+                        }, void 0, false, {
+                            fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                            lineNumber: 531,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
-                    }, void 0, false, {
-                        fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                        lineNumber: 426,
-                        columnNumber: 9
-                    }, ("TURBOPACK compile-time value", void 0))
-                ]
-            }, void 0, true, {
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
+                    lineNumber: 415,
+                    columnNumber: 9
+                }, ("TURBOPACK compile-time value", void 0))
+            }, void 0, false, {
                 fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                lineNumber: 356,
+                lineNumber: 414,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$components$2f$Footer$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                lineNumber: 447,
+                lineNumber: 558,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             selectedStrategy && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(StrategyDetailModal, {
@@ -1332,23 +1388,22 @@ const SIFPage = ()=>{
                 onClose: ()=>setSelectedStrategy(null)
             }, void 0, false, {
                 fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-                lineNumber: 451,
-                columnNumber: 9
+                lineNumber: 560,
+                columnNumber: 28
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/mokshainvestment/app/services/sif/page.tsx",
-        lineNumber: 353,
+        lineNumber: 411,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
-_s1(SIFPage, "nN2ELwTxcg45Rsd6bRJbymd1Y8U=");
-_c2 = SIFPage;
+_s(SIFPage, "nN2ELwTxcg45Rsd6bRJbymd1Y8U=");
+_c1 = SIFPage;
 const __TURBOPACK__default__export__ = SIFPage;
-var _c, _c1, _c2;
-__turbopack_context__.k.register(_c, "SIFLogoMarquee");
-__turbopack_context__.k.register(_c1, "StrategyDetailModal");
-__turbopack_context__.k.register(_c2, "SIFPage");
+var _c, _c1;
+__turbopack_context__.k.register(_c, "StrategyDetailModal");
+__turbopack_context__.k.register(_c1, "SIFPage");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
 }

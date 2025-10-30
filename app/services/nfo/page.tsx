@@ -1,182 +1,4 @@
-// "use client";
-
-// import React, { useEffect, useState } from "react";
-// import Navbar from "@/components/Navbar";
-// import Footer from "@/components/Footer";
-// import { BgComponent } from "@/components/BgComponent";
-// import { TrendingUp, PieChart, Shield } from "lucide-react";
-// import { motion, AnimatePresence } from "framer-motion";
-
-// const UpcomingNFOPage: React.FC = () => {
-//   const [nfoData, setNfoData] = useState<any[]>([]);
-//   const [activeIndex, setActiveIndex] = useState(0);
-
-//   // 🔹 Fetch data (mock for now)
-//   useEffect(() => {
-//     setNfoData([
-//       {
-//         id: 1,
-//         fund_name: "ABC Bluechip Fund",
-//         category: "Large Cap Equity",
-//         launch_date: "2025-10-15",
-//         close_date: "2025-10-30",
-//         min_investment: "₹5,000",
-//         image_url: "/images/nfo/nfo1.jpg",
-//       },
-//       {
-//         id: 2,
-//         fund_name: "XYZ Balanced Advantage Fund",
-//         category: "Hybrid",
-//         launch_date: "2025-10-20",
-//         close_date: "2025-11-05",
-//         min_investment: "₹1,000",
-//         image_url: "/images/nfo/nfo2.jpg",
-//       },
-//       {
-//         id: 3,
-//         fund_name: "PQR Flexi Cap Fund",
-//         category: "Multi Cap",
-//         launch_date: "2025-11-01",
-//         close_date: "2025-11-15",
-//         min_investment: "₹500",
-//         image_url: "/images/nfo/nfo3.jpg",
-//       },
-//     ]);
-//   }, []);
-
-//   // 🔄 Auto-scroll every 4 seconds
-//   useEffect(() => {
-//     if (nfoData.length === 0) return;
-//     const interval = setInterval(() => {
-//       setActiveIndex((prev) => (prev + 1) % nfoData.length);
-//     }, 4000);
-//     return () => clearInterval(interval);
-//   }, [nfoData]);
-
-//   return (
-//     <main className="flex flex-col min-h-screen text-white">
-//       <BgComponent />
-//       <Navbar />
-
-//       {/* 🟡 Hero Section */}
-//       <section className="flex-1 pt-28 pb-24 relative z-10">
-//         <div className="max-w-7xl mx-auto px-6">
-//           <div className="text-center mb-20">
-//             <h1 className="text-4xl md:text-6xl font-extrabold text-amber-400 mb-5">
-//               Upcoming Mutual Fund NFOs
-//             </h1>
-//             <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
-//               Discover <strong>New Fund Offers (NFOs)</strong> that give you early
-//               access to innovative investment ideas across sectors and strategies.
-//               Stay informed and invest smartly as new opportunities open up.
-//             </p>
-//           </div>
-
-//           {/* 🟡 Highlights Section */}
-//           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-//             <div className="flex flex-col items-center text-center p-8 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 shadow-xl hover:scale-105 transition-transform duration-300">
-//               <TrendingUp className="w-8 h-8 text-amber-400 mb-4" />
-//               <h4 className="font-semibold text-white mb-2">Early Opportunity</h4>
-//               <p className="text-sm text-slate-200">
-//                 Invest at the ground level of a fund before it opens to the public.
-//               </p>
-//             </div>
-
-//             <div className="flex flex-col items-center text-center p-8 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 shadow-xl hover:scale-105 transition-transform duration-300">
-//               <PieChart className="w-8 h-8 text-amber-400 mb-4" />
-//               <h4 className="font-semibold text-white mb-2">Diversified Potential</h4>
-//               <p className="text-sm text-slate-200">
-//                 Access new sectors, asset classes, and market themes.
-//               </p>
-//             </div>
-
-//             <div className="flex flex-col items-center text-center p-8 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 shadow-xl hover:scale-105 transition-transform duration-300">
-//               <Shield className="w-8 h-8 text-amber-400 mb-4" />
-//               <h4 className="font-semibold text-white mb-2">Expert Management</h4>
-//               <p className="text-sm text-slate-200">
-//                 Managed by trusted AMC professionals to maximize your portfolio’s growth.
-//               </p>
-//             </div>
-//           </div>
-
-//           {/* 🟡 Carousel Section */}
-//           <div className="relative max-w-4xl mx-auto mb-24">
-//             <h2 className="text-3xl font-bold text-center text-amber-400 mb-10">
-//               Currently Open for Subscription
-//             </h2>
-
-//             {nfoData.length > 0 ? (
-//               <div className="relative w-full h-[450px] rounded-2xl overflow-hidden border border-white/20 shadow-xl">
-//                 <AnimatePresence mode="wait">
-//                   <motion.img
-//                     key={nfoData[activeIndex].id}
-//                     src={nfoData[activeIndex].image_url}
-//                     alt={nfoData[activeIndex].fund_name}
-//                     initial={{ opacity: 0 }}
-//                     animate={{ opacity: 1 }}
-//                     exit={{ opacity: 0 }}
-//                     transition={{ duration: 1.2, ease: "easeInOut" }}
-//                     className="absolute inset-0 w-full h-full object-cover rounded-2xl"
-//                   />
-//                 </AnimatePresence>
-
-//                 {/* Lighter transparent overlay */}
-//                 <div className="absolute inset-0 bg-black/10 rounded-2xl"></div>
-
-//                 {/* Navigation buttons */}
-//                 <div className="absolute inset-y-0 left-0 flex items-center pl-4">
-//                   <button
-//                     onClick={() =>
-//                       setActiveIndex((prev) =>
-//                         prev === 0 ? nfoData.length - 1 : prev - 1
-//                       )
-//                     }
-//                     className="p-2 bg-black/20 rounded-full hover:bg-black/40 transition"
-//                   >
-//                     ‹
-//                   </button>
-//                 </div>
-//                 <div className="absolute inset-y-0 right-0 flex items-center pr-4">
-//                   <button
-//                     onClick={() =>
-//                       setActiveIndex((prev) => (prev + 1) % nfoData.length)
-//                     }
-//                     className="p-2 bg-black/20 rounded-full hover:bg-black/40 transition"
-//                   >
-//                     ›
-//                   </button>
-//                 </div>
-//               </div>
-//             ) : (
-//               <p className="text-center text-slate-400">
-//                 No upcoming NFOs available at the moment.
-//               </p>
-//             )}
-//           </div>
-
-//           {/* 🟡 CTA Section */}
-//           <div className="bg-gradient-to-r from-amber-500 to-yellow-600 rounded-2xl p-10 text-center text-white shadow-xl max-w-5xl mx-auto">
-//             <h2 className="text-3xl md:text-4xl font-bold mb-3">
-//               Don’t Miss the Next Big Opportunity
-//             </h2>
-//             <p className="text-white/90 text-lg mb-6 max-w-2xl mx-auto">
-//               Stay ahead by tracking upcoming fund launches and learning how NFOs
-//               can diversify your investment strategy. Our experts are here to guide you.
-//             </p>
-//             <button className="px-8 py-3 bg-white text-gray-900 font-semibold rounded-lg hover:bg-amber-100 transition-colors">
-//               Talk to an Advisor
-//             </button>
-//           </div>
-//         </div>
-//       </section>
-
-//       <Footer />
-//     </main>
-//   );
-// };
-
-// export default UpcomingNFOPage;
-
+// removing automatic scroll carousel
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -184,7 +6,7 @@ import { createClient } from "@supabase/supabase-js";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { BgComponent } from "@/components/BgComponent";
-import { TrendingUp, PieChart, Shield, Calendar, Clock } from "lucide-react";
+import { TrendingUp, PieChart, Shield, Calendar, Clock, Star } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Initialize Supabase client
@@ -252,38 +74,34 @@ const UpcomingNFOPage: React.FC = () => {
     fetchNFOData();
   }, []);
 
-  // Function to get full image URL from Supabase Storage
-  const getImageUrl = (imagePath: string | null) => {
-    console.log("🖼️ Getting image URL for:", imagePath);
-    
+  // Fixed: Get image URL with proper Supabase storage path
+  const getImageUrl = (imagePath: string | null, bucket: string = 'nfo-images'): string => {
     if (!imagePath) {
-      console.log("🟡 No image path, using fallback");
       return '/images/nfo/fallback.jpg';
     }
 
     // If it's already a full URL, return as is
     if (imagePath.startsWith('http')) {
-      console.log("🔗 Already full URL:", imagePath);
       return imagePath;
     }
-    
-    // Extract just the filename
+
+    // If it's just a filename, construct the proper Supabase storage URL
     let filename = imagePath;
     
-    // Remove any folder prefixes and duplicate bucket names
+    // Remove any existing bucket path if present
     if (filename.includes('/')) {
       filename = filename.split('/').pop() || filename;
     }
     
-    // Remove any duplicate bucket names that might still be there
-    filename = filename.replace('nfo-images/', '');
+    // Remove bucket prefix if present
+    filename = filename.replace(`${bucket}/`, '');
     
-    // Get public URL from Supabase
+    // Get public URL from Supabase storage
     const { data } = supabase.storage
-      .from('nfo-images')
+      .from(bucket)
       .getPublicUrl(filename);
     
-    console.log("📦 Final image URL:", data.publicUrl);
+    console.log(`🖼️ Generated image URL for ${filename}:`, data.publicUrl);
     return data.publicUrl;
   };
 
@@ -305,29 +123,21 @@ const UpcomingNFOPage: React.FC = () => {
     return nfo.start_date <= currentDate && nfo.end_date >= currentDate;
   };
 
-  // Handle image error
+  // Fixed: Handle image error more gracefully
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>, imageUrl: string | null) => {
-    console.error("❌ Image failed to load:", imageUrl);
+    console.warn("⚠️ Image failed to load:", imageUrl);
     
-    // Add to error set to prevent retries
     if (imageUrl) {
       setImageErrors(prev => new Set(prev).add(imageUrl));
     }
     
-    // Use fallback
+    // Use a proper fallback image
     e.currentTarget.src = '/images/nfo/fallback.jpg';
+    e.currentTarget.alt = 'Fallback image';
+    e.currentTarget.classList.add('opacity-50'); // Visual indicator for failed images
   };
 
-  // 🔄 Auto-scroll every 5 seconds
-  useEffect(() => {
-    if (nfoData.length === 0 || nfoData.length === 1) return;
-    
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % nfoData.length);
-    }, 5000);
-    
-    return () => clearInterval(interval);
-  }, [nfoData]);
+  // REMOVED: Auto-scroll functionality completely
 
   // Manual navigation
   const goToNext = () => {
@@ -338,45 +148,26 @@ const UpcomingNFOPage: React.FC = () => {
     setActiveIndex((prev) => (prev === 0 ? nfoData.length - 1 : prev - 1));
   };
 
-  // Test with your specific image
-  useEffect(() => {
-    if (nfoData.length > 0) {
-      console.log("🧪 Testing image URL generation for first NFO:");
-      const testUrl = getImageUrl(nfoData[0]?.image_url);
-      console.log("🧪 Final image URL:", testUrl);
-      
-      // Test known working image
-      const knownImageUrl = supabase.storage.from('nfo-images').getPublicUrl('digigold15.jpg').data.publicUrl;
-      console.log("🧪 Known working image URL:", knownImageUrl);
-    }
-  }, [nfoData]);
-
   return (
     <main className="flex flex-col min-h-screen text-white">
       <BgComponent />
       <Navbar />
 
       {/* 🟡 Hero Section */}
-      <section className="flex-1 pt-28 pb-24 relative z-10">
+      <section className="flex-1 pt-32 pb-20 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-6xl font-extrabold text-amber-400 mb-5"
-            >
-              Upcoming Mutual Fund NFOs
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed"
-            >
+          {/* Enhanced Header matching Insurance page theme */}
+          <div className="text-center mb-16">
+            <div className="inline-block bg-gradient-to-r from-amber-500/10 to-amber-400/10 px-8 py-6 rounded-2xl border border-amber-200/30 mb-8 backdrop-blur-sm">
+              <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent mb-4">
+                Upcoming Mutual Fund NFOs
+              </h1>
+            </div>
+            <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed font-medium">
               Discover <strong>New Fund Offers (NFOs)</strong> that give you early
               access to innovative investment ideas across sectors and strategies.
               Stay informed and invest smartly as new opportunities open up.
-            </motion.p>
+            </p>
           </div>
 
           {/* 🟡 Highlights Section */}
@@ -441,25 +232,14 @@ const UpcomingNFOPage: React.FC = () => {
                 <p className="text-rose-400 text-lg">{error}</p>
                 <button 
                   onClick={() => window.location.reload()}
-                  className="mt-4 px-6 py-2 bg-rose-500/20 border border-rose-500/30 text-rose-400 rounded-lg hover:bg-rose-500/30 transition-colors"
+                  className="mt-4 px-6 py-2 bg-rose-500/20 border border-rose-500/30 text-rose-400 rounded-lg hover:bg-rose-500/30 transition-colors cursor-pointer"
                 >
                   Try Again
                 </button>
               </div>
             ) : nfoData.length > 0 ? (
               <>
-                {/* Debug Info - Remove in production */}
-                <div className="mb-4 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                  <p className="text-blue-400 text-sm">
-                    <strong>Debug Info:</strong> Showing {nfoData.length} NFO(s). 
-                    Current image path: {nfoData[activeIndex]?.image_url}
-                  </p>
-                  <p className="text-blue-400 text-sm">
-                    <strong>Generated URL:</strong> {getImageUrl(nfoData[activeIndex]?.image_url)}
-                  </p>
-                </div>
-
-                <div className="relative w-full h-[500px] rounded-2xl overflow-hidden border border-white/20 shadow-2xl">
+                <div className="relative w-full h-[500px] rounded-2xl overflow-hidden border border-white/20 shadow-2xl bg-black/20">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={nfoData[activeIndex].id}
@@ -469,13 +249,15 @@ const UpcomingNFOPage: React.FC = () => {
                       transition={{ duration: 0.8, ease: "easeInOut" }}
                       className="absolute inset-0 w-full h-full"
                     >
-                      <img
-                        src={getImageUrl(nfoData[activeIndex].image_url)}
-                        alt={nfoData[activeIndex].title}
-                        className="w-full h-full object-cover"
-                        onError={(e) => handleImageError(e, nfoData[activeIndex].image_url)}
-                        onLoad={() => console.log("✅ Image loaded successfully:", nfoData[activeIndex].image_url)}
-                      />
+                      {/* FIXED: Background Image Container - Changed to object-contain to prevent stretching */}
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                        <img
+                          src={getImageUrl(nfoData[activeIndex].image_url)}
+                          alt={nfoData[activeIndex].title}
+                          className="w-full h-full object-contain" // Changed from object-cover to object-contain
+                          onError={(e) => handleImageError(e, nfoData[activeIndex].image_url)}
+                        />
+                      </div>
                       
                       {/* Gradient Overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
@@ -522,18 +304,18 @@ const UpcomingNFOPage: React.FC = () => {
                     </motion.div>
                   </AnimatePresence>
 
-                  {/* Navigation buttons */}
+                  {/* Navigation buttons - Always show if there are multiple NFOs */}
                   {nfoData.length > 1 && (
                     <>
                       <button
                         onClick={goToPrev}
-                        className="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 bg-black/50 rounded-full hover:bg-black/70 transition text-white text-xl backdrop-blur-sm"
+                        className="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 bg-black/50 rounded-full hover:bg-black/70 transition text-white text-xl backdrop-blur-sm cursor-pointer"
                       >
                         ‹
                       </button>
                       <button
                         onClick={goToNext}
-                        className="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 bg-black/50 rounded-full hover:bg-black/70 transition text-white text-xl backdrop-blur-sm"
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 bg-black/50 rounded-full hover:bg-black/70 transition text-white text-xl backdrop-blur-sm cursor-pointer"
                       >
                         ›
                       </button>
@@ -547,7 +329,7 @@ const UpcomingNFOPage: React.FC = () => {
                         <button
                           key={index}
                           onClick={() => setActiveIndex(index)}
-                          className={`w-3 h-3 rounded-full transition-all ${
+                          className={`w-3 h-3 rounded-full transition-all cursor-pointer ${
                             index === activeIndex 
                               ? 'bg-amber-400 scale-125' 
                               : 'bg-white/50 hover:bg-white/70'
@@ -569,24 +351,27 @@ const UpcomingNFOPage: React.FC = () => {
             )}
           </div>
 
-          {/* 🟡 CTA Section */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="bg-gradient-to-r from-amber-500 to-yellow-600 rounded-2xl p-10 text-center text-white shadow-xl max-w-5xl mx-auto"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Don't Miss the Next Big Opportunity
-            </h2>
-            <p className="text-white/90 text-lg mb-6 max-w-2xl mx-auto">
-              Stay ahead by tracking upcoming fund launches and learning how NFOs
-              can diversify your investment strategy. Our experts are here to guide you.
-            </p>
-            <button className="px-8 py-4 bg-white text-gray-900 font-semibold rounded-lg hover:bg-amber-100 transition-colors text-lg">
-              Talk to an Investment Advisor
-            </button>
-          </motion.div>
+          {/* Main CTA Section matching Insurance page theme */}
+          <div className="max-w-7xl mx-auto px-6 mt-8">
+            <div className="bg-gradient-to-r from-amber-500 to-amber-400 rounded-2xl p-10 text-center text-white shadow-xl">
+              <Shield className="w-16 h-16 mx-auto mb-6" />
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Don't Miss the Next Big Opportunity
+              </h2>
+              <p className="text-amber-100 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
+                Stay ahead by tracking upcoming fund launches and learning how NFOs
+                can diversify your investment strategy. Our experts are here to guide you.
+              </p>
+              <div className="flex justify-center">
+                <button 
+                  onClick={() => window.location.href = '/contact'} 
+                  className="px-12 py-5 bg-white text-amber-600 font-bold rounded-lg hover:bg-amber-50 transition-colors shadow-lg text-lg cursor-pointer"
+                >
+                  Talk to an Investment Advisor
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

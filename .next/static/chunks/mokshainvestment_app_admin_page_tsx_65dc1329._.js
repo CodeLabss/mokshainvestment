@@ -2,7 +2,7 @@
 "[project]/mokshainvestment/app/admin/page.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-// v1 - working perfectly fine with update_nfo function added
+// change from the above code
 // "use client";
 // import React, { useEffect, useState } from "react";
 // import { createClient } from "@supabase/supabase-js";
@@ -10,7 +10,9 @@
 // import { 
 //   FiUser, FiPhone, FiMail, FiFileText, FiClock, 
 //   FiCheckCircle, FiXCircle, FiLogOut, FiRefreshCw,
-//   FiImage, FiUpload, FiPlus, FiEdit, FiTrash2
+//   FiImage, FiUpload, FiPlus, FiEdit, FiTrash2,
+//   FiTrendingUp, FiShield, FiBarChart2, FiEye, FiEyeOff,
+//   FiArrowLeft, FiSearch, FiFilter
 // } from "react-icons/fi";
 // type LeadRow = {
 //   id: string;
@@ -31,6 +33,25 @@
 //   image_url: string | null;
 //   created_at: string;
 // };
+// type BondsNCD = {
+//   id: string;
+//   company_name: string;
+//   issue_size: string | null;
+//   interest_rate: number | null;
+//   tenure: string | null;
+//   image_url: string | null;
+//   chart_data: any | null;
+//   created_at: string;
+// };
+// type BondsFD = {
+//   id: string;
+//   bank_name: string;
+//   interest_rate: number | null;
+//   tenure: string | null;
+//   image_url: string | null;
+//   chart_data: any | null;
+//   created_at: string;
+// };
 // // Initialize Supabase client only once
 // const supabase = createClient(
 //   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -39,10 +60,17 @@
 // export default function AdminDashboardPage() {
 //   const [leads, setLeads] = useState<LeadRow[]>([]);
 //   const [nfoData, setNfoData] = useState<NFOData[]>([]);
+//   const [bondsNCD, setBondsNCD] = useState<BondsNCD[]>([]);
+//   const [bondsFD, setBondsFD] = useState<BondsFD[]>([]);
 //   const [loading, setLoading] = useState(true);
 //   const [refreshing, setRefreshing] = useState(false);
 //   const [userEmail, setUserEmail] = useState<string>("");
-//   const [activeTab, setActiveTab] = useState<'leads' | 'nfo'>('leads');
+//   const [activeTab, setActiveTab] = useState<'leads' | 'contacted' | 'nfo' | 'bondsNCD' | 'bondsFD'>('leads');
+//   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+//   const [authDebug, setAuthDebug] = useState<string[]>([]);
+//   const [expandedRequirement, setExpandedRequirement] = useState<string | null>(null);
+//   const [searchTerm, setSearchTerm] = useState("");
+//   const [filterRequirement, setFilterRequirement] = useState("");
 //   // NFO Form State
 //   const [nfoForm, setNfoForm] = useState({
 //     title: '',
@@ -51,81 +79,137 @@
 //     end_date: '',
 //     image_file: null as File | null
 //   });
+//   // Bonds NCD Form State
+//   const [bondsNCDForm, setBondsNCDForm] = useState({
+//     company_name: '',
+//     issue_size: '',
+//     interest_rate: '',
+//     tenure: '',
+//     image_file: null as File | null
+//   });
+//   // Bonds FD Form State
+//   const [bondsFDForm, setBondsFDForm] = useState({
+//     bank_name: '',
+//     interest_rate: '',
+//     tenure: '',
+//     image_file: null as File | null
+//   });
 //   const [uploading, setUploading] = useState(false);
 //   const [editingId, setEditingId] = useState<string | null>(null);
-//   const [showNfoForm, setShowNfoForm] = useState(false);
+//   const [editingType, setEditingType] = useState<'nfo' | 'ncd' | 'fd' | null>(null);
+//   const [showForm, setShowForm] = useState(false);
 //   const [formErrors, setFormErrors] = useState<string[]>([]);
 //   const [debugInfo, setDebugInfo] = useState<string[]>([]);
 //   const addDebugInfo = (message: string) => {
 //     console.log(`🔍 ${message}`);
 //     setDebugInfo(prev => [...prev.slice(-9), `${new Date().toLocaleTimeString()}: ${message}`]);
 //   };
-//   const checkloggedin = async () => {
-//     try {
-//       addDebugInfo("Checking authentication...");
-//       const { data, error } = await supabase.auth.getUser();
-//       if (error) {
-//         addDebugInfo(`Auth error: ${error.message}`);
-//         return false;
-//       }
-//       setUserEmail(data.user?.email || "");
-//       addDebugInfo("Authentication successful");
-//       return true;
-//     } catch (error: any) {
-//       addDebugInfo(`Auth check failed: ${error.message}`);
-//       return false;
-//     }
+//   const addAuthDebug = (message: string) => {
+//     console.log(`🔐 ${message}`);
+//     setAuthDebug(prev => [...prev.slice(-9), `${new Date().toLocaleTimeString()}: ${message}`]);
 //   };
-//   // Database connection test
-//   const checkDatabaseConnection = async () => {
-//     try {
-//       addDebugInfo("Testing database connection...");
-//       // Test leads table
-//       const { data: leadsData, error: leadsError } = await supabase
-//         .from('leads')
-//         .select('count')
-//         .limit(1);
-//       if (leadsError) {
-//         addDebugInfo(`Leads table error: ${leadsError.message} (code: ${leadsError.code})`);
-//       } else {
-//         addDebugInfo("Leads table accessible");
-//       }
-//       // Test upcoming_nfo table
-//       const { data: nfoData, error: nfoError } = await supabase
-//         .from('upcoming_nfo')
-//         .select('id')
-//         .limit(1);
-//       if (nfoError) {
-//         addDebugInfo(`NFO table error: ${nfoError.message} (code: ${nfoError.code})`);
-//         if (nfoError.code === '42P01') {
-//           addDebugInfo("NFO table doesn't exist. Please create it in Supabase.");
-//         }
-//       } else {
-//         addDebugInfo("NFO table accessible");
-//       }
-//       // Test storage bucket
-//       const { data: storageData, error: storageError } = await supabase.storage
-//         .from('nfo-images')
-//         .list('', { limit: 1 });
-//       if (storageError) {
-//         addDebugInfo(`Storage error: ${storageError.message} (code: ${storageError.code})`);
-//       } else {
-//         addDebugInfo("Storage bucket accessible");
-//       }
-//     } catch (error: any) {
-//       addDebugInfo(`Database check failed: ${error.message}`);
-//     }
-//   };
+//   // Authentication check
 //   useEffect(() => {
-//     checkloggedin().then((loggedIn) => {
-//       if (!loggedIn) {
+//     const checkAuth = async () => {
+//       try {
+//         addAuthDebug("Starting authentication check...");
+//         // Get the current session
+//         const { data: { session }, error } = await supabase.auth.getSession();
+//         if (error) {
+//           addAuthDebug(`Session check error: ${error.message}`);
+//           console.error("❌ Session check error:", error);
+//           window.location.href = "/admin/login";
+//           return;
+//         }
+//         if (!session) {
+//           addAuthDebug("No session found, redirecting to login");
+//           console.log("❌ No session found, redirecting to login");
+//           window.location.href = "/admin/login";
+//           return;
+//         }
+//         addAuthDebug(`Session found for user: ${session.user?.email}`);
+//         console.log("✅ Session found, user is authenticated");
+//         setUserEmail(session.user?.email || "");
+//         setIsCheckingAuth(false);
+//         // Now fetch the data
+//         addAuthDebug("Fetching dashboard data...");
+//         await Promise.all([
+//           fetchLeads(),
+//           fetchNFOData(),
+//           fetchBondsNCD(),
+//           fetchBondsFD()
+//         ]);
+//         addAuthDebug("Dashboard data loaded successfully");
+//       } catch (error: any) {
+//         addAuthDebug(`Auth check failed: ${error.message}`);
+//         console.error("❌ Auth check failed:", error);
 //         window.location.href = "/admin/login";
 //       }
-//     });
-//     fetchLeads();
-//     fetchNFOData();
-//     checkDatabaseConnection();
+//     };
+//     checkAuth();
 //   }, []);
+//   // Add session state listener
+//   useEffect(() => {
+//     const {
+//       data: { subscription },
+//     } = supabase.auth.onAuthStateChange((event, session) => {
+//       addAuthDebug(`Auth state changed: ${event}`);
+//       console.log("🔐 Auth state changed:", event);
+//       if (event === 'SIGNED_OUT') {
+//         addAuthDebug("User signed out, redirecting to login");
+//         window.location.href = "/admin/login";
+//       }
+//       if (event === 'SIGNED_IN') {
+//         addAuthDebug("User signed in, updating email");
+//         setUserEmail(session?.user?.email || "");
+//         setIsCheckingAuth(false);
+//       }
+//       if (event === 'TOKEN_REFRESHED') {
+//         addAuthDebug("Token refreshed successfully");
+//       }
+//     });
+//     return () => subscription.unsubscribe();
+//   }, []);
+//   // Filtered leads based on active tab and search
+//   const filteredLeads = leads.filter(lead => {
+//     const matchesSearch = 
+//       lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+//       lead.phone.includes(searchTerm) ||
+//       (lead.email && lead.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
+//       (lead.requirement && lead.requirement.toLowerCase().includes(searchTerm.toLowerCase())) ||
+//       (lead.notes && lead.notes.toLowerCase().includes(searchTerm.toLowerCase()));
+//     const matchesRequirement = !filterRequirement || lead.requirement === filterRequirement;
+//     if (activeTab === 'leads') {
+//       return !lead.is_contacted && matchesSearch && matchesRequirement;
+//     } else if (activeTab === 'contacted') {
+//       return lead.is_contacted && matchesSearch && matchesRequirement;
+//     }
+//     return matchesSearch && matchesRequirement;
+//   });
+//   // Show loading while checking authentication
+//   if (isCheckingAuth) {
+//     return (
+//       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+//         <div className="text-center">
+//           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-400 mx-auto mb-4"></div>
+//           <p className="text-slate-300 text-lg">Verifying access...</p>
+//           <p className="text-slate-400 text-sm mt-2">Checking authentication status</p>
+//         </div>
+//       </div>
+//     );
+//   }
+//   // Show loading while fetching data
+//   if (loading && !isCheckingAuth) {
+//     return (
+//       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+//         <div className="text-center">
+//           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-400 mx-auto mb-4"></div>
+//           <p className="text-slate-300 text-lg">Loading dashboard...</p>
+//           <p className="text-slate-400 text-sm mt-2">Fetching your data</p>
+//         </div>
+//       </div>
+//     );
+//   }
 //   async function fetchLeads() {
 //     try {
 //       setLoading(true);
@@ -168,11 +252,51 @@
 //       console.error('Error in fetchNFOData:', error);
 //     }
 //   }
+//   async function fetchBondsNCD() {
+//     try {
+//       addDebugInfo("Fetching Bonds NCD data...");
+//       const { data, error } = await supabase
+//         .from('bonds_ncd')
+//         .select('*')
+//         .order('created_at', { ascending: false });
+//       if (error) {
+//         addDebugInfo(`Bonds NCD fetch error: ${error.message}`);
+//         console.error('Error fetching Bonds NCD data:', error);
+//       } else {
+//         addDebugInfo(`Fetched ${data?.length || 0} Bonds NCD`);
+//         setBondsNCD(data || []);
+//       }
+//     } catch (error: any) {
+//       addDebugInfo(`Bonds NCD fetch exception: ${error.message}`);
+//       console.error('Error in fetchBondsNCD:', error);
+//     }
+//   }
+//   async function fetchBondsFD() {
+//     try {
+//       addDebugInfo("Fetching Bonds FD data...");
+//       const { data, error } = await supabase
+//         .from('bonds_fd')
+//         .select('*')
+//         .order('created_at', { ascending: false });
+//       if (error) {
+//         addDebugInfo(`Bonds FD fetch error: ${error.message}`);
+//         console.error('Error fetching Bonds FD data:', error);
+//       } else {
+//         addDebugInfo(`Fetched ${data?.length || 0} Bonds FD`);
+//         setBondsFD(data || []);
+//       }
+//     } catch (error: any) {
+//       addDebugInfo(`Bonds FD fetch exception: ${error.message}`);
+//       console.error('Error in fetchBondsFD:', error);
+//     }
+//   }
 //   async function handleRefresh() {
 //     setRefreshing(true);
 //     addDebugInfo("Manual refresh triggered");
 //     await fetchLeads();
 //     await fetchNFOData();
+//     await fetchBondsNCD();
+//     await fetchBondsFD();
 //   }
 //   async function toggleContactStatus(leadId: string, currentStatus: boolean) {
 //     try {
@@ -197,14 +321,14 @@
 //       console.error('Error toggling contact status:', error);
 //     }
 //   }
-//   // NFO Management Functions
-//   const handleImageUpload = async (file: File): Promise<string> => {
+//   // Image Upload Function
+//   const handleImageUpload = async (file: File, bucket: string): Promise<string> => {
 //     const fileExt = file.name.split('.').pop();
 //     const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`;
 //     const filePath = fileName;
-//     addDebugInfo(`Uploading image: ${fileName} (${file.size} bytes)`);
+//     addDebugInfo(`Uploading image to ${bucket}: ${fileName} (${file.size} bytes)`);
 //     const { data, error: uploadError } = await supabase.storage
-//       .from('nfo-images')
+//       .from(bucket)
 //       .upload(filePath, file, {
 //         cacheControl: '3600',
 //         upsert: false
@@ -218,79 +342,70 @@
 //     console.log("✅ Image uploaded successfully:", data?.path);
 //     return fileName;
 //   };
-//   const validateForm = (): boolean => {
+//   // NFO Management Functions
+//   const validateNFOForm = (): boolean => {
 //     const errors: string[] = [];
 //     if (!nfoForm.title.trim()) {
 //       errors.push('Title is required');
 //     }
-//     // Image is compulsory for new NFOs only
 //     if (!editingId && !nfoForm.image_file) {
 //       errors.push('Image is required for new NFOs');
 //     }
-//     // Validate file type if provided
 //     if (nfoForm.image_file) {
 //       const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 //       if (!validTypes.includes(nfoForm.image_file.type)) {
 //         errors.push('Please upload a valid image (JPEG, PNG, or WebP)');
 //       }
-//       // Validate file size (5MB max)
 //       if (nfoForm.image_file.size > 5 * 1024 * 1024) {
 //         errors.push('Image size should be less than 5MB');
 //       }
 //     }
 //     setFormErrors(errors);
 //     if (errors.length > 0) {
-//       addDebugInfo(`Form validation failed: ${errors.join(', ')}`);
+//       addDebugInfo(`NFO Form validation failed: ${errors.join(', ')}`);
 //     }
 //     return errors.length === 0;
 //   };
 //   const handleNfoSubmit = async (e: React.FormEvent) => {
 //     e.preventDefault();
 //     addDebugInfo("NFO form submission started");
-//     if (!validateForm()) {
+//     if (!validateNFOForm()) {
 //       return;
 //     }
 //     try {
 //       setUploading(true);
 //       setFormErrors([]);
 //       let imageFileName = null;
-//       // Upload new image if provided
 //       if (nfoForm.image_file) {
 //         try {
-//           imageFileName = await handleImageUpload(nfoForm.image_file);
+//           imageFileName = await handleImageUpload(nfoForm.image_file, 'nfo-images');
 //         } catch (uploadError: any) {
 //           addDebugInfo(`Image upload error in submit: ${uploadError.message}`);
-//           console.error('❌ Image upload failed:', uploadError);
 //           setFormErrors([`Image upload failed: ${uploadError.message}`]);
 //           setUploading(false);
 //           return;
 //         }
 //       } else if (editingId) {
-//         // Keep existing image if editing and no new file
 //         const existingNfo = nfoData.find(nfo => nfo.id === editingId);
 //         imageFileName = existingNfo?.image_url || null;
 //         addDebugInfo(`Using existing image: ${imageFileName}`);
 //       }
-//       // Prepare data for database
 //       const nfoDataToSave = {
 //         title: nfoForm.title,
 //         description: nfoForm.description || null,
 //         start_date: nfoForm.start_date || null,
 //         end_date: nfoForm.end_date || null,
 //         image_url: imageFileName,
-//         // updated_at: new Date().toISOString()
 //       };
 //       addDebugInfo(`Saving NFO data: ${JSON.stringify(nfoDataToSave)}`);
 //       let result;
 //       if (editingId) {
-//         // Update existing NFO
 //         addDebugInfo(`Updating existing NFO: ${editingId}`);
 //         result = await supabase
 //           .from('upcoming_nfo')
 //           .update(nfoDataToSave)
 //           .eq('id', editingId);
 //       } else {
-//         // Create new NFO
 //         addDebugInfo("Creating new NFO");
 //         result = await supabase
 //           .from('upcoming_nfo')
@@ -299,94 +414,220 @@
 //             created_at: new Date().toISOString()
 //           }]);
 //       }
-//       // Comprehensive error handling for Supabase responses
 //       if (result.error) {
 //         addDebugInfo(`Database operation failed: ${result.error.message}`);
-//         console.error('❌ Database error details:', {
-//           message: result.error.message,
-//           details: result.error.details,
-//           hint: result.error.hint,
-//           code: result.error.code
-//         });
-//         let errorMessage = 'Database error occurred. ';
-//         if (result.error.message) {
-//           errorMessage += result.error.message;
-//         }
-//         if (result.error.details) {
-//           errorMessage += ` Details: ${result.error.details}`;
-//         }
-//         if (result.error.hint) {
-//           errorMessage += ` Hint: ${result.error.hint}`;
-//         }
-//         // Specific error handling for common issues
-//         if (result.error.code === '42501') {
-//           errorMessage = "Permission denied. Check RLS policies for 'upcoming_nfo' table.";
-//         } else if (result.error.code === '42P01') {
-//           errorMessage = "Table 'upcoming_nfo' doesn't exist. Please create it in Supabase.";
-//         } else if (result.error.code === '23505') {
-//           errorMessage = "Duplicate entry. This NFO might already exist.";
-//         }
-//         throw new Error(errorMessage);
+//         throw new Error(result.error.message);
 //       }
 //       addDebugInfo("NFO saved successfully");
-//       // Reset form and refresh data
-//       resetNfoForm();
+//       resetForm();
 //       await fetchNFOData();
 //       alert(editingId ? 'NFO updated successfully!' : 'NFO created successfully!');
 //     } catch (error: any) {
 //       addDebugInfo(`NFO submission failed: ${error.message}`);
-//       console.error('❌ Error saving NFO:', error);
-//       console.error('Error details:', {
-//         message: error.message,
-//         stack: error.stack,
-//         name: error.name
-//       });
-//       // Provide more specific error messages
-//       let errorMessage = 'Error saving NFO. Please try again.';
-//       if (error.message) {
-//         errorMessage = error.message;
-//       }
-//       setFormErrors([errorMessage]);
+//       setFormErrors([error.message]);
 //     } finally {
 //       setUploading(false);
 //     }
 //   };
-//   const handleEditNfo = (nfo: NFOData) => {
-//     addDebugInfo(`Editing NFO: ${nfo.title}`);
-//     setNfoForm({
-//       title: nfo.title,
-//       description: nfo.description || '',
-//       start_date: nfo.start_date ? nfo.start_date.split('T')[0] : '',
-//       end_date: nfo.end_date ? nfo.end_date.split('T')[0] : '',
-//       image_file: null
-//     });
-//     setEditingId(nfo.id);
-//     setShowNfoForm(true);
-//     setFormErrors([]);
-//   };
-//   const handleDeleteNfo = async (id: string) => {
-//     if (!confirm('Are you sure you want to delete this NFO?')) return;
-//     try {
-//       addDebugInfo(`Deleting NFO: ${id}`);
-//       const { error } = await supabase
-//         .from('upcoming_nfo')
-//         .delete()
-//         .eq('id', id);
-//       if (error) {
-//         addDebugInfo(`Delete failed: ${error.message}`);
-//         throw error;
+//   // Bonds NCD Management Functions
+//   const validateBondsNCDForm = (): boolean => {
+//     const errors: string[] = [];
+//     if (!bondsNCDForm.company_name.trim()) {
+//       errors.push('Company name is required');
+//     }
+//     if (!editingId && !bondsNCDForm.image_file) {
+//       errors.push('Image is required for new NCDs');
+//     }
+//     if (bondsNCDForm.image_file) {
+//       const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+//       if (!validTypes.includes(bondsNCDForm.image_file.type)) {
+//         errors.push('Please upload a valid image (JPEG, PNG, or WebP)');
 //       }
-//       addDebugInfo("NFO deleted successfully");
-//       await fetchNFOData();
-//       alert('NFO deleted successfully!');
+//       if (bondsNCDForm.image_file.size > 5 * 1024 * 1024) {
+//         errors.push('Image size should be less than 5MB');
+//       }
+//     }
+//     setFormErrors(errors);
+//     return errors.length === 0;
+//   };
+//   const handleBondsNCDSubmit = async (e: React.FormEvent) => {
+//     e.preventDefault();
+//     addDebugInfo("Bonds NCD form submission started");
+//     if (!validateBondsNCDForm()) {
+//       return;
+//     }
+//     try {
+//       setUploading(true);
+//       setFormErrors([]);
+//       let imageFileName = null;
+//       if (bondsNCDForm.image_file) {
+//         try {
+//           imageFileName = await handleImageUpload(bondsNCDForm.image_file, 'bonds-images');
+//         } catch (uploadError: any) {
+//           setFormErrors([`Image upload failed: ${uploadError.message}`]);
+//           setUploading(false);
+//           return;
+//         }
+//       } else if (editingId) {
+//         const existingNCD = bondsNCD.find(ncd => ncd.id === editingId);
+//         imageFileName = existingNCD?.image_url || null;
+//       }
+//       const ncdDataToSave = {
+//         company_name: bondsNCDForm.company_name,
+//         issue_size: bondsNCDForm.issue_size || null,
+//         interest_rate: bondsNCDForm.interest_rate ? parseFloat(bondsNCDForm.interest_rate) : null,
+//         tenure: bondsNCDForm.tenure || null,
+//         image_url: imageFileName,
+//       };
+//       let result;
+//       if (editingId) {
+//         result = await supabase
+//           .from('bonds_ncd')
+//           .update(ncdDataToSave)
+//           .eq('id', editingId);
+//       } else {
+//         result = await supabase
+//           .from('bonds_ncd')
+//           .insert([{
+//             ...ncdDataToSave,
+//             created_at: new Date().toISOString()
+//           }]);
+//       }
+//       if (result.error) throw new Error(result.error.message);
+//       resetForm();
+//       await fetchBondsNCD();
+//       alert(editingId ? 'NCD updated successfully!' : 'NCD created successfully!');
 //     } catch (error: any) {
-//       addDebugInfo(`Delete error: ${error.message}`);
-//       console.error('Error deleting NFO:', error);
-//       alert(`Error deleting NFO: ${error.message || 'Please try again.'}`);
+//       setFormErrors([error.message]);
+//     } finally {
+//       setUploading(false);
 //     }
 //   };
-//   const resetNfoForm = () => {
-//     addDebugInfo("Resetting NFO form");
+//   // Bonds FD Management Functions
+//   const validateBondsFDForm = (): boolean => {
+//     const errors: string[] = [];
+//     if (!bondsFDForm.bank_name.trim()) {
+//       errors.push('Bank name is required');
+//     }
+//     if (!editingId && !bondsFDForm.image_file) {
+//       errors.push('Image is required for new FDs');
+//     }
+//     if (bondsFDForm.image_file) {
+//       const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+//       if (!validTypes.includes(bondsFDForm.image_file.type)) {
+//         errors.push('Please upload a valid image (JPEG, PNG, or WebP)');
+//       }
+//       if (bondsFDForm.image_file.size > 5 * 1024 * 1024) {
+//         errors.push('Image size should be less than 5MB');
+//       }
+//     }
+//     setFormErrors(errors);
+//     return errors.length === 0;
+//   };
+//   const handleBondsFDSubmit = async (e: React.FormEvent) => {
+//     e.preventDefault();
+//     addDebugInfo("Bonds FD form submission started");
+//     if (!validateBondsFDForm()) {
+//       return;
+//     }
+//     try {
+//       setUploading(true);
+//       setFormErrors([]);
+//       let imageFileName = null;
+//       if (bondsFDForm.image_file) {
+//         try {
+//           imageFileName = await handleImageUpload(bondsFDForm.image_file, 'bonds-images');
+//         } catch (uploadError: any) {
+//           setFormErrors([`Image upload failed: ${uploadError.message}`]);
+//           setUploading(false);
+//           return;
+//         }
+//       } else if (editingId) {
+//         const existingFD = bondsFD.find(fd => fd.id === editingId);
+//         imageFileName = existingFD?.image_url || null;
+//       }
+//       const fdDataToSave = {
+//         bank_name: bondsFDForm.bank_name,
+//         interest_rate: bondsFDForm.interest_rate ? parseFloat(bondsFDForm.interest_rate) : null,
+//         tenure: bondsFDForm.tenure || null,
+//         image_url: imageFileName,
+//       };
+//       let result;
+//       if (editingId) {
+//         result = await supabase
+//           .from('bonds_fd')
+//           .update(fdDataToSave)
+//           .eq('id', editingId);
+//       } else {
+//         result = await supabase
+//           .from('bonds_fd')
+//           .insert([{
+//             ...fdDataToSave,
+//             created_at: new Date().toISOString()
+//           }]);
+//       }
+//       if (result.error) throw new Error(result.error.message);
+//       resetForm();
+//       await fetchBondsFD();
+//       alert(editingId ? 'FD updated successfully!' : 'FD created successfully!');
+//     } catch (error: any) {
+//       setFormErrors([error.message]);
+//     } finally {
+//       setUploading(false);
+//     }
+//   };
+//   const handleEdit = (item: any, type: 'nfo' | 'ncd' | 'fd') => {
+//     addDebugInfo(`Editing ${type}: ${item.title || item.company_name || item.bank_name}`);
+//     if (type === 'nfo') {
+//       setNfoForm({
+//         title: item.title,
+//         description: item.description || '',
+//         start_date: item.start_date ? item.start_date.split('T')[0] : '',
+//         end_date: item.end_date ? item.end_date.split('T')[0] : '',
+//         image_file: null
+//       });
+//     } else if (type === 'ncd') {
+//       setBondsNCDForm({
+//         company_name: item.company_name,
+//         issue_size: item.issue_size || '',
+//         interest_rate: item.interest_rate?.toString() || '',
+//         tenure: item.tenure || '',
+//         image_file: null
+//       });
+//     } else if (type === 'fd') {
+//       setBondsFDForm({
+//         bank_name: item.bank_name,
+//         interest_rate: item.interest_rate?.toString() || '',
+//         tenure: item.tenure || '',
+//         image_file: null
+//       });
+//     }
+//     setEditingId(item.id);
+//     setEditingType(type);
+//     setShowForm(true);
+//     setFormErrors([]);
+//   };
+//   const handleDelete = async (id: string, type: 'nfo' | 'ncd' | 'fd') => {
+//     if (!confirm('Are you sure you want to delete this item?')) return;
+//     try {
+//       addDebugInfo(`Deleting ${type}: ${id}`);
+//       const tableName = type === 'nfo' ? 'upcoming_nfo' : type === 'ncd' ? 'bonds_ncd' : 'bonds_fd';
+//       const { error } = await supabase
+//         .from(tableName)
+//         .delete()
+//         .eq('id', id);
+//       if (error) throw error;
+//       // Refresh the appropriate data
+//       if (type === 'nfo') await fetchNFOData();
+//       else if (type === 'ncd') await fetchBondsNCD();
+//       else if (type === 'fd') await fetchBondsFD();
+//       alert('Item deleted successfully!');
+//     } catch (error: any) {
+//       console.error('Error deleting item:', error);
+//       alert(`Error deleting item: ${error.message || 'Please try again.'}`);
+//     }
+//   };
+//   const resetForm = () => {
 //     setNfoForm({
 //       title: '',
 //       description: '',
@@ -394,40 +635,51 @@
 //       end_date: '',
 //       image_file: null
 //     });
+//     setBondsNCDForm({
+//       company_name: '',
+//       issue_size: '',
+//       interest_rate: '',
+//       tenure: '',
+//       image_file: null
+//     });
+//     setBondsFDForm({
+//       bank_name: '',
+//       interest_rate: '',
+//       tenure: '',
+//       image_file: null
+//     });
 //     setEditingId(null);
-//     setShowNfoForm(false);
+//     setEditingType(null);
+//     setShowForm(false);
 //     setFormErrors([]);
 //   };
-//   const handleNewNfoClick = () => {
-//     addDebugInfo("Creating new NFO");
-//     resetNfoForm();
-//     setShowNfoForm(true);
+//   const handleNewClick = (type: 'nfo' | 'ncd' | 'fd') => {
+//     resetForm();
+//     setEditingType(type);
+//     setShowForm(true);
 //   };
-//   const getImageUrl = (imagePath: string | null) => {
+//   const getImageUrl = (imagePath: string | null, bucket: string) => {
 //     if (!imagePath) return null;
-//     // Extract just the filename
 //     let filename = imagePath;
 //     if (filename.includes('/')) {
 //       filename = filename.split('/').pop() || filename;
 //     }
-//     filename = filename.replace('nfo-images/', '');
+//     filename = filename.replace(`${bucket}/`, '');
 //     const { data } = supabase.storage
-//       .from('nfo-images')
+//       .from(bucket)
 //       .getPublicUrl(filename);
 //     return data.publicUrl;
 //   };
 //   async function handleSignOut() {
 //     try {
-//       addDebugInfo("Signing out...");
+//       addAuthDebug("User initiated sign out");
 //       const { error } = await supabase.auth.signOut();
 //       if (error) {
-//         addDebugInfo(`Sign out error: ${error.message}`);
 //         console.error("Error signing out:", error.message);
 //         return;
 //       }
-//       window.location.href = "/admin/login";
+//       // The auth state change listener will handle the redirect
 //     } catch (error: any) {
-//       addDebugInfo(`Sign out exception: ${error.message}`);
 //       console.error("Sign out error:", error);
 //     }
 //   }
@@ -436,6 +688,22 @@
 //   const contactedLeads = leads.filter(lead => lead.is_contacted).length;
 //   const newLeads = totalLeads - contactedLeads;
 //   const contactRate = totalLeads > 0 ? (contactedLeads / totalLeads) * 100 : 0;
+//   // Requirement statistics - FIXED VERSION
+//   const getRequirementStats = () => {
+//     const requirementCounts: { [key: string]: number } = {};
+//     leads.forEach(lead => {
+//       if (lead.requirement && lead.requirement.trim()) {
+//         const requirement = lead.requirement.trim();
+//         requirementCounts[requirement] = (requirementCounts[requirement] || 0) + 1;
+//       }
+//     });
+//     return requirementCounts;
+//   };
+//   const requirementStats = getRequirementStats();
+//   const topRequirement = Object.entries(requirementStats).sort((a, b) => b[1] - a[1])[0];
+//   const uniqueRequirements = Object.keys(requirementStats).length;
+//   // Get unique requirements for filter dropdown - FIXED: Removed duplicate definition
+//   const uniqueRequirementsList = Object.keys(requirementStats);
 //   const formatDate = (dateString: string) => {
 //     return new Date(dateString).toLocaleDateString('en-US', {
 //       year: 'numeric',
@@ -454,9 +722,423 @@
 //       'SIP': 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30',
 //       'Pension Planning': 'bg-pink-500/20 text-pink-400 border-pink-500/30',
 //       'Child Plans': 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
-//       'Wealth Advisory': 'bg-orange-500/20 text-orange-400 border-orange-500/30'
+//       'Wealth Advisory': 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+//       'Tax Saving': 'bg-red-500/20 text-red-400 border-red-500/30',
+//       'Retirement Planning': 'bg-teal-500/20 text-teal-400 border-teal-500/30',
+//       'Health Insurance': 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+//       'Life Insurance': 'bg-sky-500/20 text-sky-400 border-sky-500/30',
+//       'Car Insurance': 'bg-violet-500/20 text-violet-400 border-violet-500/30',
+//       'Home Insurance': 'bg-rose-500/20 text-rose-400 border-rose-500/30',
+//       'Investment': 'bg-lime-500/20 text-lime-400 border-lime-500/30',
+//       'Savings': 'bg-fuchsia-500/20 text-fuchsia-400 border-fuchsia-500/30'
 //     };
-//     return colors[requirement] || 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+//     // Try exact match first
+//     if (colors[requirement]) {
+//       return colors[requirement];
+//     }
+//     // Try partial matches for flexibility
+//     const requirementLower = requirement.toLowerCase();
+//     for (const [key, value] of Object.entries(colors)) {
+//       if (requirementLower.includes(key.toLowerCase())) {
+//         return value;
+//       }
+//     }
+//     // Default color for unknown requirements
+//     return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+//   };
+//   // Render appropriate form based on editingType
+//   const renderForm = () => {
+//     if (!showForm && !editingType) return null;
+//     const formConfig = {
+//       nfo: {
+//         title: editingId ? 'Edit NFO' : 'Add New NFO',
+//         onSubmit: handleNfoSubmit,
+//         fields: (
+//           <>
+//             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//               <div>
+//                 <label className="block text-slate-300 text-sm font-medium mb-2">
+//                   NFO Title *
+//                 </label>
+//                 <input
+//                   type="text"
+//                   value={nfoForm.title}
+//                   onChange={(e) => setNfoForm({...nfoForm, title: e.target.value})}
+//                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-amber-500/50 transition-colors"
+//                   placeholder="Enter NFO title"
+//                   required
+//                 />
+//               </div>
+//               <div>
+//                 <label className="block text-slate-300 text-sm font-medium mb-2">
+//                   Image {!editingId && '*'}
+//                 </label>
+//                 <input
+//                   type="file"
+//                   accept="image/jpeg, image/jpg, image/png, image/webp"
+//                   onChange={(e) => {
+//                     setNfoForm({...nfoForm, image_file: e.target.files?.[0] || null});
+//                     setFormErrors([]);
+//                   }}
+//                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-500/20 file:text-amber-400 hover:file:bg-amber-500/30 transition-colors"
+//                   required={!editingId}
+//                 />
+//                 <p className="text-slate-400 text-xs mt-2">
+//                   Required for new NFOs. Max 5MB. Supported: JPEG, PNG, WebP
+//                   {editingId && (
+//                     <span className="text-amber-400 ml-1">(Leave empty to keep current image)</span>
+//                   )}
+//                 </p>
+//               </div>
+//             </div>
+//             <div>
+//               <label className="block text-slate-300 text-sm font-medium mb-2">
+//                 Description
+//               </label>
+//               <textarea
+//                 value={nfoForm.description}
+//                 onChange={(e) => setNfoForm({...nfoForm, description: e.target.value})}
+//                 rows={3}
+//                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-amber-500/50 transition-colors"
+//                 placeholder="Enter NFO description..."
+//               />
+//             </div>
+//             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//               <div>
+//                 <label className="block text-slate-300 text-sm font-medium mb-2">
+//                   Start Date
+//                 </label>
+//                 <input
+//                   type="date"
+//                   value={nfoForm.start_date}
+//                   onChange={(e) => setNfoForm({...nfoForm, start_date: e.target.value})}
+//                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-amber-500/50 transition-colors"
+//                 />
+//               </div>
+//               <div>
+//                 <label className="block text-slate-300 text-sm font-medium mb-2">
+//                   End Date
+//                 </label>
+//                 <input
+//                   type="date"
+//                   value={nfoForm.end_date}
+//                   onChange={(e) => setNfoForm({...nfoForm, end_date: e.target.value})}
+//                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-amber-500/50 transition-colors"
+//                 />
+//               </div>
+//             </div>
+//           </>
+//         )
+//       },
+//       ncd: {
+//         title: editingId ? 'Edit NCD' : 'Add New NCD',
+//         onSubmit: handleBondsNCDSubmit,
+//         fields: (
+//           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//             <div>
+//               <label className="block text-slate-300 text-sm font-medium mb-2">
+//                 Company Name *
+//               </label>
+//               <input
+//                 type="text"
+//                 value={bondsNCDForm.company_name}
+//                 onChange={(e) => setBondsNCDForm({...bondsNCDForm, company_name: e.target.value})}
+//                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-amber-500/50 transition-colors"
+//                 placeholder="Enter company name"
+//                 required
+//               />
+//             </div>
+//             <div>
+//               <label className="block text-slate-300 text-sm font-medium mb-2">
+//                 Issue Size
+//               </label>
+//               <input
+//                 type="text"
+//                 value={bondsNCDForm.issue_size}
+//                 onChange={(e) => setBondsNCDForm({...bondsNCDForm, issue_size: e.target.value})}
+//                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-amber-500/50 transition-colors"
+//                 placeholder="e.g., ₹500 Cr"
+//               />
+//             </div>
+//             <div>
+//               <label className="block text-slate-300 text-sm font-medium mb-2">
+//                 Interest Rate (%)
+//               </label>
+//               <input
+//                 type="number"
+//                 step="0.01"
+//                 value={bondsNCDForm.interest_rate}
+//                 onChange={(e) => setBondsNCDForm({...bondsNCDForm, interest_rate: e.target.value})}
+//                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-amber-500/50 transition-colors"
+//                 placeholder="e.g., 8.5"
+//               />
+//             </div>
+//             <div>
+//               <label className="block text-slate-300 text-sm font-medium mb-2">
+//                 Tenure
+//               </label>
+//               <input
+//                 type="text"
+//                 value={bondsNCDForm.tenure}
+//                 onChange={(e) => setBondsNCDForm({...bondsNCDForm, tenure: e.target.value})}
+//                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-amber-500/50 transition-colors"
+//                 placeholder="e.g., 3 years"
+//               />
+//             </div>
+//             <div className="md:col-span-2">
+//               <label className="block text-slate-300 text-sm font-medium mb-2">
+//                 Image {!editingId && '*'}
+//               </label>
+//               <input
+//                 type="file"
+//                 accept="image/jpeg, image/jpg, image/png, image/webp"
+//                 onChange={(e) => {
+//                   setBondsNCDForm({...bondsNCDForm, image_file: e.target.files?.[0] || null});
+//                   setFormErrors([]);
+//                 }}
+//                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-500/20 file:text-amber-400 hover:file:bg-amber-500/30 transition-colors"
+//                 required={!editingId}
+//               />
+//               <p className="text-slate-400 text-xs mt-2">
+//                 Required for new NCDs. Max 5MB. Supported: JPEG, PNG, WebP
+//                 {editingId && (
+//                   <span className="text-amber-400 ml-1">(Leave empty to keep current image)</span>
+//                 )}
+//               </p>
+//             </div>
+//           </div>
+//         )
+//       },
+//       fd: {
+//         title: editingId ? 'Edit FD' : 'Add New FD',
+//         onSubmit: handleBondsFDSubmit,
+//         fields: (
+//           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//             <div>
+//               <label className="block text-slate-300 text-sm font-medium mb-2">
+//                 Bank Name *
+//               </label>
+//               <input
+//                 type="text"
+//                 value={bondsFDForm.bank_name}
+//                 onChange={(e) => setBondsFDForm({...bondsFDForm, bank_name: e.target.value})}
+//                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-amber-500/50 transition-colors"
+//                 placeholder="Enter bank name"
+//                 required
+//               />
+//             </div>
+//             <div>
+//               <label className="block text-slate-300 text-sm font-medium mb-2">
+//                 Interest Rate (%)
+//               </label>
+//               <input
+//                 type="number"
+//                 step="0.01"
+//                 value={bondsFDForm.interest_rate}
+//                 onChange={(e) => setBondsFDForm({...bondsFDForm, interest_rate: e.target.value})}
+//                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-amber-500/50 transition-colors"
+//                 placeholder="e.g., 7.2"
+//               />
+//             </div>
+//             <div className="md:col-span-2">
+//               <label className="block text-slate-300 text-sm font-medium mb-2">
+//                 Tenure
+//               </label>
+//               <input
+//                 type="text"
+//                 value={bondsFDForm.tenure}
+//                 onChange={(e) => setBondsFDForm({...bondsFDForm, tenure: e.target.value})}
+//                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-amber-500/50 transition-colors"
+//                 placeholder="e.g., 1-3 years"
+//               />
+//             </div>
+//             <div className="md:col-span-2">
+//               <label className="block text-slate-300 text-sm font-medium mb-2">
+//                 Image {!editingId && '*'}
+//               </label>
+//               <input
+//                 type="file"
+//                 accept="image/jpeg, image/jpg, image/png, image/webp"
+//                 onChange={(e) => {
+//                   setBondsFDForm({...bondsFDForm, image_file: e.target.files?.[0] || null});
+//                   setFormErrors([]);
+//                 }}
+//                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-500/20 file:text-amber-400 hover:file:bg-amber-500/30 transition-colors"
+//                 required={!editingId}
+//               />
+//               <p className="text-slate-400 text-xs mt-2">
+//                 Required for new FDs. Max 5MB. Supported: JPEG, PNG, WebP
+//                 {editingId && (
+//                   <span className="text-amber-400 ml-1">(Leave empty to keep current image)</span>
+//                 )}
+//               </p>
+//             </div>
+//           </div>
+//         )
+//       }
+//     };
+//     const config = formConfig[editingType!];
+//     return (
+//       <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 mb-8">
+//         <h2 className="text-xl font-bold text-amber-400 mb-6">
+//           {config.title}
+//         </h2>
+//         <form onSubmit={config.onSubmit} className="space-y-6">
+//           {config.fields}
+//           <div className="flex gap-3 pt-4">
+//             <button
+//               type="submit"
+//               disabled={uploading}
+//               className="flex items-center gap-2 px-6 py-3 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded-xl hover:bg-amber-500/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+//             >
+//               <FiUpload className="w-4 h-4" />
+//               {uploading ? 'Saving...' : (editingId ? 'Update' : 'Create')}
+//             </button>
+//             <button
+//               type="button"
+//               onClick={resetForm}
+//               className="px-6 py-3 bg-white/5 border border-white/10 text-slate-300 rounded-xl hover:bg-white/10 transition-colors"
+//             >
+//               Cancel
+//             </button>
+//           </div>
+//         </form>
+//       </div>
+//     );
+//   };
+//   // Render Leads Table
+//   const renderLeadsTable = () => {
+//     return (
+//       <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6">
+//         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 gap-4">
+//           <h2 className="text-xl font-bold text-amber-400">
+//             {activeTab === 'leads' ? 'New Leads' : 'Contacted Leads'} ({filteredLeads.length})
+//           </h2>
+//           <div className="flex flex-col sm:flex-row gap-3">
+//             {/* Search Input */}
+//             <div className="relative">
+//               <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+//               <input
+//                 type="text"
+//                 placeholder="Search leads..."
+//                 value={searchTerm}
+//                 onChange={(e) => setSearchTerm(e.target.value)}
+//                 className="pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-amber-500/50 transition-colors w-full sm:w-64"
+//               />
+//             </div>
+//             {/* Requirement Filter */}
+//             {uniqueRequirements > 0 && (
+//               <select
+//                 value={filterRequirement}
+//                 onChange={(e) => setFilterRequirement(e.target.value)}
+//                 className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-amber-500/50 transition-colors"
+//               >
+//                 <option value="">All Requirements</option>
+//                 {uniqueRequirementsList.map(req => (
+//                   <option key={req} value={req}>{req} ({requirementStats[req]})</option>
+//                 ))}
+//               </select>
+//             )}
+//           </div>
+//         </div>
+//         {filteredLeads.length === 0 ? (
+//           <div className="text-center py-12">
+//             <FiUser className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+//             <h3 className="text-xl font-semibold text-slate-300 mb-2">
+//               {searchTerm || filterRequirement ? 'No matching leads found' : 'No leads found'}
+//             </h3>
+//             <p className="text-slate-400">
+//               {searchTerm || filterRequirement 
+//                 ? 'Try adjusting your search or filter criteria'
+//                 : activeTab === 'leads' 
+//                   ? 'New leads will appear here once customers submit the contact form.'
+//                   : 'Contacted leads will appear here once you mark them as contacted.'
+//               }
+//             </p>
+//           </div>
+//         ) : (
+//           <div className="overflow-x-auto">
+//             <table className="w-full">
+//               <thead>
+//                 <tr className="border-b border-white/10">
+//                   <th className="text-left py-3 px-4 text-slate-400 font-semibold">Customer</th>
+//                   <th className="text-left py-3 px-4 text-slate-400 font-semibold">Contact</th>
+//                   <th className="text-left py-3 px-4 text-slate-400 font-semibold">Requirement</th>
+//                   <th className="text-left py-3 px-4 text-slate-400 font-semibold">Date</th>
+//                   <th className="text-left py-3 px-4 text-slate-400 font-semibold">Actions</th>
+//                 </tr>
+//               </thead>
+//               <tbody>
+//                 {filteredLeads.map((lead, index) => (
+//                   <motion.tr
+//                     key={lead.id}
+//                     initial={{ opacity: 0 }}
+//                     animate={{ opacity: 1 }}
+//                     transition={{ delay: index * 0.05 }}
+//                     className="border-b border-white/5 hover:bg-white/5 transition-colors"
+//                   >
+//                     <td className="py-3 px-4">
+//                       <div>
+//                         <div className="font-semibold text-white">{lead.name}</div>
+//                         {lead.email && (
+//                           <div className="text-slate-400 text-sm">{lead.email}</div>
+//                         )}
+//                       </div>
+//                     </td>
+//                     <td className="py-3 px-4">
+//                       <div className="text-slate-300 font-mono">{lead.phone}</div>
+//                     </td>
+//                     <td className="py-3 px-4">
+//                       {lead.requirement && (
+//                         <div className="max-w-xs">
+//                           <div className={`px-3 py-1 rounded-lg border ${getRequirementColor(lead.requirement)}`}>
+//                             <span className="truncate">{lead.requirement}</span>
+//                           </div>
+//                           {/* Expanded Requirement View - ALWAYS VISIBLE BY DEFAULT */}
+//                           <div className="mt-2 p-3 bg-white/5 rounded-lg border border-white/10">
+//                             <div className="font-semibold text-slate-300 mb-2">Full Requirement:</div>
+//                             <p className="text-slate-300 text-sm">{lead.requirement}</p>
+//                             {lead.notes && (
+//                               <>
+//                                 <div className="font-semibold text-slate-300 mt-3 mb-1">Additional Notes:</div>
+//                                 <p className="text-slate-400 text-sm">{lead.notes}</p>
+//                               </>
+//                             )}
+//                           </div>
+//                         </div>
+//                       )}
+//                     </td>
+//                     <td className="py-3 px-4">
+//                       <div className="text-slate-400 text-sm">
+//                         {lead.created_at ? formatDate(lead.created_at) : 'Unknown'}
+//                       </div>
+//                     </td>
+//                     <td className="py-3 px-4">
+//                       <div className="flex gap-2">
+//                         <button
+//                           onClick={() => toggleContactStatus(lead.id, lead.is_contacted || false)}
+//                           className={`p-2 rounded-lg border transition-colors ${
+//                             lead.is_contacted
+//                               ? 'bg-amber-500/20 text-amber-400 border-amber-500/30 hover:bg-amber-500/30'
+//                               : 'bg-green-500/20 text-green-400 border-green-500/30 hover:bg-green-500/30'
+//                           }`}
+//                           title={lead.is_contacted ? "Mark as New" : "Mark as Contacted"}
+//                         >
+//                           {lead.is_contacted ? 
+//                             <FiXCircle className="w-4 h-4" /> : 
+//                             <FiCheckCircle className="w-4 h-4" />
+//                           }
+//                         </button>
+//                       </div>
+//                     </td>
+//                   </motion.tr>
+//                 ))}
+//               </tbody>
+//             </table>
+//           </div>
+//         )}
+//       </div>
+//     );
 //   };
 //   return (
 //     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4 pt-20">
@@ -465,12 +1147,23 @@
 //         animate={{ opacity: 1, y: 0 }}
 //         className="max-w-7xl mx-auto"
 //       >
-//         {/* Debug Info Panel - Remove in production */}
+//         {/* Debug Info Panel */}
 //         <div className="mb-4 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
 //           <details>
 //             <summary className="cursor-pointer text-blue-400 font-semibold">Debug Info (Click to expand)</summary>
 //             <div className="mt-2 text-xs text-blue-300 max-h-32 overflow-y-auto">
 //               {debugInfo.map((info, index) => (
+//                 <div key={index} className="font-mono">{info}</div>
+//               ))}
+//             </div>
+//           </details>
+//         </div>
+//         {/* Auth Debug Panel */}
+//         <div className="mb-4 p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
+//           <details>
+//             <summary className="cursor-pointer text-green-400 font-semibold">Auth Debug (Click to expand)</summary>
+//             <div className="mt-2 text-xs text-green-300 max-h-32 overflow-y-auto">
+//               {authDebug.map((info, index) => (
 //                 <div key={index} className="font-mono">{info}</div>
 //               ))}
 //             </div>
@@ -502,22 +1195,101 @@
 //             </button>
 //           </div>
 //         </div>
+//         {/* Enhanced Stats Cards - WITH CLICKABLE CONTACTED CARD */}
+//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+//           <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6">
+//             <div className="flex items-center justify-between">
+//               <div>
+//                 <p className="text-slate-400 text-sm font-medium">Total Leads</p>
+//                 <p className="text-3xl font-bold text-white mt-2">{totalLeads}</p>
+//               </div>
+//               <div className="p-3 bg-amber-500/20 rounded-xl">
+//                 <FiUser className="w-6 h-6 text-amber-400" />
+//               </div>
+//             </div>
+//           </div>
+//           {/* CLICKABLE CONTACTED CARD */}
+//           <button
+//             onClick={() => setActiveTab('contacted')}
+//             className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors text-left cursor-pointer"
+//           >
+//             <div className="flex items-center justify-between">
+//               <div>
+//                 <p className="text-slate-400 text-sm font-medium">Contacted</p>
+//                 <p className="text-3xl font-bold text-green-400 mt-2">{contactedLeads}</p>
+//               </div>
+//               <div className="p-3 bg-green-500/20 rounded-xl">
+//                 <FiCheckCircle className="w-6 h-6 text-green-400" />
+//               </div>
+//             </div>
+//           </button>
+//           <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6">
+//             <div className="flex items-center justify-between">
+//               <div>
+//                 <p className="text-slate-400 text-sm font-medium">New Leads</p>
+//                 <p className="text-3xl font-bold text-amber-400 mt-2">{newLeads}</p>
+//               </div>
+//               <div className="p-3 bg-blue-500/20 rounded-xl">
+//                 <FiClock className="w-6 h-6 text-blue-400" />
+//               </div>
+//             </div>
+//           </div>
+//           <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6">
+//             <div className="flex items-center justify-between">
+//               <div>
+//                 <p className="text-slate-400 text-sm font-medium">Requirements</p>
+//                 <p className="text-3xl font-bold text-purple-400 mt-2">{uniqueRequirements}</p>
+//                 <p className="text-slate-400 text-xs mt-1">
+//                   {topRequirement ? `Top: ${topRequirement[0]}` : 'No data'}
+//                 </p>
+//               </div>
+//               <div className="p-3 bg-purple-500/20 rounded-xl">
+//                 <FiBarChart2 className="w-6 h-6 text-purple-400" />
+//               </div>
+//             </div>
+//           </div>
+//         </div>
 //         {/* Tab Navigation */}
-//         <div className="flex space-x-1 mb-8 bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-1 max-w-md">
+//         {/* <div className="flex space-x-1 mb-8 bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-1 max-w-3xl overflow-x-auto">
 //           <button
 //             onClick={() => setActiveTab('leads')}
-//             className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-colors flex-1 text-center ${
+//             className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-colors flex-shrink-0 text-center ${ */}
+//             {/* <div className="flex space-x-1 mb-8 bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-1 w-full overflow-x-auto"> */}
+//             <div className="flex space-x-1 mb-8 bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-1 w-full overflow-x-auto">
+//   <button
+//     onClick={() => setActiveTab('leads')}
+//     className={`flex items-center gap-2 px-6 py-3 rounded-xl transition-colors flex-1 text-center justify-center min-w-0 ${
 //               activeTab === 'leads'
 //                 ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
 //                 : 'text-slate-400 hover:text-white'
 //             }`}
 //           >
-//             <FiUser className="w-4 h-4" />
-//             Leads ({totalLeads})
+//             {/* <FiUser className="w-4 h-4" />
+//             New Leads ({leads.filter(l => !l.is_contacted).length}) */}
+//                 <FiUser className="w-4 h-4 flex-shrink-0" />
+//     <span className="truncate">New Leads ({leads.filter(l => !l.is_contacted).length})</span>
+//           </button>
+//           {/* <button
+//             onClick={() => setActiveTab('contacted')}
+//             className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-colors flex-shrink-0 text-center ${ */}
+//                 <button
+//     onClick={() => setActiveTab('contacted')}
+//     // className={`flex items-center gap-2 px-6 py-3 rounded-xl transition-colors flex-1 text-center justify-center min-w-0 ${
+//         className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-colors flex-1 min-w-0 ${
+//               activeTab === 'contacted'
+//                 ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+//                 : 'text-slate-400 hover:text-white'
+//             }`}
+//           >
+//             {/* <FiCheckCircle className="w-4 h-4" />
+//             Contacted ({contactedLeads}) */}
+//                 <FiCheckCircle className="w-4 h-4 flex-shrink-0" />
+//     <span className="truncate">Contacted ({contactedLeads})</span>
 //           </button>
 //           <button
 //             onClick={() => setActiveTab('nfo')}
-//             className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-colors flex-1 text-center ${
+//             // className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-colors flex-shrink-0 text-center ${
+//                 className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-colors flex-1 min-w-0 ${
 //               activeTab === 'nfo'
 //                 ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
 //                 : 'text-slate-400 hover:text-white'
@@ -526,222 +1298,46 @@
 //             <FiImage className="w-4 h-4" />
 //             NFOs ({nfoData.length})
 //           </button>
+//           <button
+//             onClick={() => setActiveTab('bondsNCD')}
+//             // className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-colors flex-shrink-0 text-center ${
+//                 className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-colors flex-1 min-w-0 ${
+//               activeTab === 'bondsNCD'
+//                 ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+//                 : 'text-slate-400 hover:text-white'
+//             }`}
+//           >
+//             <FiTrendingUp className="w-4 h-4" />
+//             Bonds NCD ({bondsNCD.length})
+//           </button>
+//           <button
+//             onClick={() => setActiveTab('bondsFD')}
+//             // className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-colors flex-shrink-0 text-center ${
+//                 className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-colors flex-1 min-w-0 ${
+//               activeTab === 'bondsFD'
+//                 ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+//                 : 'text-slate-400 hover:text-white'
+//             }`}
+//           >
+//             <FiShield className="w-4 h-4" />
+//             Bonds FD ({bondsFD.length})
+//           </button>
 //         </div>
-//         {/* Leads Tab Content */}
-//         {activeTab === 'leads' && (
-//           <>
-//             {/* Stats Cards */}
-//             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-//               <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6">
-//                 <div className="flex items-center justify-between">
-//                   <div>
-//                     <p className="text-slate-400 text-sm font-medium">Total Leads</p>
-//                     <p className="text-3xl font-bold text-white mt-2">{totalLeads}</p>
-//                   </div>
-//                   <div className="p-3 bg-amber-500/20 rounded-xl">
-//                     <FiUser className="w-6 h-6 text-amber-400" />
-//                   </div>
-//                 </div>
-//               </div>
-//               <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6">
-//                 <div className="flex items-center justify-between">
-//                   <div>
-//                     <p className="text-slate-400 text-sm font-medium">Contacted</p>
-//                     <p className="text-3xl font-bold text-green-400 mt-2">{contactedLeads}</p>
-//                   </div>
-//                   <div className="p-3 bg-green-500/20 rounded-xl">
-//                     <FiCheckCircle className="w-6 h-6 text-green-400" />
-//                   </div>
-//                 </div>
-//               </div>
-//               <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6">
-//                 <div className="flex items-center justify-between">
-//                   <div>
-//                     <p className="text-slate-400 text-sm font-medium">New Leads</p>
-//                     <p className="text-3xl font-bold text-amber-400 mt-2">{newLeads}</p>
-//                   </div>
-//                   <div className="p-3 bg-blue-500/20 rounded-xl">
-//                     <FiClock className="w-6 h-6 text-blue-400" />
-//                   </div>
-//                 </div>
-//               </div>
-//               <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6">
-//                 <div className="flex items-center justify-between">
-//                   <div>
-//                     <p className="text-slate-400 text-sm font-medium">Contact Rate</p>
-//                     <p className="text-3xl font-bold text-purple-400 mt-2">{contactRate.toFixed(1)}%</p>
-//                   </div>
-//                   <div className="p-3 bg-purple-500/20 rounded-xl">
-//                     <FiFileText className="w-6 h-6 text-purple-400" />
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//             {/* Leads Table */}
-//             <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-4 md:p-6 overflow-hidden">
-//               <div className="flex items-center justify-between mb-6">
-//                 <h2 className="text-xl font-bold text-amber-400">Recent Leads</h2>
-//                 <div className="text-slate-400 text-sm">
-//                   Showing {leads.length} lead{leads.length !== 1 ? 's' : ''}
-//                 </div>
-//               </div>
-//               {loading ? (
-//                 <div className="text-center py-12">
-//                   <div className="flex items-center justify-center space-x-3">
-//                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-400"></div>
-//                     <span className="text-slate-300 text-lg">Loading leads...</span>
-//                   </div>
-//                 </div>
-//               ) : leads.length === 0 ? (
-//                 <div className="text-center py-12">
-//                   <FiFileText className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-//                   <h3 className="text-xl font-semibold text-slate-300 mb-2">No leads found</h3>
-//                   <p className="text-slate-400">Leads will appear here once customers submit the contact form.</p>
-//                 </div>
-//               ) : (
-//                 <div className="overflow-x-auto">
-//                   <table className="w-full">
-//                     <thead>
-//                       <tr className="border-b border-white/10">
-//                         <th className="text-left p-3 md:p-4 text-slate-300 font-semibold">Customer</th>
-//                         <th className="text-left p-3 md:p-4 text-slate-300 font-semibold hidden md:table-cell">Contact</th>
-//                         <th className="text-left p-3 md:p-4 text-slate-300 font-semibold">Requirement</th>
-//                         <th className="text-left p-3 md:p-4 text-slate-300 font-semibold">Status</th>
-//                         <th className="text-left p-3 md:p-4 text-slate-300 font-semibold hidden lg:table-cell">Date</th>
-//                         <th className="text-left p-3 md:p-4 text-slate-300 font-semibold">Actions</th>
-//                       </tr>
-//                     </thead>
-//                     <tbody>
-//                       {leads.map((lead, index) => (
-//                         <motion.tr 
-//                           key={lead.id}
-//                           initial={{ opacity: 0, y: 10 }}
-//                           animate={{ opacity: 1, y: 0 }}
-//                           transition={{ delay: index * 0.05 }}
-//                           className="border-b border-white/5 hover:bg-white/2 transition-colors"
-//                         >
-//                           {/* Customer Name - Mobile Optimized */}
-//                           <td className="p-3 md:p-4">
-//                             <div className="flex items-center space-x-3">
-//                               <div className="w-8 h-8 md:w-10 md:h-10 bg-amber-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-//                                 <FiUser className="w-4 h-4 md:w-5 md:h-5 text-amber-400" />
-//                               </div>
-//                               <div className="min-w-0 flex-1">
-//                                 <div className="text-white font-semibold text-sm md:text-base truncate">
-//                                   {lead.name}
-//                                 </div>
-//                                 <div className="text-slate-400 text-xs md:hidden">
-//                                   {lead.phone}
-//                                 </div>
-//                                 {lead.email && (
-//                                   <div className="text-slate-400 text-xs md:hidden truncate">
-//                                     {lead.email}
-//                                   </div>
-//                                 )}
-//                               </div>
-//                             </div>
-//                           </td>
-//                           {/* Contact Info - Hidden on mobile */}
-//                           <td className="p-3 md:p-4 hidden md:table-cell">
-//                             <div className="space-y-1">
-//                               <div className="flex items-center space-x-2 text-slate-300">
-//                                 <FiPhone className="w-4 h-4" />
-//                                 <span className="font-mono text-sm">{lead.phone}</span>
-//                               </div>
-//                               {lead.email && (
-//                                 <div className="flex items-center space-x-2 text-slate-400">
-//                                   <FiMail className="w-4 h-4" />
-//                                   <span className="text-sm truncate max-w-[150px]">{lead.email}</span>
-//                                 </div>
-//                               )}
-//                             </div>
-//                           </td>
-//                           {/* Requirement */}
-//                           <td className="p-3 md:p-4">
-//                             {lead.requirement ? (
-//                               <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getRequirementColor(lead.requirement)}`}>
-//                                 <span className="truncate max-w-[80px] md:max-w-none">
-//                                   {lead.requirement}
-//                                 </span>
-//                               </span>
-//                             ) : (
-//                               <span className="text-slate-400 text-xs">Not specified</span>
-//                             )}
-//                           </td>
-//                           {/* Status */}
-//                           <td className="p-3 md:p-4">
-//                             <button
-//                               onClick={() => toggleContactStatus(lead.id, lead.is_contacted || false)}
-//                               className={`inline-flex items-center px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm font-medium border transition-colors ${
-//                                 lead.is_contacted
-//                                   ? 'bg-green-500/20 text-green-400 border-green-500/30 hover:bg-green-500/30'
-//                                   : 'bg-amber-500/20 text-amber-400 border-amber-500/30 hover:bg-amber-500/30'
-//                               }`}
-//                             >
-//                               {lead.is_contacted ? (
-//                                 <>
-//                                   <FiCheckCircle className="w-3 h-3 mr-1" />
-//                                   <span className="hidden sm:inline">Contacted</span>
-//                                   <span className="sm:hidden">Done</span>
-//                                 </>
-//                               ) : (
-//                                 <>
-//                                   <FiClock className="w-3 h-3 mr-1" />
-//                                   <span className="hidden sm:inline">New Lead</span>
-//                                   <span className="sm:hidden">New</span>
-//                                 </>
-//                               )}
-//                             </button>
-//                           </td>
-//                           {/* Date - Hidden on mobile */}
-//                           <td className="p-3 md:p-4 hidden lg:table-cell">
-//                             <div className="text-slate-300 text-sm">
-//                               {lead.created_at ? formatDate(lead.created_at) : 'Unknown'}
-//                             </div>
-//                           </td>
-//                           {/* Actions - Always visible on mobile */}
-//                           <td className="p-3 md:p-4">
-//                             <div className="flex space-x-1 md:space-x-2">
-//                               <button
-//                                 onClick={() => toggleContactStatus(lead.id, lead.is_contacted || false)}
-//                                 className={`p-2 rounded-lg border transition-colors ${
-//                                   lead.is_contacted
-//                                     ? 'bg-amber-500/20 text-amber-400 border-amber-500/30 hover:bg-amber-500/30'
-//                                     : 'bg-green-500/20 text-green-400 border-green-500/30 hover:bg-green-500/30'
-//                                 }`}
-//                                 title={lead.is_contacted ? "Mark as New" : "Mark as Contacted"}
-//                               >
-//                                 {lead.is_contacted ? 
-//                                   <FiXCircle className="w-3 h-3 md:w-4 md:h-4" /> : 
-//                                   <FiCheckCircle className="w-3 h-3 md:w-4 md:h-4" />
-//                                 }
-//                               </button>
-//                               {/* Mobile date shortcut */}
-//                               <div className="md:hidden text-slate-400 text-xs flex items-center px-2">
-//                                 {lead.created_at ? 
-//                                   new Date(lead.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-//                                   : 'N/A'
-//                                 }
-//                               </div>
-//                             </div>
-//                           </td>
-//                         </motion.tr>
-//                       ))}
-//                     </tbody>
-//                   </table>
-//                 </div>
-//               )}
-//               {/* Mobile date legend */}
-//               {leads.length > 0 && (
-//                 <div className="md:hidden mt-4 pt-4 border-t border-white/10">
-//                   <p className="text-slate-400 text-xs text-center">
-//                     Dates shown in mobile view are in MMM DD format
-//                   </p>
-//                 </div>
-//               )}
-//             </div>
-//           </>
+//         {/* Form Errors */}
+//         {formErrors.length > 0 && (
+//           <div className="bg-rose-500/20 border border-rose-500/30 rounded-2xl p-4 mb-6">
+//             <h3 className="text-rose-400 font-semibold mb-2">Error:</h3>
+//             <ul className="text-rose-300 text-sm list-disc list-inside">
+//               {formErrors.map((error, index) => (
+//                 <li key={index}>{error}</li>
+//               ))}
+//             </ul>
+//           </div>
 //         )}
+//         {/* Render Active Form */}
+//         {renderForm()}
+//         {/* Leads & Contacted Tabs Content */}
+//         {(activeTab === 'leads' || activeTab === 'contacted') && renderLeadsTable()}
 //         {/* NFO Management Tab Content */}
 //         {activeTab === 'nfo' && (
 //           <div className="space-y-8">
@@ -751,123 +1347,13 @@
 //                 Active NFOs ({nfoData.length})
 //               </h2>
 //               <button
-//                 onClick={handleNewNfoClick}
+//                 onClick={() => handleNewClick('nfo')}
 //                 className="flex items-center gap-2 px-4 py-2 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded-xl hover:bg-amber-500/30 transition-colors"
 //               >
 //                 <FiPlus className="w-4 h-4" />
 //                 Create New NFO
 //               </button>
 //             </div>
-//             {/* Form Errors */}
-//             {formErrors.length > 0 && (
-//               <div className="bg-rose-500/20 border border-rose-500/30 rounded-2xl p-4">
-//                 <h3 className="text-rose-400 font-semibold mb-2">Error:</h3>
-//                 <ul className="text-rose-300 text-sm list-disc list-inside">
-//                   {formErrors.map((error, index) => (
-//                     <li key={index}>{error}</li>
-//                   ))}
-//                 </ul>
-//               </div>
-//             )}
-//             {/* NFO Form - Conditionally Rendered */}
-//             {(showNfoForm || editingId) && (
-//               <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6">
-//                 <h2 className="text-xl font-bold text-amber-400 mb-6">
-//                   {editingId ? 'Edit NFO' : 'Add New NFO'}
-//                 </h2>
-//                 <form onSubmit={handleNfoSubmit} className="space-y-6">
-//                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-//                     <div>
-//                       <label className="block text-slate-300 text-sm font-medium mb-2">
-//                         NFO Title *
-//                       </label>
-//                       <input
-//                         type="text"
-//                         value={nfoForm.title}
-//                         onChange={(e) => setNfoForm({...nfoForm, title: e.target.value})}
-//                         className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-amber-500/50 transition-colors"
-//                         placeholder="Enter NFO title"
-//                         required
-//                       />
-//                     </div>
-//                     <div>
-//                       <label className="block text-slate-300 text-sm font-medium mb-2">
-//                         Image {!editingId && '*'}
-//                       </label>
-//                       <input
-//                         type="file"
-//                         accept="image/jpeg, image/jpg, image/png, image/webp"
-//                         onChange={(e) => {
-//                           setNfoForm({...nfoForm, image_file: e.target.files?.[0] || null});
-//                           setFormErrors([]);
-//                         }}
-//                         className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-500/20 file:text-amber-400 hover:file:bg-amber-500/30 transition-colors"
-//                         required={!editingId}
-//                       />
-//                       <p className="text-slate-400 text-xs mt-2">
-//                         Required for new NFOs. Max 5MB. Supported: JPEG, PNG, WebP
-//                         {editingId && (
-//                           <span className="text-amber-400 ml-1">(Leave empty to keep current image)</span>
-//                         )}
-//                       </p>
-//                     </div>
-//                   </div>
-//                   <div>
-//                     <label className="block text-slate-300 text-sm font-medium mb-2">
-//                       Description
-//                     </label>
-//                     <textarea
-//                       value={nfoForm.description}
-//                       onChange={(e) => setNfoForm({...nfoForm, description: e.target.value})}
-//                       rows={3}
-//                       className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-amber-500/50 transition-colors"
-//                       placeholder="Enter NFO description..."
-//                     />
-//                   </div>
-//                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-//                     <div>
-//                       <label className="block text-slate-300 text-sm font-medium mb-2">
-//                         Start Date
-//                       </label>
-//                       <input
-//                         type="date"
-//                         value={nfoForm.start_date}
-//                         onChange={(e) => setNfoForm({...nfoForm, start_date: e.target.value})}
-//                         className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-amber-500/50 transition-colors"
-//                       />
-//                     </div>
-//                     <div>
-//                       <label className="block text-slate-300 text-sm font-medium mb-2">
-//                         End Date
-//                       </label>
-//                       <input
-//                         type="date"
-//                         value={nfoForm.end_date}
-//                         onChange={(e) => setNfoForm({...nfoForm, end_date: e.target.value})}
-//                         className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-amber-500/50 transition-colors"
-//                       />
-//                     </div>
-//                   </div>
-//                   <div className="flex gap-3 pt-4">
-//                     <button
-//                       type="submit"
-//                       disabled={uploading}
-//                       className="flex items-center gap-2 px-6 py-3 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded-xl hover:bg-amber-500/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-//                     >
-//                       <FiUpload className="w-4 h-4" />
-//                       {uploading ? 'Saving...' : editingId ? 'Update NFO' : 'Create NFO'}
-//                     </button>
-//                     <button
-//                       type="button"
-//                       onClick={resetNfoForm}
-//                       className="px-6 py-3 bg-white/5 border border-white/10 text-slate-300 rounded-xl hover:bg-white/10 transition-colors"
-//                     >
-//                       Cancel
-//                     </button>
-//                   </div>
-//                 </form>
-//               </div>
-//             )}
 //             {/* NFO List */}
 //             <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6">
 //               {nfoData.length === 0 ? (
@@ -876,7 +1362,7 @@
 //                   <h3 className="text-xl font-semibold text-slate-300 mb-2">No NFOs found</h3>
 //                   <p className="text-slate-400 mb-6">Create your first NFO to get started.</p>
 //                   <button
-//                     onClick={handleNewNfoClick}
+//                     onClick={() => handleNewClick('nfo')}
 //                     className="flex items-center gap-2 px-6 py-3 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded-xl hover:bg-amber-500/30 transition-colors mx-auto"
 //                   >
 //                     <FiPlus className="w-4 h-4" />
@@ -895,7 +1381,7 @@
 //                       {nfo.image_url && (
 //                         <div className="h-40 bg-slate-800 overflow-hidden">
 //                           <img
-//                             src={getImageUrl(nfo.image_url) || ''}
+//                             src={getImageUrl(nfo.image_url, 'nfo-images') || ''}
 //                             alt={nfo.title}
 //                             className="w-full h-full object-cover"
 //                           />
@@ -916,14 +1402,202 @@
 //                         </div>
 //                         <div className="flex gap-2">
 //                           <button
-//                             onClick={() => handleEditNfo(nfo)}
+//                             onClick={() => handleEdit(nfo, 'nfo')}
 //                             className="flex items-center gap-1 px-3 py-1 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-lg text-xs hover:bg-blue-500/30 transition-colors"
 //                           >
 //                             <FiEdit className="w-3 h-3" />
 //                             Edit
 //                           </button>
 //                           <button
-//                             onClick={() => handleDeleteNfo(nfo.id)}
+//                             onClick={() => handleDelete(nfo.id, 'nfo')}
+//                             className="flex items-center gap-1 px-3 py-1 bg-rose-500/20 border border-rose-500/30 text-rose-400 rounded-lg text-xs hover:bg-rose-500/30 transition-colors"
+//                           >
+//                             <FiTrash2 className="w-3 h-3" />
+//                             Delete
+//                           </button>
+//                         </div>
+//                       </div>
+//                     </motion.div>
+//                   ))}
+//                 </div>
+//               )}
+//             </div>
+//           </div>
+//         )}
+//         {/* Bonds NCD Tab Content */}
+//         {activeTab === 'bondsNCD' && (
+//           <div className="space-y-8">
+//             {/* Bonds NCD List Header with Create Button */}
+//             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+//               <h2 className="text-2xl font-bold text-amber-400">
+//                 Bonds NCD ({bondsNCD.length})
+//               </h2>
+//               <button
+//                 onClick={() => handleNewClick('ncd')}
+//                 className="flex items-center gap-2 px-4 py-2 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded-xl hover:bg-amber-500/30 transition-colors"
+//               >
+//                 <FiPlus className="w-4 h-4" />
+//                 Add New NCD
+//               </button>
+//             </div>
+//             {/* Bonds NCD List */}
+//             <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6">
+//               {bondsNCD.length === 0 ? (
+//                 <div className="text-center py-12">
+//                   <FiTrendingUp className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+//                   <h3 className="text-xl font-semibold text-slate-300 mb-2">No NCDs found</h3>
+//                   <p className="text-slate-400 mb-6">Add your first NCD to get started.</p>
+//                   <button
+//                     onClick={() => handleNewClick('ncd')}
+//                     className="flex items-center gap-2 px-6 py-3 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded-xl hover:bg-amber-500/30 transition-colors mx-auto"
+//                   >
+//                     <FiPlus className="w-4 h-4" />
+//                     Add Your First NCD
+//                   </button>
+//                 </div>
+//               ) : (
+//                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+//                   {bondsNCD.map((ncd) => (
+//                     <motion.div
+//                       key={ncd.id}
+//                       initial={{ opacity: 0, y: 10 }}
+//                       animate={{ opacity: 1, y: 0 }}
+//                       className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:bg-white/10 transition-colors"
+//                     >
+//                       {ncd.image_url && (
+//                         <div className="h-40 bg-slate-800 overflow-hidden">
+//                           <img
+//                             src={getImageUrl(ncd.image_url, 'bonds-images') || ''}
+//                             alt={ncd.company_name}
+//                             className="w-full h-full object-cover"
+//                           />
+//                         </div>
+//                       )}
+//                       <div className="p-4">
+//                         <h3 className="font-bold text-white text-lg mb-2 line-clamp-2">
+//                           {ncd.company_name}
+//                         </h3>
+//                         <div className="space-y-2 text-sm text-slate-300 mb-4">
+//                           {ncd.issue_size && (
+//                             <div className="flex justify-between">
+//                               <span>Issue Size:</span>
+//                               <span className="text-amber-400">{ncd.issue_size}</span>
+//                             </div>
+//                           )}
+//                           {ncd.interest_rate && (
+//                             <div className="flex justify-between">
+//                               <span>Interest Rate:</span>
+//                               <span className="text-green-400">{ncd.interest_rate}%</span>
+//                             </div>
+//                           )}
+//                           {ncd.tenure && (
+//                             <div className="flex justify-between">
+//                               <span>Tenure:</span>
+//                               <span className="text-blue-400">{ncd.tenure}</span>
+//                             </div>
+//                           )}
+//                         </div>
+//                         <div className="flex gap-2">
+//                           <button
+//                             onClick={() => handleEdit(ncd, 'ncd')}
+//                             className="flex items-center gap-1 px-3 py-1 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-lg text-xs hover:bg-blue-500/30 transition-colors"
+//                           >
+//                             <FiEdit className="w-3 h-3" />
+//                             Edit
+//                           </button>
+//                           <button
+//                             onClick={() => handleDelete(ncd.id, 'ncd')}
+//                             className="flex items-center gap-1 px-3 py-1 bg-rose-500/20 border border-rose-500/30 text-rose-400 rounded-lg text-xs hover:bg-rose-500/30 transition-colors"
+//                           >
+//                             <FiTrash2 className="w-3 h-3" />
+//                             Delete
+//                           </button>
+//                         </div>
+//                       </div>
+//                     </motion.div>
+//                   ))}
+//                 </div>
+//               )}
+//             </div>
+//           </div>
+//         )}
+//         {/* Bonds FD Tab Content */}
+//         {activeTab === 'bondsFD' && (
+//           <div className="space-y-8">
+//             {/* Bonds FD List Header with Create Button */}
+//             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+//               <h2 className="text-2xl font-bold text-amber-400">
+//                 Bonds FD ({bondsFD.length})
+//               </h2>
+//               <button
+//                 onClick={() => handleNewClick('fd')}
+//                 className="flex items-center gap-2 px-4 py-2 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded-xl hover:bg-amber-500/30 transition-colors"
+//               >
+//                 <FiPlus className="w-4 h-4" />
+//                 Add New FD
+//               </button>
+//             </div>
+//             {/* Bonds FD List */}
+//             <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6">
+//               {bondsFD.length === 0 ? (
+//                 <div className="text-center py-12">
+//                   <FiShield className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+//                   <h3 className="text-xl font-semibold text-slate-300 mb-2">No FDs found</h3>
+//                   <p className="text-slate-400 mb-6">Add your first FD to get started.</p>
+//                   <button
+//                     onClick={() => handleNewClick('fd')}
+//                     className="flex items-center gap-2 px-6 py-3 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded-xl hover:bg-amber-500/30 transition-colors mx-auto"
+//                   >
+//                     <FiPlus className="w-4 h-4" />
+//                     Add Your First FD
+//                   </button>
+//                 </div>
+//               ) : (
+//                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+//                   {bondsFD.map((fd) => (
+//                     <motion.div
+//                       key={fd.id}
+//                       initial={{ opacity: 0, y: 10 }}
+//                       animate={{ opacity: 1, y: 0 }}
+//                       className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:bg-white/10 transition-colors"
+//                     >
+//                       {fd.image_url && (
+//                         <div className="h-40 bg-slate-800 overflow-hidden">
+//                           <img
+//                             src={getImageUrl(fd.image_url, 'bonds-images') || ''}
+//                             alt={fd.bank_name}
+//                             className="w-full h-full object-cover"
+//                           />
+//                         </div>
+//                       )}
+//                       <div className="p-4">
+//                         <h3 className="font-bold text-white text-lg mb-2 line-clamp-2">
+//                           {fd.bank_name}
+//                         </h3>
+//                         <div className="space-y-2 text-sm text-slate-300 mb-4">
+//                           {fd.interest_rate && (
+//                             <div className="flex justify-between">
+//                               <span>Interest Rate:</span>
+//                               <span className="text-green-400">{fd.interest_rate}%</span>
+//                             </div>
+//                           )}
+//                           {fd.tenure && (
+//                             <div className="flex justify-between">
+//                               <span>Tenure:</span>
+//                               <span className="text-blue-400">{fd.tenure}</span>
+//                             </div>
+//                           )}
+//                         </div>
+//                         <div className="flex gap-2">
+//                           <button
+//                             onClick={() => handleEdit(fd, 'fd')}
+//                             className="flex items-center gap-1 px-3 py-1 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-lg text-xs hover:bg-blue-500/30 transition-colors"
+//                           >
+//                             <FiEdit className="w-3 h-3" />
+//                             Edit
+//                           </button>
+//                           <button
+//                             onClick={() => handleDelete(fd.id, 'fd')}
 //                             className="flex items-center gap-1 px-3 py-1 bg-rose-500/20 border border-rose-500/30 text-rose-400 rounded-lg text-xs hover:bg-rose-500/30 transition-colors"
 //                           >
 //                             <FiTrash2 className="w-3 h-3" />
@@ -939,7 +1613,7 @@
 //           </div>
 //         )}
 //         {/* Footer Stats */}
-//         {(leads.length > 0 || nfoData.length > 0) && (
+//         {(leads.length > 0 || nfoData.length > 0 || bondsNCD.length > 0 || bondsFD.length > 0) && (
 //           <div className="mt-6 text-center">
 //             <p className="text-slate-400 text-sm">
 //               Last updated: {new Date().toLocaleString()}
@@ -950,8 +1624,7 @@
 //     </div>
 //   );
 // }
-// v2 with bonds integration
-// v2 - Updated with Bonds NCD and FD management
+// prod ready hopefully
 __turbopack_context__.s([
     "default",
     ()=>AdminDashboardPage
@@ -969,7 +1642,6 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
-// Initialize Supabase client only once
 const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f40$supabase$2f$supabase$2d$js$2f$dist$2f$module$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createClient"])(("TURBOPACK compile-time value", "https://fouathcllogchmgagguq.supabase.co"), ("TURBOPACK compile-time value", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZvdWF0aGNsbG9nY2htZ2FnZ3VxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcyMzIzMTEsImV4cCI6MjA3MjgwODMxMX0.y9rOlWdVGnA-vCflrTys4IEROvp9v18qBd46wRwg2oM"));
 function AdminDashboardPage() {
     _s();
@@ -981,7 +1653,9 @@ function AdminDashboardPage() {
     const [refreshing, setRefreshing] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [userEmail, setUserEmail] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [activeTab, setActiveTab] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('leads');
-    // NFO Form State
+    const [isCheckingAuth, setIsCheckingAuth] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [searchTerm, setSearchTerm] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    const [filterRequirement, setFilterRequirement] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [nfoForm, setNfoForm] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
         title: '',
         description: '',
@@ -989,7 +1663,6 @@ function AdminDashboardPage() {
         end_date: '',
         image_file: null
     });
-    // Bonds NCD Form State
     const [bondsNCDForm, setBondsNCDForm] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
         company_name: '',
         issue_size: '',
@@ -997,7 +1670,6 @@ function AdminDashboardPage() {
         tenure: '',
         image_file: null
     });
-    // Bonds FD Form State
     const [bondsFDForm, setBondsFDForm] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
         bank_name: '',
         interest_rate: '',
@@ -1009,62 +1681,135 @@ function AdminDashboardPage() {
     const [editingType, setEditingType] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [showForm, setShowForm] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [formErrors, setFormErrors] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
-    const [debugInfo, setDebugInfo] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
-    const addDebugInfo = (message)=>{
-        console.log("🔍 ".concat(message));
-        setDebugInfo((prev)=>[
-                ...prev.slice(-9),
-                "".concat(new Date().toLocaleTimeString(), ": ").concat(message)
-            ]);
-    };
-    const checkloggedin = async ()=>{
-        try {
-            var _data_user;
-            addDebugInfo("Checking authentication...");
-            const { data, error } = await supabase.auth.getUser();
-            if (error) {
-                addDebugInfo("Auth error: ".concat(error.message));
-                return false;
-            }
-            setUserEmail(((_data_user = data.user) === null || _data_user === void 0 ? void 0 : _data_user.email) || "");
-            addDebugInfo("Authentication successful");
-            return true;
-        } catch (error) {
-            addDebugInfo("Auth check failed: ".concat(error.message));
-            return false;
-        }
-    };
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "AdminDashboardPage.useEffect": ()=>{
-            checkloggedin().then({
-                "AdminDashboardPage.useEffect": (loggedIn)=>{
-                    if (!loggedIn) {
+            const checkAuth = {
+                "AdminDashboardPage.useEffect.checkAuth": async ()=>{
+                    try {
+                        var _session_user;
+                        const { data: { session }, error } = await supabase.auth.getSession();
+                        if (error || !session) {
+                            window.location.href = "/admin/login";
+                            return;
+                        }
+                        setUserEmail(((_session_user = session.user) === null || _session_user === void 0 ? void 0 : _session_user.email) || "");
+                        setIsCheckingAuth(false);
+                        await Promise.all([
+                            fetchLeads(),
+                            fetchNFOData(),
+                            fetchBondsNCD(),
+                            fetchBondsFD()
+                        ]);
+                    } catch (error) {
+                        window.location.href = "/admin/login";
+                    }
+                }
+            }["AdminDashboardPage.useEffect.checkAuth"];
+            checkAuth();
+        }
+    }["AdminDashboardPage.useEffect"], []);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "AdminDashboardPage.useEffect": ()=>{
+            const { data: { subscription } } = supabase.auth.onAuthStateChange({
+                "AdminDashboardPage.useEffect": (event)=>{
+                    if (event === 'SIGNED_OUT') {
                         window.location.href = "/admin/login";
                     }
                 }
             }["AdminDashboardPage.useEffect"]);
-            fetchLeads();
-            fetchNFOData();
-            fetchBondsNCD();
-            fetchBondsFD();
+            return ({
+                "AdminDashboardPage.useEffect": ()=>subscription.unsubscribe()
+            })["AdminDashboardPage.useEffect"];
         }
     }["AdminDashboardPage.useEffect"], []);
+    const filteredLeads = leads.filter((lead)=>{
+        const matchesSearch = lead.name.toLowerCase().includes(searchTerm.toLowerCase()) || lead.phone.includes(searchTerm) || lead.email && lead.email.toLowerCase().includes(searchTerm.toLowerCase()) || lead.requirement && lead.requirement.toLowerCase().includes(searchTerm.toLowerCase()) || lead.notes && lead.notes.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesRequirement = !filterRequirement || lead.requirement === filterRequirement;
+        if (activeTab === 'leads') {
+            return !lead.is_contacted && matchesSearch && matchesRequirement;
+        } else if (activeTab === 'contacted') {
+            return lead.is_contacted && matchesSearch && matchesRequirement;
+        }
+        return matchesSearch && matchesRequirement;
+    });
+    if (isCheckingAuth) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "text-center",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "animate-spin rounded-full h-12 w-12 border-b-2 border-amber-400 mx-auto mb-4"
+                    }, void 0, false, {
+                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                        lineNumber: 1953,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        className: "text-slate-300 text-lg",
+                        children: "Verifying access..."
+                    }, void 0, false, {
+                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                        lineNumber: 1954,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                lineNumber: 1952,
+                columnNumber: 9
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+            lineNumber: 1951,
+            columnNumber: 7
+        }, this);
+    }
+    if (loading && !isCheckingAuth) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "text-center",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "animate-spin rounded-full h-12 w-12 border-b-2 border-amber-400 mx-auto mb-4"
+                    }, void 0, false, {
+                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                        lineNumber: 1964,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        className: "text-slate-300 text-lg",
+                        children: "Loading dashboard..."
+                    }, void 0, false, {
+                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                        lineNumber: 1965,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                lineNumber: 1963,
+                columnNumber: 9
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+            lineNumber: 1962,
+            columnNumber: 7
+        }, this);
+    }
     async function fetchLeads() {
         try {
             setLoading(true);
-            addDebugInfo("Fetching leads...");
             const { data, error } = await supabase.from('leads').select('*').order('created_at', {
                 ascending: false
             });
             if (error) {
-                addDebugInfo("Leads fetch error: ".concat(error.message));
                 console.error('Error fetching leads:', error);
             } else {
-                addDebugInfo("Fetched ".concat((data === null || data === void 0 ? void 0 : data.length) || 0, " leads"));
                 setLeads(data || []);
             }
         } catch (error) {
-            addDebugInfo("Leads fetch exception: ".concat(error.message));
             console.error('Error in fetchLeads:', error);
         } finally{
             setLoading(false);
@@ -1073,61 +1818,48 @@ function AdminDashboardPage() {
     }
     async function fetchNFOData() {
         try {
-            addDebugInfo("Fetching NFO data...");
             const { data, error } = await supabase.from('upcoming_nfo').select('*').order('start_date', {
                 ascending: true
             });
             if (error) {
-                addDebugInfo("NFO fetch error: ".concat(error.message));
                 console.error('Error fetching NFO data:', error);
             } else {
-                addDebugInfo("Fetched ".concat((data === null || data === void 0 ? void 0 : data.length) || 0, " NFOs"));
                 setNfoData(data || []);
             }
         } catch (error) {
-            addDebugInfo("NFO fetch exception: ".concat(error.message));
             console.error('Error in fetchNFOData:', error);
         }
     }
     async function fetchBondsNCD() {
         try {
-            addDebugInfo("Fetching Bonds NCD data...");
             const { data, error } = await supabase.from('bonds_ncd').select('*').order('created_at', {
                 ascending: false
             });
             if (error) {
-                addDebugInfo("Bonds NCD fetch error: ".concat(error.message));
                 console.error('Error fetching Bonds NCD data:', error);
             } else {
-                addDebugInfo("Fetched ".concat((data === null || data === void 0 ? void 0 : data.length) || 0, " Bonds NCD"));
                 setBondsNCD(data || []);
             }
         } catch (error) {
-            addDebugInfo("Bonds NCD fetch exception: ".concat(error.message));
             console.error('Error in fetchBondsNCD:', error);
         }
     }
     async function fetchBondsFD() {
         try {
-            addDebugInfo("Fetching Bonds FD data...");
             const { data, error } = await supabase.from('bonds_fd').select('*').order('created_at', {
                 ascending: false
             });
             if (error) {
-                addDebugInfo("Bonds FD fetch error: ".concat(error.message));
                 console.error('Error fetching Bonds FD data:', error);
             } else {
-                addDebugInfo("Fetched ".concat((data === null || data === void 0 ? void 0 : data.length) || 0, " Bonds FD"));
                 setBondsFD(data || []);
             }
         } catch (error) {
-            addDebugInfo("Bonds FD fetch exception: ".concat(error.message));
             console.error('Error in fetchBondsFD:', error);
         }
     }
     async function handleRefresh() {
         setRefreshing(true);
-        addDebugInfo("Manual refresh triggered");
         await fetchLeads();
         await fetchNFOData();
         await fetchBondsNCD();
@@ -1135,45 +1867,33 @@ function AdminDashboardPage() {
     }
     async function toggleContactStatus(leadId, currentStatus) {
         try {
-            addDebugInfo("Toggling contact status for lead ".concat(leadId));
             const { error } = await supabase.from('leads').update({
                 is_contacted: !currentStatus
             }).eq('id', leadId);
             if (error) {
-                addDebugInfo("Contact status update error: ".concat(error.message));
                 console.error('Error updating lead:', error);
             } else {
-                addDebugInfo("Contact status updated successfully");
                 setLeads(leads.map((lead)=>lead.id === leadId ? {
                         ...lead,
                         is_contacted: !currentStatus
                     } : lead));
             }
         } catch (error) {
-            addDebugInfo("Contact status exception: ".concat(error.message));
             console.error('Error toggling contact status:', error);
         }
     }
-    // Image Upload Function
     const handleImageUpload = async (file, bucket)=>{
         const fileExt = file.name.split('.').pop();
         const fileName = "".concat(Math.random().toString(36).substring(2), "_").concat(Date.now(), ".").concat(fileExt);
-        const filePath = fileName;
-        addDebugInfo("Uploading image to ".concat(bucket, ": ").concat(fileName, " (").concat(file.size, " bytes)"));
-        const { data, error: uploadError } = await supabase.storage.from(bucket).upload(filePath, file, {
+        const { data, error: uploadError } = await supabase.storage.from(bucket).upload(fileName, file, {
             cacheControl: '3600',
             upsert: false
         });
         if (uploadError) {
-            addDebugInfo("Image upload failed: ".concat(uploadError.message));
-            console.error("❌ Storage upload error:", uploadError);
             throw new Error("Failed to upload image: ".concat(uploadError.message));
         }
-        addDebugInfo("Image uploaded successfully");
-        console.log("✅ Image uploaded successfully:", data === null || data === void 0 ? void 0 : data.path);
         return fileName;
     };
-    // NFO Management Functions
     const validateNFOForm = ()=>{
         const errors = [];
         if (!nfoForm.title.trim()) {
@@ -1197,14 +1917,10 @@ function AdminDashboardPage() {
             }
         }
         setFormErrors(errors);
-        if (errors.length > 0) {
-            addDebugInfo("NFO Form validation failed: ".concat(errors.join(', ')));
-        }
         return errors.length === 0;
     };
     const handleNfoSubmit = async (e)=>{
         e.preventDefault();
-        addDebugInfo("NFO form submission started");
         if (!validateNFOForm()) {
             return;
         }
@@ -1216,7 +1932,6 @@ function AdminDashboardPage() {
                 try {
                     imageFileName = await handleImageUpload(nfoForm.image_file, 'nfo-images');
                 } catch (uploadError) {
-                    addDebugInfo("Image upload error in submit: ".concat(uploadError.message));
                     setFormErrors([
                         "Image upload failed: ".concat(uploadError.message)
                     ]);
@@ -1226,7 +1941,6 @@ function AdminDashboardPage() {
             } else if (editingId) {
                 const existingNfo = nfoData.find((nfo)=>nfo.id === editingId);
                 imageFileName = (existingNfo === null || existingNfo === void 0 ? void 0 : existingNfo.image_url) || null;
-                addDebugInfo("Using existing image: ".concat(imageFileName));
             }
             const nfoDataToSave = {
                 title: nfoForm.title,
@@ -1235,13 +1949,10 @@ function AdminDashboardPage() {
                 end_date: nfoForm.end_date || null,
                 image_url: imageFileName
             };
-            addDebugInfo("Saving NFO data: ".concat(JSON.stringify(nfoDataToSave)));
             let result;
             if (editingId) {
-                addDebugInfo("Updating existing NFO: ".concat(editingId));
                 result = await supabase.from('upcoming_nfo').update(nfoDataToSave).eq('id', editingId);
             } else {
-                addDebugInfo("Creating new NFO");
                 result = await supabase.from('upcoming_nfo').insert([
                     {
                         ...nfoDataToSave,
@@ -1250,15 +1961,12 @@ function AdminDashboardPage() {
                 ]);
             }
             if (result.error) {
-                addDebugInfo("Database operation failed: ".concat(result.error.message));
                 throw new Error(result.error.message);
             }
-            addDebugInfo("NFO saved successfully");
             resetForm();
             await fetchNFOData();
             alert(editingId ? 'NFO updated successfully!' : 'NFO created successfully!');
         } catch (error) {
-            addDebugInfo("NFO submission failed: ".concat(error.message));
             setFormErrors([
                 error.message
             ]);
@@ -1266,7 +1974,6 @@ function AdminDashboardPage() {
             setUploading(false);
         }
     };
-    // Bonds NCD Management Functions
     const validateBondsNCDForm = ()=>{
         const errors = [];
         if (!bondsNCDForm.company_name.trim()) {
@@ -1294,7 +2001,6 @@ function AdminDashboardPage() {
     };
     const handleBondsNCDSubmit = async (e)=>{
         e.preventDefault();
-        addDebugInfo("Bonds NCD form submission started");
         if (!validateBondsNCDForm()) {
             return;
         }
@@ -1346,7 +2052,6 @@ function AdminDashboardPage() {
             setUploading(false);
         }
     };
-    // Bonds FD Management Functions
     const validateBondsFDForm = ()=>{
         const errors = [];
         if (!bondsFDForm.bank_name.trim()) {
@@ -1374,7 +2079,6 @@ function AdminDashboardPage() {
     };
     const handleBondsFDSubmit = async (e)=>{
         e.preventDefault();
-        addDebugInfo("Bonds FD form submission started");
         if (!validateBondsFDForm()) {
             return;
         }
@@ -1426,7 +2130,6 @@ function AdminDashboardPage() {
         }
     };
     const handleEdit = (item, type)=>{
-        addDebugInfo("Editing ".concat(type, ": ").concat(item.title || item.company_name || item.bank_name));
         if (type === 'nfo') {
             setNfoForm({
                 title: item.title,
@@ -1461,17 +2164,14 @@ function AdminDashboardPage() {
     const handleDelete = async (id, type)=>{
         if (!confirm('Are you sure you want to delete this item?')) return;
         try {
-            addDebugInfo("Deleting ".concat(type, ": ").concat(id));
             const tableName = type === 'nfo' ? 'upcoming_nfo' : type === 'ncd' ? 'bonds_ncd' : 'bonds_fd';
             const { error } = await supabase.from(tableName).delete().eq('id', id);
             if (error) throw error;
-            // Refresh the appropriate data
             if (type === 'nfo') await fetchNFOData();
             else if (type === 'ncd') await fetchBondsNCD();
             else if (type === 'fd') await fetchBondsFD();
             alert('Item deleted successfully!');
         } catch (error) {
-            console.error('Error deleting item:', error);
             alert("Error deleting item: ".concat(error.message || 'Please try again.'));
         }
     };
@@ -1521,18 +2221,28 @@ function AdminDashboardPage() {
             const { error } = await supabase.auth.signOut();
             if (error) {
                 console.error("Error signing out:", error.message);
-                return;
             }
-            window.location.href = "/admin/login";
         } catch (error) {
             console.error("Sign out error:", error);
         }
     }
-    // Stats calculations
     const totalLeads = leads.length;
     const contactedLeads = leads.filter((lead)=>lead.is_contacted).length;
     const newLeads = totalLeads - contactedLeads;
-    const contactRate = totalLeads > 0 ? contactedLeads / totalLeads * 100 : 0;
+    const getRequirementStats = ()=>{
+        const requirementCounts = {};
+        leads.forEach((lead)=>{
+            if (lead.requirement && lead.requirement.trim()) {
+                const requirement = lead.requirement.trim();
+                requirementCounts[requirement] = (requirementCounts[requirement] || 0) + 1;
+            }
+        });
+        return requirementCounts;
+    };
+    const requirementStats = getRequirementStats();
+    const topRequirement = Object.entries(requirementStats).sort((a, b)=>b[1] - a[1])[0];
+    const uniqueRequirements = Object.keys(requirementStats).length;
+    const uniqueRequirementsList = Object.keys(requirementStats);
     const formatDate = (dateString)=>{
         return new Date(dateString).toLocaleDateString('en-US', {
             year: 'numeric',
@@ -1551,11 +2261,27 @@ function AdminDashboardPage() {
             'SIP': 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30',
             'Pension Planning': 'bg-pink-500/20 text-pink-400 border-pink-500/30',
             'Child Plans': 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
-            'Wealth Advisory': 'bg-orange-500/20 text-orange-400 border-orange-500/30'
+            'Wealth Advisory': 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+            'Tax Saving': 'bg-red-500/20 text-red-400 border-red-500/30',
+            'Retirement Planning': 'bg-teal-500/20 text-teal-400 border-teal-500/30',
+            'Health Insurance': 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+            'Life Insurance': 'bg-sky-500/20 text-sky-400 border-sky-500/30',
+            'Car Insurance': 'bg-violet-500/20 text-violet-400 border-violet-500/30',
+            'Home Insurance': 'bg-rose-500/20 text-rose-400 border-rose-500/30',
+            'Investment': 'bg-lime-500/20 text-lime-400 border-lime-500/30',
+            'Savings': 'bg-fuchsia-500/20 text-fuchsia-400 border-fuchsia-500/30'
         };
-        return colors[requirement] || 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+        if (colors[requirement]) {
+            return colors[requirement];
+        }
+        const requirementLower = requirement.toLowerCase();
+        for (const [key, value] of Object.entries(colors)){
+            if (requirementLower.includes(key.toLowerCase())) {
+                return value;
+            }
+        }
+        return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
     };
-    // Render appropriate form based on editingType
     const renderForm = ()=>{
         if (!showForm && !editingType) return null;
         const formConfig = {
@@ -1574,7 +2300,7 @@ function AdminDashboardPage() {
                                             children: "NFO Title *"
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 1780,
+                                            lineNumber: 2547,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1589,13 +2315,13 @@ function AdminDashboardPage() {
                                             required: true
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 1783,
+                                            lineNumber: 2550,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1779,
+                                    lineNumber: 2546,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1608,7 +2334,7 @@ function AdminDashboardPage() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 1794,
+                                            lineNumber: 2561,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1626,7 +2352,7 @@ function AdminDashboardPage() {
                                             required: !editingId
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 1797,
+                                            lineNumber: 2564,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1638,25 +2364,25 @@ function AdminDashboardPage() {
                                                     children: "(Leave empty to keep current image)"
                                                 }, void 0, false, {
                                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                    lineNumber: 1810,
+                                                    lineNumber: 2577,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 1807,
+                                            lineNumber: 2574,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1793,
+                                    lineNumber: 2560,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 1778,
+                            lineNumber: 2545,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1666,7 +2392,7 @@ function AdminDashboardPage() {
                                     children: "Description"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1817,
+                                    lineNumber: 2584,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -1680,13 +2406,13 @@ function AdminDashboardPage() {
                                     placeholder: "Enter NFO description..."
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1820,
+                                    lineNumber: 2587,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 1816,
+                            lineNumber: 2583,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1699,7 +2425,7 @@ function AdminDashboardPage() {
                                             children: "Start Date"
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 1831,
+                                            lineNumber: 2598,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1712,13 +2438,13 @@ function AdminDashboardPage() {
                                             className: "w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-amber-500/50 transition-colors"
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 1834,
+                                            lineNumber: 2601,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1830,
+                                    lineNumber: 2597,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1728,7 +2454,7 @@ function AdminDashboardPage() {
                                             children: "End Date"
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 1843,
+                                            lineNumber: 2610,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1741,19 +2467,19 @@ function AdminDashboardPage() {
                                             className: "w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-amber-500/50 transition-colors"
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 1846,
+                                            lineNumber: 2613,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1842,
+                                    lineNumber: 2609,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 1829,
+                            lineNumber: 2596,
                             columnNumber: 13
                         }, this)
                     ]
@@ -1772,7 +2498,7 @@ function AdminDashboardPage() {
                                     children: "Company Name *"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1863,
+                                    lineNumber: 2630,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1787,13 +2513,13 @@ function AdminDashboardPage() {
                                     required: true
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1866,
+                                    lineNumber: 2633,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 1862,
+                            lineNumber: 2629,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1803,7 +2529,7 @@ function AdminDashboardPage() {
                                     children: "Issue Size"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1877,
+                                    lineNumber: 2644,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1817,13 +2543,13 @@ function AdminDashboardPage() {
                                     placeholder: "e.g., ₹500 Cr"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1880,
+                                    lineNumber: 2647,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 1876,
+                            lineNumber: 2643,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1833,7 +2559,7 @@ function AdminDashboardPage() {
                                     children: "Interest Rate (%)"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1890,
+                                    lineNumber: 2657,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1848,13 +2574,13 @@ function AdminDashboardPage() {
                                     placeholder: "e.g., 8.5"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1893,
+                                    lineNumber: 2660,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 1889,
+                            lineNumber: 2656,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1864,7 +2590,7 @@ function AdminDashboardPage() {
                                     children: "Tenure"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1904,
+                                    lineNumber: 2671,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1878,13 +2604,13 @@ function AdminDashboardPage() {
                                     placeholder: "e.g., 3 years"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1907,
+                                    lineNumber: 2674,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 1903,
+                            lineNumber: 2670,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1898,7 +2624,7 @@ function AdminDashboardPage() {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1917,
+                                    lineNumber: 2684,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1916,7 +2642,7 @@ function AdminDashboardPage() {
                                     required: !editingId
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1920,
+                                    lineNumber: 2687,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1928,25 +2654,25 @@ function AdminDashboardPage() {
                                             children: "(Leave empty to keep current image)"
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 1933,
+                                            lineNumber: 2700,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1930,
+                                    lineNumber: 2697,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 1916,
+                            lineNumber: 2683,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                    lineNumber: 1861,
+                    lineNumber: 2628,
                     columnNumber: 11
                 }, this)
             },
@@ -1963,7 +2689,7 @@ function AdminDashboardPage() {
                                     children: "Bank Name *"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1946,
+                                    lineNumber: 2713,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1978,13 +2704,13 @@ function AdminDashboardPage() {
                                     required: true
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1949,
+                                    lineNumber: 2716,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 1945,
+                            lineNumber: 2712,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1994,7 +2720,7 @@ function AdminDashboardPage() {
                                     children: "Interest Rate (%)"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1960,
+                                    lineNumber: 2727,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2009,13 +2735,13 @@ function AdminDashboardPage() {
                                     placeholder: "e.g., 7.2"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1963,
+                                    lineNumber: 2730,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 1959,
+                            lineNumber: 2726,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2026,7 +2752,7 @@ function AdminDashboardPage() {
                                     children: "Tenure"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1974,
+                                    lineNumber: 2741,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2040,13 +2766,13 @@ function AdminDashboardPage() {
                                     placeholder: "e.g., 1-3 years"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1977,
+                                    lineNumber: 2744,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 1973,
+                            lineNumber: 2740,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2060,7 +2786,7 @@ function AdminDashboardPage() {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1987,
+                                    lineNumber: 2754,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2078,7 +2804,7 @@ function AdminDashboardPage() {
                                     required: !editingId
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 1990,
+                                    lineNumber: 2757,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2090,25 +2816,25 @@ function AdminDashboardPage() {
                                             children: "(Leave empty to keep current image)"
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 2003,
+                                            lineNumber: 2770,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2000,
+                                    lineNumber: 2767,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 1986,
+                            lineNumber: 2753,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                    lineNumber: 1944,
+                    lineNumber: 2711,
                     columnNumber: 11
                 }, this)
             }
@@ -2122,7 +2848,7 @@ function AdminDashboardPage() {
                     children: config.title
                 }, void 0, false, {
                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                    lineNumber: 2016,
+                    lineNumber: 2783,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -2142,14 +2868,14 @@ function AdminDashboardPage() {
                                             className: "w-4 h-4"
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 2029,
+                                            lineNumber: 2796,
                                             columnNumber: 15
                                         }, this),
                                         uploading ? 'Saving...' : editingId ? 'Update' : 'Create'
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2024,
+                                    lineNumber: 2791,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2159,25 +2885,425 @@ function AdminDashboardPage() {
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2033,
+                                    lineNumber: 2800,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 2023,
+                            lineNumber: 2790,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                    lineNumber: 2020,
+                    lineNumber: 2787,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-            lineNumber: 2015,
+            lineNumber: 2782,
+            columnNumber: 7
+        }, this);
+    };
+    const renderLeadsTable = ()=>{
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6",
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 gap-4",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                            className: "text-xl font-bold text-amber-400",
+                            children: [
+                                activeTab === 'leads' ? 'New Leads' : 'Contacted Leads',
+                                " (",
+                                filteredLeads.length,
+                                ")"
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                            lineNumber: 2817,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex flex-col sm:flex-row gap-3",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "relative",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiSearch"], {
+                                            className: "absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                            lineNumber: 2823,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                            type: "text",
+                                            placeholder: "Search leads...",
+                                            value: searchTerm,
+                                            onChange: (e)=>setSearchTerm(e.target.value),
+                                            className: "pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-amber-500/50 transition-colors w-full sm:w-64"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                            lineNumber: 2824,
+                                            columnNumber: 15
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                    lineNumber: 2822,
+                                    columnNumber: 13
+                                }, this),
+                                uniqueRequirements > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                    value: filterRequirement,
+                                    onChange: (e)=>setFilterRequirement(e.target.value),
+                                    className: "px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-amber-500/50 transition-colors",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                            value: "",
+                                            children: "All Requirements"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                            lineNumber: 2839,
+                                            columnNumber: 17
+                                        }, this),
+                                        uniqueRequirementsList.map((req)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                value: req,
+                                                children: [
+                                                    req,
+                                                    " (",
+                                                    requirementStats[req],
+                                                    ")"
+                                                ]
+                                            }, req, true, {
+                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                lineNumber: 2841,
+                                                columnNumber: 19
+                                            }, this))
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                    lineNumber: 2834,
+                                    columnNumber: 15
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                            lineNumber: 2821,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                    lineNumber: 2816,
+                    columnNumber: 9
+                }, this),
+                filteredLeads.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "text-center py-12",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiUser"], {
+                            className: "w-16 h-16 text-slate-600 mx-auto mb-4"
+                        }, void 0, false, {
+                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                            lineNumber: 2850,
+                            columnNumber: 13
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                            className: "text-xl font-semibold text-slate-300 mb-2",
+                            children: searchTerm || filterRequirement ? 'No matching leads found' : 'No leads found'
+                        }, void 0, false, {
+                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                            lineNumber: 2851,
+                            columnNumber: 13
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-slate-400",
+                            children: searchTerm || filterRequirement ? 'Try adjusting your search or filter criteria' : activeTab === 'leads' ? 'New leads will appear here once customers submit the contact form.' : 'Contacted leads will appear here once you mark them as contacted.'
+                        }, void 0, false, {
+                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                            lineNumber: 2854,
+                            columnNumber: 13
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                    lineNumber: 2849,
+                    columnNumber: 11
+                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "overflow-x-auto",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
+                        className: "w-full",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                    className: "border-b border-white/10",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                            className: "text-left py-3 px-4 text-slate-400 font-semibold",
+                                            children: "Customer"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                            lineNumber: 2868,
+                                            columnNumber: 19
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                            className: "text-left py-3 px-4 text-slate-400 font-semibold",
+                                            children: "Contact"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                            lineNumber: 2869,
+                                            columnNumber: 19
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                            className: "text-left py-3 px-4 text-slate-400 font-semibold",
+                                            children: "Requirement"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                            lineNumber: 2870,
+                                            columnNumber: 19
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                            className: "text-left py-3 px-4 text-slate-400 font-semibold",
+                                            children: "Date"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                            lineNumber: 2871,
+                                            columnNumber: 19
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                            className: "text-left py-3 px-4 text-slate-400 font-semibold",
+                                            children: "Actions"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                            lineNumber: 2872,
+                                            columnNumber: 19
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                    lineNumber: 2867,
+                                    columnNumber: 17
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                lineNumber: 2866,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
+                                children: filteredLeads.map((lead, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].tr, {
+                                        initial: {
+                                            opacity: 0
+                                        },
+                                        animate: {
+                                            opacity: 1
+                                        },
+                                        transition: {
+                                            delay: index * 0.05
+                                        },
+                                        className: "border-b border-white/5 hover:bg-white/5 transition-colors",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                className: "py-3 px-4",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "font-semibold text-white",
+                                                            children: lead.name
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                            lineNumber: 2886,
+                                                            columnNumber: 25
+                                                        }, this),
+                                                        lead.email && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "text-slate-400 text-sm",
+                                                            children: lead.email
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                            lineNumber: 2888,
+                                                            columnNumber: 27
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                    lineNumber: 2885,
+                                                    columnNumber: 23
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                lineNumber: 2884,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                className: "py-3 px-4",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "text-slate-300 font-mono",
+                                                    children: lead.phone
+                                                }, void 0, false, {
+                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                    lineNumber: 2893,
+                                                    columnNumber: 23
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                lineNumber: 2892,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                className: "py-3 px-4",
+                                                children: lead.requirement && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "max-w-xs",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "px-3 py-1 rounded-lg border ".concat(getRequirementColor(lead.requirement)),
+                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "truncate",
+                                                                children: lead.requirement
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                                lineNumber: 2899,
+                                                                columnNumber: 29
+                                                            }, this)
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                            lineNumber: 2898,
+                                                            columnNumber: 27
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "mt-2 p-3 bg-white/5 rounded-lg border border-white/10",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                    className: "font-semibold text-slate-300 mb-2",
+                                                                    children: "Full Requirement:"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                                    lineNumber: 2903,
+                                                                    columnNumber: 29
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                    className: "text-slate-300 text-sm",
+                                                                    children: lead.requirement
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                                    lineNumber: 2904,
+                                                                    columnNumber: 29
+                                                                }, this),
+                                                                lead.notes && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                                                                    children: [
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                            className: "font-semibold text-slate-300 mt-3 mb-1",
+                                                                            children: "Additional Notes:"
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                                            lineNumber: 2908,
+                                                                            columnNumber: 33
+                                                                        }, this),
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                            className: "text-slate-400 text-sm",
+                                                                            children: lead.notes
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                                            lineNumber: 2909,
+                                                                            columnNumber: 33
+                                                                        }, this)
+                                                                    ]
+                                                                }, void 0, true)
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                            lineNumber: 2902,
+                                                            columnNumber: 27
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                    lineNumber: 2897,
+                                                    columnNumber: 25
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                lineNumber: 2895,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                className: "py-3 px-4",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "text-slate-400 text-sm",
+                                                    children: lead.created_at ? formatDate(lead.created_at) : 'Unknown'
+                                                }, void 0, false, {
+                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                    lineNumber: 2917,
+                                                    columnNumber: 23
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                lineNumber: 2916,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                className: "py-3 px-4",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "flex gap-2",
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                        onClick: ()=>toggleContactStatus(lead.id, lead.is_contacted || false),
+                                                        className: "p-2 rounded-lg border transition-colors ".concat(lead.is_contacted ? 'bg-amber-500/20 text-amber-400 border-amber-500/30 hover:bg-amber-500/30' : 'bg-green-500/20 text-green-400 border-green-500/30 hover:bg-green-500/30'),
+                                                        title: lead.is_contacted ? "Mark as New" : "Mark as Contacted",
+                                                        children: lead.is_contacted ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiXCircle"], {
+                                                            className: "w-4 h-4"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                            lineNumber: 2933,
+                                                            columnNumber: 29
+                                                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiCheckCircle"], {
+                                                            className: "w-4 h-4"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                            lineNumber: 2934,
+                                                            columnNumber: 29
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                        lineNumber: 2923,
+                                                        columnNumber: 25
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                    lineNumber: 2922,
+                                                    columnNumber: 23
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                lineNumber: 2921,
+                                                columnNumber: 21
+                                            }, this)
+                                        ]
+                                    }, lead.id, true, {
+                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                        lineNumber: 2877,
+                                        columnNumber: 19
+                                    }, this))
+                            }, void 0, false, {
+                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                lineNumber: 2875,
+                                columnNumber: 15
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                        lineNumber: 2865,
+                        columnNumber: 13
+                    }, this)
+                }, void 0, false, {
+                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                    lineNumber: 2864,
+                    columnNumber: 11
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+            lineNumber: 2815,
             columnNumber: 7
         }, this);
     };
@@ -2195,44 +3321,6 @@ function AdminDashboardPage() {
             className: "max-w-7xl mx-auto",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "mb-4 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg",
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("details", {
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("summary", {
-                                className: "cursor-pointer text-blue-400 font-semibold",
-                                children: "Debug Info (Click to expand)"
-                            }, void 0, false, {
-                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                lineNumber: 2056,
-                                columnNumber: 13
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "mt-2 text-xs text-blue-300 max-h-32 overflow-y-auto",
-                                children: debugInfo.map((info, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "font-mono",
-                                        children: info
-                                    }, index, false, {
-                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2059,
-                                        columnNumber: 17
-                                    }, this))
-                            }, void 0, false, {
-                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                lineNumber: 2057,
-                                columnNumber: 13
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                        lineNumber: 2055,
-                        columnNumber: 11
-                    }, this)
-                }, void 0, false, {
-                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                    lineNumber: 2054,
-                    columnNumber: 9
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2243,7 +3331,7 @@ function AdminDashboardPage() {
                                     children: "Admin Dashboard"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2068,
+                                    lineNumber: 2959,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2255,19 +3343,19 @@ function AdminDashboardPage() {
                                             children: userEmail
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 2070,
+                                            lineNumber: 2961,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2069,
+                                    lineNumber: 2960,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 2067,
+                            lineNumber: 2958,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2282,14 +3370,14 @@ function AdminDashboardPage() {
                                             className: "w-4 h-4 ".concat(refreshing ? 'animate-spin' : '')
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 2079,
+                                            lineNumber: 2970,
                                             columnNumber: 15
                                         }, this),
                                         "Refresh"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2074,
+                                    lineNumber: 2965,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2300,115 +3388,414 @@ function AdminDashboardPage() {
                                             className: "w-4 h-4"
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 2086,
+                                            lineNumber: 2977,
                                             columnNumber: 15
                                         }, this),
                                         "Sign Out"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2082,
+                                    lineNumber: 2973,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 2073,
+                            lineNumber: 2964,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                    lineNumber: 2066,
+                    lineNumber: 2957,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "flex space-x-1 mb-8 bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-1 max-w-2xl overflow-x-auto",
+                    className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex items-center justify-between",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-slate-400 text-sm font-medium",
+                                                children: "Total Leads"
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                lineNumber: 2988,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-3xl font-bold text-white mt-2",
+                                                children: totalLeads
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                lineNumber: 2989,
+                                                columnNumber: 17
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                        lineNumber: 2987,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "p-3 bg-amber-500/20 rounded-xl",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiUser"], {
+                                            className: "w-6 h-6 text-amber-400"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                            lineNumber: 2992,
+                                            columnNumber: 17
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                        lineNumber: 2991,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                lineNumber: 2986,
+                                columnNumber: 13
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                            lineNumber: 2985,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: ()=>setActiveTab('contacted'),
+                            className: "bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors text-left cursor-pointer",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex items-center justify-between",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-slate-400 text-sm font-medium",
+                                                children: "Contacted"
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                lineNumber: 3003,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-3xl font-bold text-green-400 mt-2",
+                                                children: contactedLeads
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                lineNumber: 3004,
+                                                columnNumber: 17
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                        lineNumber: 3002,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "p-3 bg-green-500/20 rounded-xl",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiCheckCircle"], {
+                                            className: "w-6 h-6 text-green-400"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                            lineNumber: 3007,
+                                            columnNumber: 17
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                        lineNumber: 3006,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                lineNumber: 3001,
+                                columnNumber: 13
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                            lineNumber: 2997,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex items-center justify-between",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-slate-400 text-sm font-medium",
+                                                children: "New Leads"
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                lineNumber: 3015,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-3xl font-bold text-amber-400 mt-2",
+                                                children: newLeads
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                lineNumber: 3016,
+                                                columnNumber: 17
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                        lineNumber: 3014,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "p-3 bg-blue-500/20 rounded-xl",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiClock"], {
+                                            className: "w-6 h-6 text-blue-400"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                            lineNumber: 3019,
+                                            columnNumber: 17
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                        lineNumber: 3018,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                lineNumber: 3013,
+                                columnNumber: 13
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                            lineNumber: 3012,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex items-center justify-between",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-slate-400 text-sm font-medium",
+                                                children: "Requirements"
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                lineNumber: 3027,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-3xl font-bold text-purple-400 mt-2",
+                                                children: uniqueRequirements
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                lineNumber: 3028,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-slate-400 text-xs mt-1",
+                                                children: topRequirement ? "Top: ".concat(topRequirement[0]) : 'No data'
+                                            }, void 0, false, {
+                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                                lineNumber: 3029,
+                                                columnNumber: 17
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                        lineNumber: 3026,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "p-3 bg-purple-500/20 rounded-xl",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiBarChart2"], {
+                                            className: "w-6 h-6 text-purple-400"
+                                        }, void 0, false, {
+                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                            lineNumber: 3034,
+                                            columnNumber: 17
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                        lineNumber: 3033,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                lineNumber: 3025,
+                                columnNumber: 13
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                            lineNumber: 3024,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                    lineNumber: 2984,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "flex space-x-1 mb-8 bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-1 w-full overflow-x-auto",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: ()=>setActiveTab('leads'),
-                            className: "flex items-center gap-2 px-4 py-2 rounded-xl transition-colors flex-shrink-0 text-center ".concat(activeTab === 'leads' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'text-slate-400 hover:text-white'),
+                            className: "flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-colors flex-1 min-w-0 ".concat(activeTab === 'leads' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'text-slate-400 hover:text-white'),
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiUser"], {
-                                    className: "w-4 h-4"
+                                    className: "w-4 h-4 flex-shrink-0"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2102,
+                                    lineNumber: 3050,
                                     columnNumber: 13
                                 }, this),
-                                "Leads (",
-                                totalLeads,
-                                ")"
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "truncate text-sm",
+                                    children: [
+                                        "New Leads (",
+                                        leads.filter((l)=>!l.is_contacted).length,
+                                        ")"
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                    lineNumber: 3051,
+                                    columnNumber: 13
+                                }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 2094,
+                            lineNumber: 3042,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: ()=>setActiveTab('contacted'),
+                            className: "flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-colors flex-1 min-w-0 ".concat(activeTab === 'contacted' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'text-slate-400 hover:text-white'),
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiCheckCircle"], {
+                                    className: "w-4 h-4 flex-shrink-0"
+                                }, void 0, false, {
+                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                    lineNumber: 3061,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "truncate text-sm",
+                                    children: [
+                                        "Contacted (",
+                                        contactedLeads,
+                                        ")"
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                    lineNumber: 3062,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                            lineNumber: 3053,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: ()=>setActiveTab('nfo'),
-                            className: "flex items-center gap-2 px-4 py-2 rounded-xl transition-colors flex-shrink-0 text-center ".concat(activeTab === 'nfo' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'text-slate-400 hover:text-white'),
+                            className: "flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-colors flex-1 min-w-0 ".concat(activeTab === 'nfo' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'text-slate-400 hover:text-white'),
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiImage"], {
-                                    className: "w-4 h-4"
+                                    className: "w-4 h-4 flex-shrink-0"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2113,
+                                    lineNumber: 3072,
                                     columnNumber: 13
                                 }, this),
-                                "NFOs (",
-                                nfoData.length,
-                                ")"
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "truncate text-sm",
+                                    children: [
+                                        "NFOs (",
+                                        nfoData.length,
+                                        ")"
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                    lineNumber: 3073,
+                                    columnNumber: 13
+                                }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 2105,
+                            lineNumber: 3064,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: ()=>setActiveTab('bondsNCD'),
-                            className: "flex items-center gap-2 px-4 py-2 rounded-xl transition-colors flex-shrink-0 text-center ".concat(activeTab === 'bondsNCD' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'text-slate-400 hover:text-white'),
+                            className: "flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-colors flex-1 min-w-0 ".concat(activeTab === 'bondsNCD' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'text-slate-400 hover:text-white'),
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiTrendingUp"], {
-                                    className: "w-4 h-4"
+                                    className: "w-4 h-4 flex-shrink-0"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2124,
+                                    lineNumber: 3083,
                                     columnNumber: 13
                                 }, this),
-                                "Bonds NCD (",
-                                bondsNCD.length,
-                                ")"
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "truncate text-sm",
+                                    children: [
+                                        "Bonds NCD (",
+                                        bondsNCD.length,
+                                        ")"
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                    lineNumber: 3084,
+                                    columnNumber: 13
+                                }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 2116,
+                            lineNumber: 3075,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: ()=>setActiveTab('bondsFD'),
-                            className: "flex items-center gap-2 px-4 py-2 rounded-xl transition-colors flex-shrink-0 text-center ".concat(activeTab === 'bondsFD' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'text-slate-400 hover:text-white'),
+                            className: "flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-colors flex-1 min-w-0 ".concat(activeTab === 'bondsFD' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'text-slate-400 hover:text-white'),
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiShield"], {
-                                    className: "w-4 h-4"
+                                    className: "w-4 h-4 flex-shrink-0"
                                 }, void 0, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2135,
+                                    lineNumber: 3094,
                                     columnNumber: 13
                                 }, this),
-                                "Bonds FD (",
-                                bondsFD.length,
-                                ")"
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "truncate text-sm",
+                                    children: [
+                                        "Bonds FD (",
+                                        bondsFD.length,
+                                        ")"
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
+                                    lineNumber: 3095,
+                                    columnNumber: 13
+                                }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 2127,
+                            lineNumber: 3086,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                    lineNumber: 2093,
+                    lineNumber: 3041,
                     columnNumber: 9
                 }, this),
                 formErrors.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2419,7 +3806,7 @@ function AdminDashboardPage() {
                             children: "Error:"
                         }, void 0, false, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 2143,
+                            lineNumber: 3102,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -2428,746 +3815,22 @@ function AdminDashboardPage() {
                                     children: error
                                 }, index, false, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2146,
+                                    lineNumber: 3105,
                                     columnNumber: 17
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 2144,
+                            lineNumber: 3103,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                    lineNumber: 2142,
+                    lineNumber: 3101,
                     columnNumber: 11
                 }, this),
                 renderForm(),
-                activeTab === 'leads' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-center justify-between",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-slate-400 text-sm font-medium",
-                                                        children: "Total Leads"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2163,
-                                                        columnNumber: 21
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-3xl font-bold text-white mt-2",
-                                                        children: totalLeads
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2164,
-                                                        columnNumber: 21
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2162,
-                                                columnNumber: 19
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "p-3 bg-amber-500/20 rounded-xl",
-                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiUser"], {
-                                                    className: "w-6 h-6 text-amber-400"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                    lineNumber: 2167,
-                                                    columnNumber: 21
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2166,
-                                                columnNumber: 19
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2161,
-                                        columnNumber: 17
-                                    }, this)
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2160,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-center justify-between",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-slate-400 text-sm font-medium",
-                                                        children: "Contacted"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2175,
-                                                        columnNumber: 21
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-3xl font-bold text-green-400 mt-2",
-                                                        children: contactedLeads
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2176,
-                                                        columnNumber: 21
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2174,
-                                                columnNumber: 19
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "p-3 bg-green-500/20 rounded-xl",
-                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiCheckCircle"], {
-                                                    className: "w-6 h-6 text-green-400"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                    lineNumber: 2179,
-                                                    columnNumber: 21
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2178,
-                                                columnNumber: 19
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2173,
-                                        columnNumber: 17
-                                    }, this)
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2172,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-center justify-between",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-slate-400 text-sm font-medium",
-                                                        children: "New Leads"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2187,
-                                                        columnNumber: 21
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-3xl font-bold text-amber-400 mt-2",
-                                                        children: newLeads
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2188,
-                                                        columnNumber: 21
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2186,
-                                                columnNumber: 19
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "p-3 bg-blue-500/20 rounded-xl",
-                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiClock"], {
-                                                    className: "w-6 h-6 text-blue-400"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                    lineNumber: 2191,
-                                                    columnNumber: 21
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2190,
-                                                columnNumber: 19
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2185,
-                                        columnNumber: 17
-                                    }, this)
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2184,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-center justify-between",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-slate-400 text-sm font-medium",
-                                                        children: "Contact Rate"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2199,
-                                                        columnNumber: 21
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-3xl font-bold text-purple-400 mt-2",
-                                                        children: [
-                                                            contactRate.toFixed(1),
-                                                            "%"
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2200,
-                                                        columnNumber: 21
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2198,
-                                                columnNumber: 19
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "p-3 bg-purple-500/20 rounded-xl",
-                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiFileText"], {
-                                                    className: "w-6 h-6 text-purple-400"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                    lineNumber: 2203,
-                                                    columnNumber: 21
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2202,
-                                                columnNumber: 19
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2197,
-                                        columnNumber: 17
-                                    }, this)
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2196,
-                                    columnNumber: 15
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 2159,
-                            columnNumber: 13
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-4 md:p-6 overflow-hidden",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex items-center justify-between mb-6",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                            className: "text-xl font-bold text-amber-400",
-                                            children: "Recent Leads"
-                                        }, void 0, false, {
-                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 2212,
-                                            columnNumber: 17
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "text-slate-400 text-sm",
-                                            children: [
-                                                "Showing ",
-                                                leads.length,
-                                                " lead",
-                                                leads.length !== 1 ? 's' : ''
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 2213,
-                                            columnNumber: 17
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2211,
-                                    columnNumber: 15
-                                }, this),
-                                loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "text-center py-12",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-center justify-center space-x-3",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "animate-spin rounded-full h-8 w-8 border-b-2 border-amber-400"
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2221,
-                                                columnNumber: 21
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-slate-300 text-lg",
-                                                children: "Loading leads..."
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2222,
-                                                columnNumber: 21
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2220,
-                                        columnNumber: 19
-                                    }, this)
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2219,
-                                    columnNumber: 17
-                                }, this) : leads.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "text-center py-12",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiFileText"], {
-                                            className: "w-16 h-16 text-slate-600 mx-auto mb-4"
-                                        }, void 0, false, {
-                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 2227,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                            className: "text-xl font-semibold text-slate-300 mb-2",
-                                            children: "No leads found"
-                                        }, void 0, false, {
-                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 2228,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-slate-400",
-                                            children: "Leads will appear here once customers submit the contact form."
-                                        }, void 0, false, {
-                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 2229,
-                                            columnNumber: 19
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2226,
-                                    columnNumber: 17
-                                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "overflow-x-auto",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
-                                        className: "w-full",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
-                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
-                                                    className: "border-b border-white/10",
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                            className: "text-left p-3 md:p-4 text-slate-300 font-semibold",
-                                                            children: "Customer"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                            lineNumber: 2236,
-                                                            columnNumber: 25
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                            className: "text-left p-3 md:p-4 text-slate-300 font-semibold hidden md:table-cell",
-                                                            children: "Contact"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                            lineNumber: 2237,
-                                                            columnNumber: 25
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                            className: "text-left p-3 md:p-4 text-slate-300 font-semibold",
-                                                            children: "Requirement"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                            lineNumber: 2238,
-                                                            columnNumber: 25
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                            className: "text-left p-3 md:p-4 text-slate-300 font-semibold",
-                                                            children: "Status"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                            lineNumber: 2239,
-                                                            columnNumber: 25
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                            className: "text-left p-3 md:p-4 text-slate-300 font-semibold hidden lg:table-cell",
-                                                            children: "Date"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                            lineNumber: 2240,
-                                                            columnNumber: 25
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                                            className: "text-left p-3 md:p-4 text-slate-300 font-semibold",
-                                                            children: "Actions"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                            lineNumber: 2241,
-                                                            columnNumber: 25
-                                                        }, this)
-                                                    ]
-                                                }, void 0, true, {
-                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                    lineNumber: 2235,
-                                                    columnNumber: 23
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2234,
-                                                columnNumber: 21
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
-                                                children: leads.map((lead, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].tr, {
-                                                        initial: {
-                                                            opacity: 0,
-                                                            y: 10
-                                                        },
-                                                        animate: {
-                                                            opacity: 1,
-                                                            y: 0
-                                                        },
-                                                        transition: {
-                                                            delay: index * 0.05
-                                                        },
-                                                        className: "border-b border-white/5 hover:bg-white/2 transition-colors",
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                                className: "p-3 md:p-4",
-                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                    className: "flex items-center space-x-3",
-                                                                    children: [
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                            className: "w-8 h-8 md:w-10 md:h-10 bg-amber-500/20 rounded-full flex items-center justify-center flex-shrink-0",
-                                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiUser"], {
-                                                                                className: "w-4 h-4 md:w-5 md:h-5 text-amber-400"
-                                                                            }, void 0, false, {
-                                                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                                lineNumber: 2257,
-                                                                                columnNumber: 33
-                                                                            }, this)
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                            lineNumber: 2256,
-                                                                            columnNumber: 31
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                            className: "min-w-0 flex-1",
-                                                                            children: [
-                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                                    className: "text-white font-semibold text-sm md:text-base truncate",
-                                                                                    children: lead.name
-                                                                                }, void 0, false, {
-                                                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                                    lineNumber: 2260,
-                                                                                    columnNumber: 33
-                                                                                }, this),
-                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                                    className: "text-slate-400 text-xs md:hidden",
-                                                                                    children: lead.phone
-                                                                                }, void 0, false, {
-                                                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                                    lineNumber: 2263,
-                                                                                    columnNumber: 33
-                                                                                }, this),
-                                                                                lead.email && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                                    className: "text-slate-400 text-xs md:hidden truncate",
-                                                                                    children: lead.email
-                                                                                }, void 0, false, {
-                                                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                                    lineNumber: 2267,
-                                                                                    columnNumber: 35
-                                                                                }, this)
-                                                                            ]
-                                                                        }, void 0, true, {
-                                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                            lineNumber: 2259,
-                                                                            columnNumber: 31
-                                                                        }, this)
-                                                                    ]
-                                                                }, void 0, true, {
-                                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                    lineNumber: 2255,
-                                                                    columnNumber: 29
-                                                                }, this)
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2254,
-                                                                columnNumber: 27
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                                className: "p-3 md:p-4 hidden md:table-cell",
-                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                    className: "space-y-1",
-                                                                    children: [
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                            className: "flex items-center space-x-2 text-slate-300",
-                                                                            children: [
-                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiPhone"], {
-                                                                                    className: "w-4 h-4"
-                                                                                }, void 0, false, {
-                                                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                                    lineNumber: 2279,
-                                                                                    columnNumber: 33
-                                                                                }, this),
-                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                    className: "font-mono text-sm",
-                                                                                    children: lead.phone
-                                                                                }, void 0, false, {
-                                                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                                    lineNumber: 2280,
-                                                                                    columnNumber: 33
-                                                                                }, this)
-                                                                            ]
-                                                                        }, void 0, true, {
-                                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                            lineNumber: 2278,
-                                                                            columnNumber: 31
-                                                                        }, this),
-                                                                        lead.email && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                            className: "flex items-center space-x-2 text-slate-400",
-                                                                            children: [
-                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiMail"], {
-                                                                                    className: "w-4 h-4"
-                                                                                }, void 0, false, {
-                                                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                                    lineNumber: 2284,
-                                                                                    columnNumber: 35
-                                                                                }, this),
-                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                    className: "text-sm truncate max-w-[150px]",
-                                                                                    children: lead.email
-                                                                                }, void 0, false, {
-                                                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                                    lineNumber: 2285,
-                                                                                    columnNumber: 35
-                                                                                }, this)
-                                                                            ]
-                                                                        }, void 0, true, {
-                                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                            lineNumber: 2283,
-                                                                            columnNumber: 33
-                                                                        }, this)
-                                                                    ]
-                                                                }, void 0, true, {
-                                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                    lineNumber: 2277,
-                                                                    columnNumber: 29
-                                                                }, this)
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2276,
-                                                                columnNumber: 27
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                                className: "p-3 md:p-4",
-                                                                children: lead.requirement ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                    className: "inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ".concat(getRequirementColor(lead.requirement)),
-                                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                        className: "truncate max-w-[80px] md:max-w-none",
-                                                                        children: lead.requirement
-                                                                    }, void 0, false, {
-                                                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                        lineNumber: 2295,
-                                                                        columnNumber: 33
-                                                                    }, this)
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                    lineNumber: 2294,
-                                                                    columnNumber: 31
-                                                                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                    className: "text-slate-400 text-xs",
-                                                                    children: "Not specified"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                    lineNumber: 2300,
-                                                                    columnNumber: 31
-                                                                }, this)
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2292,
-                                                                columnNumber: 27
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                                className: "p-3 md:p-4",
-                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                                    onClick: ()=>toggleContactStatus(lead.id, lead.is_contacted || false),
-                                                                    className: "inline-flex items-center px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm font-medium border transition-colors ".concat(lead.is_contacted ? 'bg-green-500/20 text-green-400 border-green-500/30 hover:bg-green-500/30' : 'bg-amber-500/20 text-amber-400 border-amber-500/30 hover:bg-amber-500/30'),
-                                                                    children: lead.is_contacted ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
-                                                                        children: [
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiCheckCircle"], {
-                                                                                className: "w-3 h-3 mr-1"
-                                                                            }, void 0, false, {
-                                                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                                lineNumber: 2316,
-                                                                                columnNumber: 35
-                                                                            }, this),
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                className: "hidden sm:inline",
-                                                                                children: "Contacted"
-                                                                            }, void 0, false, {
-                                                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                                lineNumber: 2317,
-                                                                                columnNumber: 35
-                                                                            }, this),
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                className: "sm:hidden",
-                                                                                children: "Done"
-                                                                            }, void 0, false, {
-                                                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                                lineNumber: 2318,
-                                                                                columnNumber: 35
-                                                                            }, this)
-                                                                        ]
-                                                                    }, void 0, true) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
-                                                                        children: [
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiClock"], {
-                                                                                className: "w-3 h-3 mr-1"
-                                                                            }, void 0, false, {
-                                                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                                lineNumber: 2322,
-                                                                                columnNumber: 35
-                                                                            }, this),
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                className: "hidden sm:inline",
-                                                                                children: "New Lead"
-                                                                            }, void 0, false, {
-                                                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                                lineNumber: 2323,
-                                                                                columnNumber: 35
-                                                                            }, this),
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                className: "sm:hidden",
-                                                                                children: "New"
-                                                                            }, void 0, false, {
-                                                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                                lineNumber: 2324,
-                                                                                columnNumber: 35
-                                                                            }, this)
-                                                                        ]
-                                                                    }, void 0, true)
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                    lineNumber: 2306,
-                                                                    columnNumber: 29
-                                                                }, this)
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2305,
-                                                                columnNumber: 27
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                                className: "p-3 md:p-4 hidden lg:table-cell",
-                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                    className: "text-slate-300 text-sm",
-                                                                    children: lead.created_at ? formatDate(lead.created_at) : 'Unknown'
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                    lineNumber: 2332,
-                                                                    columnNumber: 29
-                                                                }, this)
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2331,
-                                                                columnNumber: 27
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                                className: "p-3 md:p-4",
-                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                    className: "flex space-x-1 md:space-x-2",
-                                                                    children: [
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                                            onClick: ()=>toggleContactStatus(lead.id, lead.is_contacted || false),
-                                                                            className: "p-2 rounded-lg border transition-colors ".concat(lead.is_contacted ? 'bg-amber-500/20 text-amber-400 border-amber-500/30 hover:bg-amber-500/30' : 'bg-green-500/20 text-green-400 border-green-500/30 hover:bg-green-500/30'),
-                                                                            title: lead.is_contacted ? "Mark as New" : "Mark as Contacted",
-                                                                            children: lead.is_contacted ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiXCircle"], {
-                                                                                className: "w-3 h-3 md:w-4 md:h-4"
-                                                                            }, void 0, false, {
-                                                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                                lineNumber: 2350,
-                                                                                columnNumber: 35
-                                                                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$react$2d$icons$2f$fi$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FiCheckCircle"], {
-                                                                                className: "w-3 h-3 md:w-4 md:h-4"
-                                                                            }, void 0, false, {
-                                                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                                lineNumber: 2351,
-                                                                                columnNumber: 35
-                                                                            }, this)
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                            lineNumber: 2340,
-                                                                            columnNumber: 31
-                                                                        }, this),
-                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                            className: "md:hidden text-slate-400 text-xs flex items-center px-2",
-                                                                            children: lead.created_at ? new Date(lead.created_at).toLocaleDateString('en-US', {
-                                                                                month: 'short',
-                                                                                day: 'numeric'
-                                                                            }) : 'N/A'
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                            lineNumber: 2356,
-                                                                            columnNumber: 31
-                                                                        }, this)
-                                                                    ]
-                                                                }, void 0, true, {
-                                                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                    lineNumber: 2339,
-                                                                    columnNumber: 29
-                                                                }, this)
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2338,
-                                                                columnNumber: 27
-                                                            }, this)
-                                                        ]
-                                                    }, lead.id, true, {
-                                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2246,
-                                                        columnNumber: 25
-                                                    }, this))
-                                            }, void 0, false, {
-                                                fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2244,
-                                                columnNumber: 21
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2233,
-                                        columnNumber: 19
-                                    }, this)
-                                }, void 0, false, {
-                                    fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2232,
-                                    columnNumber: 17
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 2210,
-                            columnNumber: 13
-                        }, this)
-                    ]
-                }, void 0, true),
+                (activeTab === 'leads' || activeTab === 'contacted') && renderLeadsTable(),
                 activeTab === 'nfo' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "space-y-8",
                     children: [
@@ -3183,7 +3846,7 @@ function AdminDashboardPage() {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2379,
+                                    lineNumber: 3121,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3194,20 +3857,20 @@ function AdminDashboardPage() {
                                             className: "w-4 h-4"
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 2386,
+                                            lineNumber: 3128,
                                             columnNumber: 17
                                         }, this),
                                         "Create New NFO"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2382,
+                                    lineNumber: 3124,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 2378,
+                            lineNumber: 3120,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3219,7 +3882,7 @@ function AdminDashboardPage() {
                                         className: "w-16 h-16 text-slate-600 mx-auto mb-4"
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2395,
+                                        lineNumber: 3136,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -3227,7 +3890,7 @@ function AdminDashboardPage() {
                                         children: "No NFOs found"
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2396,
+                                        lineNumber: 3137,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3235,7 +3898,7 @@ function AdminDashboardPage() {
                                         children: "Create your first NFO to get started."
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2397,
+                                        lineNumber: 3138,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3246,20 +3909,20 @@ function AdminDashboardPage() {
                                                 className: "w-4 h-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2402,
+                                                lineNumber: 3143,
                                                 columnNumber: 21
                                             }, this),
                                             "Create Your First NFO"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2398,
+                                        lineNumber: 3139,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                lineNumber: 2394,
+                                lineNumber: 3135,
                                 columnNumber: 17
                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
@@ -3282,12 +3945,12 @@ function AdminDashboardPage() {
                                                     className: "w-full h-full object-cover"
                                                 }, void 0, false, {
                                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                    lineNumber: 2417,
+                                                    lineNumber: 3158,
                                                     columnNumber: 27
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2416,
+                                                lineNumber: 3157,
                                                 columnNumber: 25
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3298,7 +3961,7 @@ function AdminDashboardPage() {
                                                         children: nfo.title
                                                     }, void 0, false, {
                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2425,
+                                                        lineNumber: 3166,
                                                         columnNumber: 25
                                                     }, this),
                                                     nfo.description && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3306,7 +3969,7 @@ function AdminDashboardPage() {
                                                         children: nfo.description
                                                     }, void 0, false, {
                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2429,
+                                                        lineNumber: 3170,
                                                         columnNumber: 27
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3319,7 +3982,7 @@ function AdminDashboardPage() {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2434,
+                                                                lineNumber: 3175,
                                                                 columnNumber: 27
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3329,13 +3992,13 @@ function AdminDashboardPage() {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2435,
+                                                                lineNumber: 3176,
                                                                 columnNumber: 27
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2433,
+                                                        lineNumber: 3174,
                                                         columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3349,14 +4012,14 @@ function AdminDashboardPage() {
                                                                         className: "w-3 h-3"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                        lineNumber: 2442,
+                                                                        lineNumber: 3183,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     "Edit"
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2438,
+                                                                lineNumber: 3179,
                                                                 columnNumber: 27
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3367,48 +4030,48 @@ function AdminDashboardPage() {
                                                                         className: "w-3 h-3"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                        lineNumber: 2449,
+                                                                        lineNumber: 3190,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     "Delete"
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2445,
+                                                                lineNumber: 3186,
                                                                 columnNumber: 27
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2437,
+                                                        lineNumber: 3178,
                                                         columnNumber: 25
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2424,
+                                                lineNumber: 3165,
                                                 columnNumber: 23
                                             }, this)
                                         ]
                                     }, nfo.id, true, {
                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2409,
+                                        lineNumber: 3150,
                                         columnNumber: 21
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                lineNumber: 2407,
+                                lineNumber: 3148,
                                 columnNumber: 17
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 2392,
+                            lineNumber: 3133,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                    lineNumber: 2376,
+                    lineNumber: 3119,
                     columnNumber: 11
                 }, this),
                 activeTab === 'bondsNCD' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3426,7 +4089,7 @@ function AdminDashboardPage() {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2467,
+                                    lineNumber: 3207,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3437,20 +4100,20 @@ function AdminDashboardPage() {
                                             className: "w-4 h-4"
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 2474,
+                                            lineNumber: 3214,
                                             columnNumber: 17
                                         }, this),
                                         "Add New NCD"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2470,
+                                    lineNumber: 3210,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 2466,
+                            lineNumber: 3206,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3462,7 +4125,7 @@ function AdminDashboardPage() {
                                         className: "w-16 h-16 text-slate-600 mx-auto mb-4"
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2483,
+                                        lineNumber: 3222,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -3470,7 +4133,7 @@ function AdminDashboardPage() {
                                         children: "No NCDs found"
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2484,
+                                        lineNumber: 3223,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3478,7 +4141,7 @@ function AdminDashboardPage() {
                                         children: "Add your first NCD to get started."
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2485,
+                                        lineNumber: 3224,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3489,20 +4152,20 @@ function AdminDashboardPage() {
                                                 className: "w-4 h-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2490,
+                                                lineNumber: 3229,
                                                 columnNumber: 21
                                             }, this),
                                             "Add Your First NCD"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2486,
+                                        lineNumber: 3225,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                lineNumber: 2482,
+                                lineNumber: 3221,
                                 columnNumber: 17
                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
@@ -3525,12 +4188,12 @@ function AdminDashboardPage() {
                                                     className: "w-full h-full object-cover"
                                                 }, void 0, false, {
                                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                    lineNumber: 2505,
+                                                    lineNumber: 3244,
                                                     columnNumber: 27
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2504,
+                                                lineNumber: 3243,
                                                 columnNumber: 25
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3541,7 +4204,7 @@ function AdminDashboardPage() {
                                                         children: ncd.company_name
                                                     }, void 0, false, {
                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2513,
+                                                        lineNumber: 3252,
                                                         columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3554,7 +4217,7 @@ function AdminDashboardPage() {
                                                                         children: "Issue Size:"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                        lineNumber: 2519,
+                                                                        lineNumber: 3258,
                                                                         columnNumber: 31
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3562,13 +4225,13 @@ function AdminDashboardPage() {
                                                                         children: ncd.issue_size
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                        lineNumber: 2520,
+                                                                        lineNumber: 3259,
                                                                         columnNumber: 31
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2518,
+                                                                lineNumber: 3257,
                                                                 columnNumber: 29
                                                             }, this),
                                                             ncd.interest_rate && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3578,7 +4241,7 @@ function AdminDashboardPage() {
                                                                         children: "Interest Rate:"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                        lineNumber: 2525,
+                                                                        lineNumber: 3264,
                                                                         columnNumber: 31
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3589,13 +4252,13 @@ function AdminDashboardPage() {
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                        lineNumber: 2526,
+                                                                        lineNumber: 3265,
                                                                         columnNumber: 31
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2524,
+                                                                lineNumber: 3263,
                                                                 columnNumber: 29
                                                             }, this),
                                                             ncd.tenure && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3605,7 +4268,7 @@ function AdminDashboardPage() {
                                                                         children: "Tenure:"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                        lineNumber: 2531,
+                                                                        lineNumber: 3270,
                                                                         columnNumber: 31
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3613,19 +4276,19 @@ function AdminDashboardPage() {
                                                                         children: ncd.tenure
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                        lineNumber: 2532,
+                                                                        lineNumber: 3271,
                                                                         columnNumber: 31
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2530,
+                                                                lineNumber: 3269,
                                                                 columnNumber: 29
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2516,
+                                                        lineNumber: 3255,
                                                         columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3639,14 +4302,14 @@ function AdminDashboardPage() {
                                                                         className: "w-3 h-3"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                        lineNumber: 2541,
+                                                                        lineNumber: 3280,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     "Edit"
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2537,
+                                                                lineNumber: 3276,
                                                                 columnNumber: 27
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3657,48 +4320,48 @@ function AdminDashboardPage() {
                                                                         className: "w-3 h-3"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                        lineNumber: 2548,
+                                                                        lineNumber: 3287,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     "Delete"
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2544,
+                                                                lineNumber: 3283,
                                                                 columnNumber: 27
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2536,
+                                                        lineNumber: 3275,
                                                         columnNumber: 25
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2512,
+                                                lineNumber: 3251,
                                                 columnNumber: 23
                                             }, this)
                                         ]
                                     }, ncd.id, true, {
                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2497,
+                                        lineNumber: 3236,
                                         columnNumber: 21
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                lineNumber: 2495,
+                                lineNumber: 3234,
                                 columnNumber: 17
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 2480,
+                            lineNumber: 3219,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                    lineNumber: 2464,
+                    lineNumber: 3205,
                     columnNumber: 11
                 }, this),
                 activeTab === 'bondsFD' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3716,7 +4379,7 @@ function AdminDashboardPage() {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2566,
+                                    lineNumber: 3304,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3727,20 +4390,20 @@ function AdminDashboardPage() {
                                             className: "w-4 h-4"
                                         }, void 0, false, {
                                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                            lineNumber: 2573,
+                                            lineNumber: 3311,
                                             columnNumber: 17
                                         }, this),
                                         "Add New FD"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                    lineNumber: 2569,
+                                    lineNumber: 3307,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 2565,
+                            lineNumber: 3303,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3752,7 +4415,7 @@ function AdminDashboardPage() {
                                         className: "w-16 h-16 text-slate-600 mx-auto mb-4"
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2582,
+                                        lineNumber: 3319,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -3760,7 +4423,7 @@ function AdminDashboardPage() {
                                         children: "No FDs found"
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2583,
+                                        lineNumber: 3320,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3768,7 +4431,7 @@ function AdminDashboardPage() {
                                         children: "Add your first FD to get started."
                                     }, void 0, false, {
                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2584,
+                                        lineNumber: 3321,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3779,20 +4442,20 @@ function AdminDashboardPage() {
                                                 className: "w-4 h-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2589,
+                                                lineNumber: 3326,
                                                 columnNumber: 21
                                             }, this),
                                             "Add Your First FD"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2585,
+                                        lineNumber: 3322,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                lineNumber: 2581,
+                                lineNumber: 3318,
                                 columnNumber: 17
                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
@@ -3815,12 +4478,12 @@ function AdminDashboardPage() {
                                                     className: "w-full h-full object-cover"
                                                 }, void 0, false, {
                                                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                    lineNumber: 2604,
+                                                    lineNumber: 3341,
                                                     columnNumber: 27
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2603,
+                                                lineNumber: 3340,
                                                 columnNumber: 25
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3831,7 +4494,7 @@ function AdminDashboardPage() {
                                                         children: fd.bank_name
                                                     }, void 0, false, {
                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2612,
+                                                        lineNumber: 3349,
                                                         columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3844,7 +4507,7 @@ function AdminDashboardPage() {
                                                                         children: "Interest Rate:"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                        lineNumber: 2618,
+                                                                        lineNumber: 3355,
                                                                         columnNumber: 31
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3855,13 +4518,13 @@ function AdminDashboardPage() {
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                        lineNumber: 2619,
+                                                                        lineNumber: 3356,
                                                                         columnNumber: 31
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2617,
+                                                                lineNumber: 3354,
                                                                 columnNumber: 29
                                                             }, this),
                                                             fd.tenure && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3871,7 +4534,7 @@ function AdminDashboardPage() {
                                                                         children: "Tenure:"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                        lineNumber: 2624,
+                                                                        lineNumber: 3361,
                                                                         columnNumber: 31
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3879,19 +4542,19 @@ function AdminDashboardPage() {
                                                                         children: fd.tenure
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                        lineNumber: 2625,
+                                                                        lineNumber: 3362,
                                                                         columnNumber: 31
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2623,
+                                                                lineNumber: 3360,
                                                                 columnNumber: 29
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2615,
+                                                        lineNumber: 3352,
                                                         columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3905,14 +4568,14 @@ function AdminDashboardPage() {
                                                                         className: "w-3 h-3"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                        lineNumber: 2634,
+                                                                        lineNumber: 3371,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     "Edit"
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2630,
+                                                                lineNumber: 3367,
                                                                 columnNumber: 27
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3923,48 +4586,48 @@ function AdminDashboardPage() {
                                                                         className: "w-3 h-3"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                        lineNumber: 2641,
+                                                                        lineNumber: 3378,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     "Delete"
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                                lineNumber: 2637,
+                                                                lineNumber: 3374,
                                                                 columnNumber: 27
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                        lineNumber: 2629,
+                                                        lineNumber: 3366,
                                                         columnNumber: 25
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                                lineNumber: 2611,
+                                                lineNumber: 3348,
                                                 columnNumber: 23
                                             }, this)
                                         ]
                                     }, fd.id, true, {
                                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                        lineNumber: 2596,
+                                        lineNumber: 3333,
                                         columnNumber: 21
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                                lineNumber: 2594,
+                                lineNumber: 3331,
                                 columnNumber: 17
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                            lineNumber: 2579,
+                            lineNumber: 3316,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                    lineNumber: 2563,
+                    lineNumber: 3302,
                     columnNumber: 11
                 }, this),
                 (leads.length > 0 || nfoData.length > 0 || bondsNCD.length > 0 || bondsFD.length > 0) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3977,27 +4640,27 @@ function AdminDashboardPage() {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                        lineNumber: 2657,
+                        lineNumber: 3393,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-                    lineNumber: 2656,
+                    lineNumber: 3392,
                     columnNumber: 11
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-            lineNumber: 2048,
+            lineNumber: 2951,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/mokshainvestment/app/admin/page.tsx",
-        lineNumber: 2047,
+        lineNumber: 2950,
         columnNumber: 5
     }, this);
 }
-_s(AdminDashboardPage, "JbldQTT5GU9/tyjA21WGvCcFj2k=");
+_s(AdminDashboardPage, "rzDd7xBUxXXVBAJUOItQvEco0FU=");
 _c = AdminDashboardPage;
 var _c;
 __turbopack_context__.k.register(_c, "AdminDashboardPage");

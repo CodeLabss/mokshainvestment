@@ -583,10 +583,10 @@ const LoanPage = () => {
         { 
           id: "car-loan", 
           name: "Car Loan", 
-          description: "Drive home your dream car with our attractive car loan options. We offer financing for new and used cars with minimal documentation and quick approval process.",
+          description: "Drive home your dream car with our attractive car loan options. We offer financing for new cars with minimal documentation and quick approval process.",
           icon: <Car className="w-8 h-8 text-sky-400" />,
           features: [
-            "Financing for new and used cars",
+            "Financing for new  cars",
             "Competitive interest rates",
             "Minimal documentation",
             "Quick approval process",

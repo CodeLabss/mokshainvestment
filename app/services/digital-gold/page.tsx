@@ -1,9 +1,10 @@
+
 "use client";
 
 import React, { useState, useRef, useEffect, ReactNode } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { DollarSign, Shield, Home, ArrowRight, Gem, Zap, Coins, TrendingUp } from "lucide-react";
+import { DollarSign, Shield, Home, ArrowRight, Gem, Zap, Coins, TrendingUp, Star } from "lucide-react";
 import { BgComponent } from "@/components/BgComponent";
 
 // Updated image paths to use your public folder
@@ -117,29 +118,22 @@ const DigitalGoldPage = () => {
       <div className="relative z-10">
         <Navbar />
 
-        {/* Enhanced Hero Section */}
-        <section className="min-h-screen flex items-center justify-center relative">
-          <div className="max-w-6xl mx-auto px-6 text-center">
-            
-            {/* Premium Badge */}
-            <div className="inline-flex items-center gap-3 bg-amber-400/10 border border-amber-400/30 rounded-full px-6 py-3 mb-8 backdrop-blur-sm">
-              <Gem className="w-5 h-5 text-amber-400" />
-              <span className="text-amber-400 font-semibold text-sm uppercase tracking-wide">Premium Gold Investment</span>
+        {/* Enhanced Hero Section with Increased Top Padding and Centering */}
+        <section className="min-h-[90vh] flex items-center justify-center pt-40 pb-20 relative z-10">
+          <div className="max-w-7xl mx-auto px-6 w-full">
+            {/* Enhanced Header matching Insurance page theme */}
+            <div className="text-center mb-16">
+              <div className="inline-block bg-gradient-to-r from-amber-500/10 to-amber-400/10 px-8 py-6 rounded-2xl border border-amber-200/30 mb-8 backdrop-blur-sm">
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent mb-4">
+                  Digital Gold
+                </h1>
+              </div>
+              <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed font-medium">
+                Own physical gold digitally with bank-grade security. Start with just ₹100 and build your 
+                <span className="text-amber-400 font-semibold"> golden legacy </span>
+                with 24/7 trading and insured vault storage.
+              </p>
             </div>
-
-            {/* Main Heading with Gradient */}
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-6">
-              <span className="bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-600 bg-clip-text text-transparent">
-                Digital Gold
-              </span>
-            </h1>
-
-            {/* Enhanced Subtitle */}
-            <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto mb-12 leading-relaxed">
-              Own physical gold digitally with bank-grade security. Start with just ₹100 and build your 
-              <span className="text-amber-400 font-semibold"> golden legacy </span>
-              with 24/7 trading and insured vault storage.
-            </p>
 
             {/* Enhanced CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
@@ -153,10 +147,6 @@ const DigitalGoldPage = () => {
                   <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>
-              
-              {/* <button className="px-8 py-4 border-2 border-amber-400/50 text-amber-400 font-semibold rounded-xl transition-all duration-300 hover:bg-amber-400/10 hover:border-amber-400">
-                Watch Product Tour
-              </button> */}
             </div>
 
             {/* Trust Indicators */}
@@ -325,9 +315,6 @@ const DigitalGoldPage = () => {
                 <button onClick={() => window.location.href = '/contact'} className="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-xl hover:from-amber-600 hover:to-amber-700 transition-all duration-300 transform hover:scale-105 shadow-lg cursor-pointer">
                   Get Expert Advice
                 </button>
-                {/* <button className="px-8 py-4 border-2 border-amber-400 text-amber-400 font-semibold rounded-xl hover:bg-amber-400/10 transition-all duration-300">
-                  Get Expert Advice
-                </button> */}
               </div>
             </div>
           </div>
