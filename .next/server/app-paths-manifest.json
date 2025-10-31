@@ -1,7 +1,4 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/admin/login/page": "app/admin/login/page.js",
   "/admin/page": "app/admin/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/services/insurance/page": "app/services/insurance/page.js"
+  "/favicon.ico/route": "app/favicon.ico/route.js"
 }

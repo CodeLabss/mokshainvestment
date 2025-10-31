@@ -1,23 +1,46 @@
 globalThis.__BUILD_MANIFEST = {
   "pages": {
-    "/_app": []
+    "/_app": [
+      "static/chunks/c46c0_next_dist_compiled_next-devtools_index_3026f9cf.js",
+      "static/chunks/c46c0_next_dist_compiled_b13c2cae._.js",
+      "static/chunks/c46c0_next_dist_shared_lib_9b52e1d0._.js",
+      "static/chunks/c46c0_next_dist_client_8d11ccb2._.js",
+      "static/chunks/c46c0_next_dist_4c506d46._.js",
+      "static/chunks/c46c0_next_app_edcb57dc.js",
+      "static/chunks/[next]_entry_page-loader_ts_d87b69f2._.js",
+      "static/chunks/c46c0_react-dom_02a911eb._.js",
+      "static/chunks/c46c0_301ac104._.js",
+      "static/chunks/[root-of-the-server]__d61e89d1._.js",
+      "static/chunks/mokshainvestment_pages__app_2da965e7._.js",
+      "static/chunks/turbopack-mokshainvestment_pages__app_cb27a32a._.js"
+    ],
+    "/_error": [
+      "static/chunks/c46c0_next_dist_compiled_next-devtools_index_3026f9cf.js",
+      "static/chunks/c46c0_next_dist_compiled_b13c2cae._.js",
+      "static/chunks/c46c0_next_dist_shared_lib_03a349f0._.js",
+      "static/chunks/c46c0_next_dist_client_8d11ccb2._.js",
+      "static/chunks/c46c0_next_dist_54ea9bf1._.js",
+      "static/chunks/c46c0_next_error_1d159182.js",
+      "static/chunks/[next]_entry_page-loader_ts_b73490e8._.js",
+      "static/chunks/c46c0_react-dom_02a911eb._.js",
+      "static/chunks/c46c0_301ac104._.js",
+      "static/chunks/[root-of-the-server]__35032b8d._.js",
+      "static/chunks/mokshainvestment_pages__error_2da965e7._.js",
+      "static/chunks/turbopack-mokshainvestment_pages__error_a45f3f3c._.js"
+    ]
   },
   "devFiles": [],
   "ampDevFiles": [],
   "polyfillFiles": [
-    "static/chunks/c46c0_next_dist_build_polyfills_polyfill-nomodule.js"
+    "static/chunks/a6dad97d9634a72d.js"
   ],
   "lowPriorityFiles": [],
   "rootMainFiles": [
-    "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_f528c91a._.js",
-    "static/chunks/c46c0_next_dist_compiled_react-dom_fa9472e3._.js",
-    "static/chunks/c46c0_next_dist_compiled_next-devtools_index_75e01526.js",
-    "static/chunks/c46c0_next_dist_compiled_accf6bf0._.js",
-    "static/chunks/c46c0_next_dist_client_d90e3ea8._.js",
-    "static/chunks/c46c0_next_dist_f5df054a._.js",
-    "static/chunks/c46c0_@swc_helpers_cjs_a9dd0772._.js",
-    "static/chunks/mokshainvestment_a0ff3932._.js",
-    "static/chunks/turbopack-mokshainvestment_3ba76e37._.js"
+    "static/chunks/e06f4d78ea8aaae4.js",
+    "static/chunks/81909cc8ecacd6bc.js",
+    "static/chunks/215c74b9daa9591c.js",
+    "static/chunks/b730186d7c410c90.js",
+    "static/chunks/turbopack-ef5d6d8660877d15.js"
   ],
   "ampFirstPages": []
 };

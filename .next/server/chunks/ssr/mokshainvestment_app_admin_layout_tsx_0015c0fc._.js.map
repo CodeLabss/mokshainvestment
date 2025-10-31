@@ -1,6 +1,1 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Tarak/Desktop/mokshainvestment/mokshainvestment/app/admin/layout.tsx"],"sourcesContent":["\"use client\";\r\n\r\nimport React from \"react\";\r\n\r\nexport default function AdminLayout({ children }: { children: React.ReactNode }) {\r\n  return (\r\n    <div style={{ minHeight: \"100vh\", backgroundColor: \"#401010\", color: \"white\" }}>\r\n      {children}\r\n    </div>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;;AAAA;;AAIe,SAAS,YAAY,EAAE,QAAQ,EAAiC;IAC7E,qBACE,kQAAC;QAAI,OAAO;YAAE,WAAW;YAAS,iBAAiB;YAAW,OAAO;QAAQ;kBAC1E;;;;;;AAGP","debugId":null}}]
-}
+{"version":3,"sources":["turbopack:///[project]/mokshainvestment/app/admin/layout.tsx"],"sourcesContent":["\"use client\";\r\n\r\nimport React from \"react\";\r\n\r\nexport default function AdminLayout({ children }: { children: React.ReactNode }) {\r\n  return (\r\n    <div style={{ minHeight: \"100vh\", backgroundColor: \"#401010\", color: \"white\" }}>\r\n      {children}\r\n    </div>\r\n  );\r\n}\r\n"],"names":[],"mappings":"+EAIe,SAAS,EAAY,UAAE,CAAQ,CAAiC,EAC7E,MACE,CAAA,EAAA,EAAA,GAAA,EAAC,MAAA,CAAI,MAAO,CAAE,UAAW,QAAS,gBAAiB,UAAW,MAAO,OAAQ,WAC1E,GAGP"}

@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Tarak/Desktop/mokshainvestment/mokshainvestment/app/admin/layout.tsx"],"sourcesContent":["\"use client\";\r\n\r\nimport React from \"react\";\r\n\r\nexport default function AdminLayout({ children }: { children: React.ReactNode }) {\r\n  return (\r\n    <div style={{ minHeight: \"100vh\", backgroundColor: \"#401010\", color: \"white\" }}>\r\n      {children}\r\n    </div>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;;AAAA;;AAIe,SAAS,YAAY,KAA2C;QAA3C,EAAE,QAAQ,EAAiC,GAA3C;IAClC,qBACE,iNAAC;QAAI,OAAO;YAAE,WAAW;YAAS,iBAAiB;YAAW,OAAO;QAAQ;kBAC1E;;;;;;AAGP;KANwB","debugId":null}}]
-}

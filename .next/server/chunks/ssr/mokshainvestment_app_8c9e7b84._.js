@@ -1,22 +1,3 @@
-module.exports = [
-"[project]/mokshainvestment/app/favicon.ico (static in ecmascript)", ((__turbopack_context__) => {
-
-__turbopack_context__.v("/_next/static/media/favicon.0b3bf435.ico");}),
-"[project]/mokshainvestment/app/favicon.ico.mjs { IMAGE => \"[project]/mokshainvestment/app/favicon.ico (static in ecmascript)\" } [app-rsc] (structured image object, ecmascript)", ((__turbopack_context__) => {
-"use strict";
-
-__turbopack_context__.s([
-    "default",
-    ()=>__TURBOPACK__default__export__
-]);
-var __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$app$2f$favicon$2e$ico__$28$static__in__ecmascript$29$__ = __turbopack_context__.i("[project]/mokshainvestment/app/favicon.ico (static in ecmascript)");
-;
-const __TURBOPACK__default__export__ = {
-    src: __TURBOPACK__imported__module__$5b$project$5d2f$mokshainvestment$2f$app$2f$favicon$2e$ico__$28$static__in__ecmascript$29$__["default"],
-    width: 256,
-    height: 256
-};
-}),
-];
+module.exports=[69402,a=>{a.v("/_next/static/media/favicon.0b3bf435.ico")},11593,a=>{"use strict";a.s(["default",()=>b]);let b={src:a.i(69402).default,width:256,height:256}}];
 
 //# sourceMappingURL=mokshainvestment_app_8c9e7b84._.js.map
