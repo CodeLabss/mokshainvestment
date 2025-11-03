@@ -2,12 +2,13 @@
   "name": "mokshainvestment",
   "version": "0.1.0",
   "private": true,
+  
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
-    "start": "next start",
-    "lint": "eslint"
+    "dev": "next dev --turbo",
+    "build": "next build",
+    "start": "next start"
   },
+
   "dependencies": {
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/ssr": "^0.7.0",
@@ -26,14 +27,14 @@
     "react-dom": "19.1.0",
     "react-hot-toast": "^2.6.0",
     "react-icons": "^5.5.0",
-    "three": "^0.180.0"
+    "three": "^0.164.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "24.3.1",
     "@types/react": "^19.1.12",
-    "@types/three": "^0.180.0",
+    "@types/three": "^0.164.0",
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
     "tailwindcss": "^4"

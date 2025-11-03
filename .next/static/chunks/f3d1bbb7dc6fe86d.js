@@ -1,1 +1,0 @@
-(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,80052,t=>{"use strict";t.s(["default",()=>o]);var e=t.i(51757);function o(t){let{children:o}=t;return(0,e.jsx)("div",{style:{minHeight:"100vh",backgroundColor:"#401010",color:"white"},children:o})}}]);
