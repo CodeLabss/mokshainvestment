@@ -1,23 +1,6 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/api/admin/content/route": "app/api/admin/content/route.js",
-  "/api/admin/records/route": "app/api/admin/records/route.js",
-  "/api/admin/leads/route": "app/api/admin/leads/route.js",
-  "/api/admin/upload/route": "app/api/admin/upload/route.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/about/page": "app/about/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/page": "app/page.js",
-  "/services/digital-gold/page": "app/services/digital-gold/page.js",
-  "/services/bonds/page": "app/services/bonds/page.js",
-  "/services/financial-planning/page": "app/services/financial-planning/page.js",
-  "/services/insurance/page": "app/services/insurance/page.js",
-  "/services/loan/page": "app/services/loan/page.js",
-  "/services/mutual-funds-loan/page": "app/services/mutual-funds-loan/page.js",
-  "/services/mutual-funds/page": "app/services/mutual-funds/page.js",
-  "/services/nfo/page": "app/services/nfo/page.js",
-  "/services/sif/page": "app/services/sif/page.js",
-  "/services/page": "app/services/page.js",
+  "/admin/login/page": "app/admin/login/page.js",
   "/admin/page": "app/admin/page.js",
-  "/admin/login/page": "app/admin/login/page.js"
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/page": "app/page.js"
 }
