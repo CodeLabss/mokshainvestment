@@ -1,6 +1,9 @@
 {
+  "/about/page": "app/about/page.js",
   "/admin/login/page": "app/admin/login/page.js",
   "/admin/page": "app/admin/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/services/mutual-funds/page": "app/services/mutual-funds/page.js",
+  "/services/sif/page": "app/services/sif/page.js"
 }

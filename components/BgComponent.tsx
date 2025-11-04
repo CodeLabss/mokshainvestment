@@ -159,33 +159,33 @@
 
 
 // for production environment but not live a temporary gradient version
-// "use client";
+"use client";
 
-// import { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
-// export function BgComponent() {
-//   const containerRef = useRef<HTMLDivElement>(null);
-//   const canvasRef = useRef<HTMLDivElement>(null);
+export function BgComponent() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLDivElement>(null);
 
-//   useEffect(() => {
-//     // Simple fallback - just return a gradient background
-//     if (!containerRef.current) return;
+  useEffect(() => {
+    // Simple fallback - just return a gradient background
+    if (!containerRef.current) return;
     
-//     containerRef.current.style.background = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+    containerRef.current.style.background = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
     
-//     return () => {
-//       if (containerRef.current) {
-//         containerRef.current.style.background = "";
-//       }
-//     };
-//   }, []);
+    return () => {
+      if (containerRef.current) {
+        containerRef.current.style.background = "";
+      }
+    };
+  }, []);
 
-//   return (
-//     <div ref={containerRef} className="pointer-events-none fixed inset-0 -z-10">
-//       <div ref={canvasRef} className="absolute inset-0" />
-//     </div>
-//   );
-// }
+  return (
+    <div ref={containerRef} className="pointer-events-none fixed inset-0 -z-10">
+      <div ref={canvasRef} className="absolute inset-0" />
+    </div>
+  );
+}
 
 // for prod v2
 // "use client";
@@ -337,197 +337,197 @@
 
 
 // for prod v3
-"use client";
+// "use client";
 
-import { useEffect, useRef } from "react";
+// import { useEffect, useRef } from "react";
 
-export function BgComponent() {
-  const containerRef = useRef<HTMLDivElement>(null);
+// export function BgComponent() {
+//   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!containerRef.current) return;
+//   useEffect(() => {
+//     if (!containerRef.current) return;
 
-    // Create the silk-like animated background
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes silkFlow {
-        0%, 100% {
-          background-position: 0% 0%, 100% 100%, 50% 50%;
-          filter: hue-rotate(0deg) blur(0px);
-        }
-        25% {
-          background-position: 100% 0%, 0% 100%, 80% 20%;
-          filter: hue-rotate(90deg) blur(2px);
-        }
-        50% {
-          background-position: 100% 100%, 0% 0%, 20% 80%;
-          filter: hue-rotate(180deg) blur(4px);
-        }
-        75% {
-          background-position: 0% 100%, 100% 0%, 80% 80%;
-          filter: hue-rotate(270deg) blur(2px);
-        }
-      }
+//     // Create the silk-like animated background
+//     const style = document.createElement('style');
+//     style.textContent = `
+//       @keyframes silkFlow {
+//         0%, 100% {
+//           background-position: 0% 0%, 100% 100%, 50% 50%;
+//           filter: hue-rotate(0deg) blur(0px);
+//         }
+//         25% {
+//           background-position: 100% 0%, 0% 100%, 80% 20%;
+//           filter: hue-rotate(90deg) blur(2px);
+//         }
+//         50% {
+//           background-position: 100% 100%, 0% 0%, 20% 80%;
+//           filter: hue-rotate(180deg) blur(4px);
+//         }
+//         75% {
+//           background-position: 0% 100%, 100% 0%, 80% 80%;
+//           filter: hue-rotate(270deg) blur(2px);
+//         }
+//       }
       
-      @keyframes silkWave {
-        0%, 100% {
-          transform: translateX(0%) translateY(0%) scale(1) rotate(0deg);
-          opacity: 0.6;
-        }
-        25% {
-          transform: translateX(5%) translateY(-3%) scale(1.1) rotate(90deg);
-          opacity: 0.8;
-        }
-        50% {
-          transform: translateX(-3%) translateY(5%) scale(1.05) rotate(180deg);
-          opacity: 0.7;
-        }
-        75% {
-          transform: translateX(3%) translateY(-2%) scale(1.15) rotate(270deg);
-          opacity: 0.9;
-        }
-      }
+//       @keyframes silkWave {
+//         0%, 100% {
+//           transform: translateX(0%) translateY(0%) scale(1) rotate(0deg);
+//           opacity: 0.6;
+//         }
+//         25% {
+//           transform: translateX(5%) translateY(-3%) scale(1.1) rotate(90deg);
+//           opacity: 0.8;
+//         }
+//         50% {
+//           transform: translateX(-3%) translateY(5%) scale(1.05) rotate(180deg);
+//           opacity: 0.7;
+//         }
+//         75% {
+//           transform: translateX(3%) translateY(-2%) scale(1.15) rotate(270deg);
+//           opacity: 0.9;
+//         }
+//       }
       
-      @keyframes silkPulse {
-        0%, 100% {
-          transform: scale(1) rotate(0deg);
-          opacity: 0.4;
-        }
-        33% {
-          transform: scale(1.3) rotate(120deg);
-          opacity: 0.6;
-        }
-        66% {
-          transform: scale(1.1) rotate(240deg);
-          opacity: 0.5;
-        }
-      }
+//       @keyframes silkPulse {
+//         0%, 100% {
+//           transform: scale(1) rotate(0deg);
+//           opacity: 0.4;
+//         }
+//         33% {
+//           transform: scale(1.3) rotate(120deg);
+//           opacity: 0.6;
+//         }
+//         66% {
+//           transform: scale(1.1) rotate(240deg);
+//           opacity: 0.5;
+//         }
+//       }
       
-      .silk-layer {
-        position: absolute;
-        inset: 0;
-        background: 
-          radial-gradient(circle at 20% 20%, rgba(184, 255, 247, 0.4) 0%, transparent 50%),
-          radial-gradient(circle at 80% 80%, rgba(110, 52, 102, 0.3) 0%, transparent 50%),
-          radial-gradient(circle at 50% 50%, rgba(1, 51, 255, 0.3) 0%, transparent 60%),
-          radial-gradient(circle at 80% 20%, rgba(102, 209, 254, 0.4) 0%, transparent 50%);
-        background-size: 400% 400%, 300% 300%, 500% 500%, 350% 350%;
-        animation: silkFlow 20s ease-in-out infinite;
-        mix-blend-mode: screen;
-      }
+//       .silk-layer {
+//         position: absolute;
+//         inset: 0;
+//         background: 
+//           radial-gradient(circle at 20% 20%, rgba(184, 255, 247, 0.4) 0%, transparent 50%),
+//           radial-gradient(circle at 80% 80%, rgba(110, 52, 102, 0.3) 0%, transparent 50%),
+//           radial-gradient(circle at 50% 50%, rgba(1, 51, 255, 0.3) 0%, transparent 60%),
+//           radial-gradient(circle at 80% 20%, rgba(102, 209, 254, 0.4) 0%, transparent 50%);
+//         background-size: 400% 400%, 300% 300%, 500% 500%, 350% 350%;
+//         animation: silkFlow 20s ease-in-out infinite;
+//         mix-blend-mode: screen;
+//       }
       
-      .silk-wave {
-        position: absolute;
-        border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%;
-        filter: blur(30px);
-        animation: silkWave 15s ease-in-out infinite;
-        mix-blend-mode: overlay;
-      }
+//       .silk-wave {
+//         position: absolute;
+//         border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%;
+//         filter: blur(30px);
+//         animation: silkWave 15s ease-in-out infinite;
+//         mix-blend-mode: overlay;
+//       }
       
-      .silk-pulse {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(25px);
-        animation: silkPulse 12s ease-in-out infinite;
-        mix-blend-mode: soft-light;
-      }
-    `;
+//       .silk-pulse {
+//         position: absolute;
+//         border-radius: 50%;
+//         filter: blur(25px);
+//         animation: silkPulse 12s ease-in-out infinite;
+//         mix-blend-mode: soft-light;
+//       }
+//     `;
     
-    document.head.appendChild(style);
+//     document.head.appendChild(style);
 
-    // Set base container styles
-    containerRef.current.style.background = `linear-gradient(135deg, 
-      rgba(184, 255, 247, 0.1) 0%, 
-      rgba(110, 52, 102, 0.1) 50%, 
-      rgba(1, 51, 255, 0.1) 100%)`;
+//     // Set base container styles
+//     containerRef.current.style.background = `linear-gradient(135deg, 
+//       rgba(184, 255, 247, 0.1) 0%, 
+//       rgba(110, 52, 102, 0.1) 50%, 
+//       rgba(1, 51, 255, 0.1) 100%)`;
     
-    containerRef.current.style.overflow = `hidden`;
+//     containerRef.current.style.overflow = `hidden`;
 
-    // Create silk layers
-    const silkLayer = document.createElement('div');
-    silkLayer.className = 'silk-layer';
-    containerRef.current.appendChild(silkLayer);
+//     // Create silk layers
+//     const silkLayer = document.createElement('div');
+//     silkLayer.className = 'silk-layer';
+//     containerRef.current.appendChild(silkLayer);
 
-    // Create silk waves with your exact colors
-    const colors = [
-      'rgba(184, 255, 247, 0.4)',  // Cyan
-      'rgba(110, 52, 102, 0.3)',   // Purple
-      'rgba(1, 51, 255, 0.3)',     // Blue
-      'rgba(102, 209, 254, 0.4)'   // Light Blue
-    ];
+//     // Create silk waves with your exact colors
+//     const colors = [
+//       'rgba(184, 255, 247, 0.4)',  // Cyan
+//       'rgba(110, 52, 102, 0.3)',   // Purple
+//       'rgba(1, 51, 255, 0.3)',     // Blue
+//       'rgba(102, 209, 254, 0.4)'   // Light Blue
+//     ];
 
-    // Create 8 silk waves for rich movement
-    for (let i = 0; i < 8; i++) {
-      const wave = document.createElement('div');
-      const pulse = document.createElement('div');
+//     // Create 8 silk waves for rich movement
+//     for (let i = 0; i < 8; i++) {
+//       const wave = document.createElement('div');
+//       const pulse = document.createElement('div');
       
-      const size = 300 + Math.random() * 400;
-      const left = Math.random() * 120 - 10;
-      const top = Math.random() * 120 - 10;
-      const color = colors[i % colors.length];
-      const delay = Math.random() * 10;
-      const duration = 15 + Math.random() * 10;
+//       const size = 300 + Math.random() * 400;
+//       const left = Math.random() * 120 - 10;
+//       const top = Math.random() * 120 - 10;
+//       const color = colors[i % colors.length];
+//       const delay = Math.random() * 10;
+//       const duration = 15 + Math.random() * 10;
       
-      // Silk wave element
-      wave.className = 'silk-wave';
-      wave.style.width = `${size}px`;
-      wave.style.height = `${size}px`;
-      wave.style.left = `${left}%`;
-      wave.style.top = `${top}%`;
-      wave.style.background = color;
-      wave.style.animationDelay = `${delay}s`;
-      wave.style.animationDuration = `${duration}s`;
+//       // Silk wave element
+//       wave.className = 'silk-wave';
+//       wave.style.width = `${size}px`;
+//       wave.style.height = `${size}px`;
+//       wave.style.left = `${left}%`;
+//       wave.style.top = `${top}%`;
+//       wave.style.background = color;
+//       wave.style.animationDelay = `${delay}s`;
+//       wave.style.animationDuration = `${duration}s`;
       
-      // Silk pulse element
-      pulse.className = 'silk-pulse';
-      pulse.style.width = `${size * 0.6}px`;
-      pulse.style.height = `${size * 0.6}px`;
-      pulse.style.left = `${(left + 15) % 100}%`;
-      pulse.style.top = `${(top + 15) % 100}%`;
-      pulse.style.background = colors[(i + 2) % colors.length];
-      pulse.style.animationDelay = `${delay + 4}s`;
-      pulse.style.animationDuration = `${duration - 3}s`;
+//       // Silk pulse element
+//       pulse.className = 'silk-pulse';
+//       pulse.style.width = `${size * 0.6}px`;
+//       pulse.style.height = `${size * 0.6}px`;
+//       pulse.style.left = `${(left + 15) % 100}%`;
+//       pulse.style.top = `${(top + 15) % 100}%`;
+//       pulse.style.background = colors[(i + 2) % colors.length];
+//       pulse.style.animationDelay = `${delay + 4}s`;
+//       pulse.style.animationDuration = `${duration - 3}s`;
       
-      containerRef.current.appendChild(wave);
-      containerRef.current.appendChild(pulse);
-    }
+//       containerRef.current.appendChild(wave);
+//       containerRef.current.appendChild(pulse);
+//     }
 
-    // Add continuous subtle movement to the entire container
-    const moveContainer = () => {
-      if (containerRef.current) {
-        const time = performance.now() * 0.001;
-        const x = Math.sin(time * 0.2) * 1;
-        const y = Math.cos(time * 0.15) * 1;
-        containerRef.current.style.transform = `translate(${x}px, ${y}px)`;
-        requestAnimationFrame(moveContainer);
-      }
-    };
+//     // Add continuous subtle movement to the entire container
+//     const moveContainer = () => {
+//       if (containerRef.current) {
+//         const time = performance.now() * 0.001;
+//         const x = Math.sin(time * 0.2) * 1;
+//         const y = Math.cos(time * 0.15) * 1;
+//         containerRef.current.style.transform = `translate(${x}px, ${y}px)`;
+//         requestAnimationFrame(moveContainer);
+//       }
+//     };
     
-    moveContainer();
+//     moveContainer();
 
-    return () => {
-      // Cleanup
-      if (containerRef.current) {
-        containerRef.current.style.background = "";
-        containerRef.current.style.overflow = "";
-        containerRef.current.style.transform = "";
+//     return () => {
+//       // Cleanup
+//       if (containerRef.current) {
+//         containerRef.current.style.background = "";
+//         containerRef.current.style.overflow = "";
+//         containerRef.current.style.transform = "";
         
-        // Remove all child elements
-        while (containerRef.current.firstChild) {
-          containerRef.current.removeChild(containerRef.current.firstChild);
-        }
-      }
+//         // Remove all child elements
+//         while (containerRef.current.firstChild) {
+//           containerRef.current.removeChild(containerRef.current.firstChild);
+//         }
+//       }
       
-      // Remove style element
-      if (document.head.contains(style)) {
-        document.head.removeChild(style);
-      }
-    };
-  }, []);
+//       // Remove style element
+//       if (document.head.contains(style)) {
+//         document.head.removeChild(style);
+//       }
+//     };
+//   }, []);
 
-  return (
-    <div ref={containerRef} className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      {/* Silk animation elements will be added here */}
-    </div>
-  );
-}
+//   return (
+//     <div ref={containerRef} className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+//       {/* Silk animation elements will be added here */}
+//     </div>
+//   );
+// }

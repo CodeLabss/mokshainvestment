@@ -541,11 +541,11 @@ const SIFPage = () => {
                     Schedule Consultation
                   </button>
                 </Link>
-                <div className="flex-1 max-w-md">
+                {/* <div className="flex-1 max-w-md">
                   <button className="w-full px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
                     Download Brochure
                   </button>
-                </div>
+                </div> */}
               </div>
               <p className="text-amber-200 text-sm mt-6">
                 Minimum investment: ₹10,00,000 • Accredited investors only

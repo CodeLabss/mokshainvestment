@@ -624,7 +624,7 @@ const InfiniteLogoMarquee = ({ companies, direction = "left" }: { companies: Com
 const DualMarqueeSection = () => {
   // First set of companies for top marquee (right to left)
   const topMarqueeCompanies: Company[] = [
-    { id: "1", name: "HDFC Mutual Fund", logo_url: "/images/mutual-funds/aditya-brila.jpg" },
+    // { id: "1", name: "HDFC Mutual Fund", logo_url: "/images/mutual-funds/aditya-brila.jpg" },
     { id: "2", name: "ICICI Prudential", logo_url: "/images/mutual-funds/bajaj.jpg" },
     { id: "3", name: "SBI Mutual Fund", logo_url: "/images/mutual-funds/bandhan.jpg" },
     { id: "4", name: "Axis Mutual Fund", logo_url: "/images/mutual-funds/canara.jpg" },
